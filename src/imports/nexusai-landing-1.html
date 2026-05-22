@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NexusAI — Intelligent Banking, Trusted Future</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ── RESET & ROOT ─────────────────────────────── */
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#060912;
+  --bg2:#0A0F1E;
+  --bg3:#0E1628;
+  --surface:rgba(255,255,255,0.035);
+  --surface2:rgba(255,255,255,0.06);
+  --surface3:rgba(255,255,255,0.09);
+  --border:rgba(255,255,255,0.08);
+  --border2:rgba(255,255,255,0.14);
+  --border-accent:rgba(82,217,168,0.3);
+  --text:#F0F4FF;
+  --text2:#8896B0;
+  --text3:#5A6A82;
+  --mint:#52D9A8;
+  --mint2:#3EC49A;
+  --mint3:#29A87E;
+  --mint-glow:rgba(82,217,168,0.12);
+  --mint-glow2:rgba(82,217,168,0.06);
+  --gold:#F4C95A;
+  --gold-glow:rgba(244,201,90,0.1);
+  --blue:#4E9FFF;
+  --blue-glow:rgba(78,159,255,0.1);
+  --red:#FF6B6B;
+  --amber:#FFB347;
+  --radius:14px;
+  --radius-sm:8px;
+  --radius-lg:20px;
+  --radius-xl:28px;
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Geist',sans-serif;
+  font-size:16px;
+  line-height:1.6;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+img{display:block;max-width:100%}
+a{text-decoration:none;color:inherit}
+
+/* ── NOISE TEXTURE OVERLAY ─────────────────────── */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;opacity:.4;
+}
+
+/* ── SCROLLBAR ─────────────────────────────────── */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--surface3);border-radius:4px}
+
+/* ── NAV ───────────────────────────────────────── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 2rem;height:64px;
+  background:rgba(6,9,18,0.75);
+  backdrop-filter:blur(24px) saturate(180%);
+  border-bottom:0.5px solid var(--border);
+}
+.nav-logo{display:flex;align-items:center;gap:10px;cursor:pointer}
+.logo-icon{
+  width:32px;height:32px;
+  background:linear-gradient(135deg,var(--mint),var(--mint3));
+  border-radius:8px;position:relative;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+}
+.logo-icon svg{width:16px;height:16px}
+.logo-text{font-family:'Instrument Serif',serif;font-size:1.3rem;letter-spacing:-.01em;color:#fff}
+.logo-text span{color:var(--mint)}
+.nav-center{display:flex;gap:0;background:var(--surface);border:0.5px solid var(--border);border-radius:999px;padding:3px}
+.nav-link{
+  padding:.35rem 1rem;font-size:.8rem;font-weight:500;color:var(--text2);
+  border-radius:999px;transition:all .2s;cursor:pointer;white-space:nowrap;
+}
+.nav-link:hover,.nav-link.active{color:var(--text);background:var(--surface2)}
+.nav-right{display:flex;align-items:center;gap:.75rem}
+.btn-ghost{
+  padding:.45rem 1.1rem;font-size:.82rem;font-weight:500;
+  color:var(--text2);background:transparent;border:0.5px solid var(--border);
+  border-radius:999px;cursor:pointer;font-family:'Geist',sans-serif;transition:all .2s;
+}
+.btn-ghost:hover{color:var(--text);border-color:var(--border2)}
+.btn-nav-cta{
+  padding:.45rem 1.2rem;font-size:.82rem;font-weight:600;
+  color:var(--bg);background:var(--mint);border:none;
+  border-radius:999px;cursor:pointer;font-family:'Geist',sans-serif;
+  display:flex;align-items:center;gap:.4rem;transition:all .2s;
+}
+.btn-nav-cta:hover{background:var(--mint2);transform:translateY(-1px)}
+
+/* ── ANNOUNCEMENT BAR ──────────────────────────── */
+.announce{
+  background:linear-gradient(90deg,rgba(82,217,168,.08),rgba(78,159,255,.06),rgba(82,217,168,.08));
+  border-bottom:0.5px solid var(--border-accent);
+  padding:.55rem 1rem;text-align:center;font-size:.78rem;font-weight:500;
+  color:var(--text2);letter-spacing:.01em;display:flex;align-items:center;justify-content:center;gap:.75rem;
+  position:relative;z-index:999;margin-top:64px;
+}
+.announce-badge{
+  padding:.15rem .65rem;background:var(--mint-glow);border:0.5px solid var(--border-accent);
+  border-radius:999px;font-size:.7rem;font-weight:700;color:var(--mint);letter-spacing:.06em;
+}
+.announce a{color:var(--mint);transition:opacity .2s}
+.announce a:hover{opacity:.7}
+
+/* ── HERO ──────────────────────────────────────── */
+.hero{
+  position:relative;min-height:100vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;padding:6rem 1.5rem 5rem;
+  text-align:center;overflow:hidden;
+}
+/* Mesh gradient bg */
+.hero-mesh{
+  position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -10%,rgba(82,217,168,.09),transparent),
+    radial-gradient(ellipse 60% 40% at 80% 60%,rgba(78,159,255,.06),transparent),
+    radial-gradient(ellipse 50% 50% at 20% 80%,rgba(244,201,90,.04),transparent);
+}
+.hero-grid{
+  position:absolute;inset:0;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+  background-size:48px 48px;
+  mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 20%,transparent 70%);
+}
+/* Glowing orbs */
+.orb{position:absolute;border-radius:50%;pointer-events:none;filter:blur(80px)}
+.orb-1{width:500px;height:500px;background:rgba(82,217,168,.07);top:-150px;left:50%;transform:translateX(-50%)}
+.orb-2{width:350px;height:350px;background:rgba(78,159,255,.05);bottom:0;right:-50px}
+.orb-3{width:280px;height:280px;background:rgba(244,201,90,.04);bottom:100px;left:-50px}
+
+.hero-inner{position:relative;z-index:1;max-width:920px}
+.hero-chip{
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:.4rem 1rem .4rem .5rem;
+  background:var(--surface2);border:0.5px solid var(--border2);
+  border-radius:999px;font-size:.78rem;font-weight:500;color:var(--text2);
+  margin-bottom:2rem;cursor:default;
+}
+.chip-dot{
+  width:22px;height:22px;border-radius:50%;
+  background:linear-gradient(135deg,var(--mint),var(--mint3));
+  display:flex;align-items:center;justify-content:center;font-size:.6rem;
+}
+.chip-live{
+  display:inline-block;width:6px;height:6px;border-radius:50%;
+  background:var(--mint);margin-left:auto;
+  animation:blink 1.8s ease-in-out infinite;
+}
+@keyframes blink{0%,100%{opacity:1;box-shadow:0 0 0 3px rgba(82,217,168,.2)}50%{opacity:.4;box-shadow:none}}
+
+h1{
+  font-family:'Instrument Serif',serif;
+  font-size:clamp(3rem,7vw,5.5rem);
+  line-height:1.02;letter-spacing:-.03em;
+  color:#fff;margin-bottom:1.5rem;
+}
+h1 .ital{font-style:italic;color:var(--mint)}
+h1 .dim{color:rgba(240,244,255,.35)}
+
+.hero-sub{
+  font-size:clamp(1rem,2vw,1.2rem);color:var(--text2);
+  max-width:600px;margin:0 auto 2.5rem;font-weight:400;line-height:1.75;
+}
+.hero-actions{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;margin-bottom:4rem}
+.btn-primary{
+  padding:.8rem 1.75rem;font-size:.95rem;font-weight:600;
+  color:var(--bg);background:var(--mint);border:none;border-radius:999px;
+  cursor:pointer;font-family:'Geist',sans-serif;
+  display:inline-flex;align-items:center;gap:.5rem;transition:all .25s;
+  box-shadow:0 0 0 0 rgba(82,217,168,.3);
+}
+.btn-primary:hover{background:var(--mint2);transform:translateY(-2px);box-shadow:0 8px 30px rgba(82,217,168,.25)}
+.btn-secondary{
+  padding:.8rem 1.75rem;font-size:.95rem;font-weight:500;
+  color:var(--text);background:var(--surface2);border:0.5px solid var(--border2);
+  border-radius:999px;cursor:pointer;font-family:'Geist',sans-serif;
+  display:inline-flex;align-items:center;gap:.5rem;transition:all .25s;
+}
+.btn-secondary:hover{border-color:var(--border-accent);color:var(--mint);transform:translateY(-2px)}
+
+/* hero dashboard mockup */
+.hero-mockup{
+  position:relative;width:100%;max-width:900px;margin:0 auto;
+  border-radius:var(--radius-xl);overflow:hidden;
+  border:0.5px solid var(--border2);
+  box-shadow:0 40px 120px rgba(0,0,0,.7),0 0 0 0.5px var(--border),inset 0 1px 0 rgba(255,255,255,.05);
+}
+.mockup-bar{
+  background:var(--bg3);border-bottom:0.5px solid var(--border);
+  padding:.7rem 1.25rem;display:flex;align-items:center;gap:.75rem;
+}
+.mockup-dots{display:flex;gap:.4rem}
+.dot{width:10px;height:10px;border-radius:50%}
+.dot-r{background:#FF5F57}.dot-y{background:#FFBD2E}.dot-g{background:#28CA41}
+.mockup-url{
+  flex:1;background:var(--surface);border:0.5px solid var(--border);
+  border-radius:6px;padding:.3rem .75rem;font-family:'Geist Mono',monospace;
+  font-size:.7rem;color:var(--text3);text-align:center;
+}
+.mockup-body{background:var(--bg2);padding:1.5rem;display:grid;grid-template-columns:200px 1fr;gap:1rem;min-height:420px}
+/* sidebar */
+.mock-sidebar{display:flex;flex-direction:column;gap:.25rem}
+.mock-sidebar-logo{
+  display:flex;align-items:center;gap:.5rem;padding:.5rem .75rem;margin-bottom:.75rem;
+}
+.mock-sidebar-logo span{font-family:'Instrument Serif',serif;font-size:1rem;color:#fff}
+.mock-sidebar-logo span em{color:var(--mint);font-style:normal}
+.mock-nav-item{
+  display:flex;align-items:center;gap:.5rem;padding:.5rem .75rem;
+  border-radius:8px;font-size:.78rem;color:var(--text2);cursor:pointer;transition:all .2s;
+}
+.mock-nav-item:hover,.mock-nav-item.active{background:var(--surface2);color:var(--text)}
+.mock-nav-item.active{color:var(--mint)}
+.mock-nav-dot{width:6px;height:6px;border-radius:50%;background:currentColor;flex-shrink:0}
+.mock-nav-badge{
+  margin-left:auto;padding:.1rem .45rem;background:rgba(255,107,107,.15);
+  border-radius:999px;font-size:.65rem;font-weight:700;color:var(--red);
+}
+.mock-nav-badge.green{background:var(--mint-glow);color:var(--mint)}
+/* main panel */
+.mock-main{display:flex;flex-direction:column;gap:1rem}
+.mock-topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:.25rem}
+.mock-greeting{font-size:.82rem;color:var(--text2)}
+.mock-greeting strong{color:var(--text);font-weight:600}
+.mock-actions{display:flex;gap:.5rem}
+.mock-btn{
+  padding:.3rem .7rem;font-size:.7rem;font-weight:600;border-radius:6px;cursor:pointer;
+  background:var(--mint);color:var(--bg);border:none;font-family:'Geist',sans-serif;
+}
+.mock-btn.ghost{background:var(--surface);color:var(--text2);border:0.5px solid var(--border)}
+/* stat cards */
+.mock-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem}
+.mock-stat{
+  background:var(--surface);border:0.5px solid var(--border);
+  border-radius:10px;padding:.85rem;position:relative;overflow:hidden;
+}
+.mock-stat::after{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(82,217,168,.3),transparent);
+}
+.mock-stat-label{font-size:.65rem;color:var(--text3);letter-spacing:.05em;text-transform:uppercase;margin-bottom:.35rem}
+.mock-stat-val{font-family:'Instrument Serif',serif;font-size:1.4rem;color:#fff;line-height:1}
+.mock-stat-val em{font-style:normal;color:var(--mint)}
+.mock-stat-sub{font-size:.65rem;color:var(--text3);margin-top:.2rem}
+.mock-stat-badge{
+  position:absolute;top:.7rem;right:.7rem;
+  padding:.15rem .45rem;border-radius:999px;font-size:.6rem;font-weight:700;
+}
+.badge-up{background:rgba(82,217,168,.15);color:var(--mint)}
+.badge-down{background:rgba(255,107,107,.15);color:var(--red)}
+.badge-warn{background:rgba(255,179,71,.15);color:var(--amber)}
+/* alert list */
+.mock-alerts{background:var(--surface);border:0.5px solid var(--border);border-radius:10px;padding:.85rem;flex:1}
+.mock-alerts-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem}
+.mock-alerts-title{font-size:.72rem;font-weight:600;color:var(--text2);letter-spacing:.06em;text-transform:uppercase}
+.mock-alerts-count{
+  padding:.15rem .55rem;background:rgba(255,107,107,.15);border-radius:999px;
+  font-size:.65rem;font-weight:700;color:var(--red);
+}
+.mock-alert-row{
+  display:flex;align-items:center;gap:.6rem;padding:.5rem 0;
+  border-bottom:0.5px solid var(--border);
+}
+.mock-alert-row:last-child{border-bottom:none}
+.mock-alert-ind{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.ind-red{background:var(--red)}.ind-amber{background:var(--amber)}.ind-green{background:var(--mint)}
+.mock-alert-info{flex:1;min-width:0}
+.mock-alert-name{font-size:.72rem;font-weight:500;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mock-alert-meta{font-size:.62rem;color:var(--text3)}
+.mock-alert-score{font-family:'Geist Mono',monospace;font-size:.72rem;font-weight:700}
+.score-r{color:var(--red)}.score-a{color:var(--amber)}.score-g{color:var(--mint)}
+
+/* chart sparkline */
+.mock-chart{background:var(--surface);border:0.5px solid var(--border);border-radius:10px;padding:.85rem;position:relative;overflow:hidden}
+.mock-chart-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:.5rem}
+.mock-chart-title{font-size:.72rem;font-weight:600;color:var(--text2);letter-spacing:.06em;text-transform:uppercase}
+.mock-chart-val{font-family:'Instrument Serif',serif;font-size:1.1rem;color:#fff}
+.mock-chart-val span{color:var(--mint);font-size:.75rem}
+.sparkline-wrap{height:48px;position:relative}
+.sparkline-wrap svg{width:100%;height:100%}
+
+/* ── TICKER ────────────────────────────────────── */
+.ticker-wrap{
+  overflow:hidden;border-top:0.5px solid var(--border);border-bottom:0.5px solid var(--border);
+  background:var(--bg2);padding:.7rem 0;
+}
+.ticker-track{
+  display:flex;gap:0;width:max-content;
+  animation:ticker 30s linear infinite;
+}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.ticker-item{
+  display:flex;align-items:center;gap:.6rem;padding:0 2rem;
+  white-space:nowrap;font-size:.75rem;font-family:'Geist Mono',monospace;
+  color:var(--text3);border-right:0.5px solid var(--border);
+}
+.ticker-item:last-child{border-right:none}
+.ticker-label{color:var(--text2);font-weight:500}
+.ticker-val{color:var(--mint)}
+.ticker-val.neg{color:var(--red)}
+.ticker-sep{color:var(--text3);font-size:.6rem}
+
+/* ── SECTION BASE ──────────────────────────────── */
+.section{padding:6rem 1.5rem;max-width:1200px;margin:0 auto;position:relative}
+.section-full{padding:5rem 0;position:relative}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--mint);font-family:'Geist Mono',monospace;margin-bottom:.85rem;
+}
+.eyebrow::before{content:'//';opacity:.5}
+h2.section-h{
+  font-family:'Instrument Serif',serif;
+  font-size:clamp(2.2rem,5vw,3.5rem);
+  line-height:1.06;letter-spacing:-.025em;color:#fff;margin-bottom:1rem;
+}
+h2.section-h em{font-style:italic;color:var(--mint)}
+.section-sub{font-size:1rem;color:var(--text2);max-width:520px;line-height:1.75}
+
+/* ── AUDIENCE BENTO ────────────────────────────── */
+.bento{display:grid;gap:1rem;margin-top:2.5rem}
+.bento-3{grid-template-columns:repeat(3,1fr)}
+.bento-2{grid-template-columns:repeat(2,1fr)}
+.bento-card{
+  background:var(--surface);border:0.5px solid var(--border);
+  border-radius:var(--radius-lg);padding:2rem;
+  transition:all .35s cubic-bezier(.23,1,.32,1);
+  position:relative;overflow:hidden;cursor:default;
+}
+.bento-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.08),transparent);
+}
+.bento-card:hover{
+  background:var(--surface2);border-color:var(--border2);
+  transform:translateY(-4px);
+  box-shadow:0 20px 60px rgba(0,0,0,.5);
+}
+.bento-card.accent-mint{border-color:var(--border-accent)}
+.bento-card.accent-mint::after{
+  content:'';position:absolute;bottom:-60px;right:-60px;
+  width:160px;height:160px;border-radius:50%;
+  background:radial-gradient(circle,rgba(82,217,168,.08),transparent 70%);pointer-events:none;
+}
+.bento-card.accent-gold{border-color:rgba(244,201,90,.2)}
+.bento-card.accent-gold::after{
+  content:'';position:absolute;bottom:-60px;right:-60px;
+  width:160px;height:160px;border-radius:50%;
+  background:radial-gradient(circle,rgba(244,201,90,.06),transparent 70%);pointer-events:none;
+}
+.bento-card.accent-blue{border-color:rgba(78,159,255,.2)}
+.bento-icon{
+  width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+  font-size:1.25rem;margin-bottom:1.25rem;
+}
+.bento-icon-mint{background:rgba(82,217,168,.12);border:0.5px solid rgba(82,217,168,.2)}
+.bento-icon-gold{background:rgba(244,201,90,.1);border:0.5px solid rgba(244,201,90,.2)}
+.bento-icon-blue{background:rgba(78,159,255,.1);border:0.5px solid rgba(78,159,255,.2)}
+.bento-title{
+  font-family:'Instrument Serif',serif;font-size:1.35rem;
+  color:#fff;margin-bottom:.5rem;line-height:1.2;
+}
+.bento-desc{font-size:.88rem;color:var(--text2);line-height:1.7}
+.bento-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:1.1rem}
+.tag{
+  padding:.22rem .7rem;font-size:.7rem;font-weight:600;border-radius:999px;
+  letter-spacing:.03em;
+}
+.tag-m{background:var(--mint-glow);color:var(--mint);border:0.5px solid var(--border-accent)}
+.tag-g{background:var(--gold-glow);color:var(--gold);border:0.5px solid rgba(244,201,90,.25)}
+.tag-b{background:var(--blue-glow);color:var(--blue);border:0.5px solid rgba(78,159,255,.25)}
+
+/* ── FEATURE SECTION ───────────────────────────── */
+.feature-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-top:3rem}
+.feat{
+  background:var(--surface);border:0.5px solid var(--border);
+  border-radius:var(--radius-lg);padding:2rem 2.25rem;
+  position:relative;overflow:hidden;transition:all .3s;
+}
+.feat:hover{border-color:var(--border2);background:var(--surface2)}
+.feat.span2{grid-column:1/-1}
+.feat-num{
+  font-family:'Geist Mono',monospace;font-size:.68rem;color:var(--mint);
+  font-weight:500;letter-spacing:.1em;margin-bottom:1rem;opacity:.6;
+}
+.feat-title{
+  font-family:'Instrument Serif',serif;font-size:1.5rem;color:#fff;
+  margin-bottom:.6rem;line-height:1.15;
+}
+.feat-desc{font-size:.9rem;color:var(--text2);line-height:1.75}
+.feat-callout{
+  margin-top:1.25rem;padding:.8rem 1rem;
+  background:var(--mint-glow);border-left:2px solid var(--mint);
+  border-radius:0 8px 8px 0;font-size:.83rem;color:var(--text2);
+}
+.feat-callout strong{color:var(--mint)}
+/* decorative sparkline in feat card */
+.feat-visual{margin-top:1.5rem;opacity:.5}
+
+/* ── AML SECTION ───────────────────────────────── */
+.aml-layout{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:start;margin-top:3rem}
+.aml-panel{
+  background:var(--surface);border:0.5px solid var(--border);
+  border-radius:var(--radius-lg);padding:1.75rem;position:relative;overflow:hidden;
+}
+.aml-panel::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(82,217,168,.25),transparent);
+}
+.panel-head{
+  display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;
+}
+.panel-label{font-family:'Geist Mono',monospace;font-size:.68rem;color:var(--mint);letter-spacing:.08em}
+.status-pill{
+  display:flex;align-items:center;gap:.4rem;padding:.2rem .65rem;
+  background:rgba(255,107,107,.12);border:0.5px solid rgba(255,107,107,.25);
+  border-radius:999px;font-size:.68rem;font-weight:700;color:var(--red);letter-spacing:.05em;
+}
+.status-pill.ok{background:var(--mint-glow);border-color:var(--border-accent);color:var(--mint)}
+.pill-dot{width:5px;height:5px;border-radius:50%;background:currentColor;animation:blink 1.5s infinite}
+.alert-row{
+  display:flex;align-items:center;gap:.75rem;padding:.65rem 0;
+  border-bottom:0.5px solid var(--border);transition:background .2s;
+}
+.alert-row:last-child{border-bottom:none}
+.alert-row:hover{background:var(--surface2);margin:0 -.5rem;padding:.65rem .5rem;border-radius:8px;border-bottom:none}
+.al-ind{width:8px;height:8px;border-radius:50%;flex-shrink:0;position:relative}
+.al-ind::after{content:'';position:absolute;inset:-3px;border-radius:50%;border:1px solid currentColor;opacity:.3}
+.al-red{background:var(--red);color:var(--red)}
+.al-amber{background:var(--amber);color:var(--amber)}
+.al-green{background:var(--mint);color:var(--mint)}
+.al-info{flex:1;min-width:0}
+.al-name{font-size:.82rem;font-weight:500;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.al-meta{font-size:.7rem;color:var(--text3);margin-top:.05rem}
+.al-score{
+  font-family:'Geist Mono',monospace;font-size:.82rem;font-weight:700;
+  padding:.2rem .55rem;border-radius:6px;
+}
+.sc-r{color:var(--red);background:rgba(255,107,107,.1)}
+.sc-a{color:var(--amber);background:rgba(255,179,71,.1)}
+.sc-g{color:var(--mint);background:var(--mint-glow)}
+/* checklist */
+.check-list{display:flex;flex-direction:column;gap:1.1rem}
+.check-item{display:flex;gap:1rem;align-items:flex-start}
+.check-box{
+  width:24px;height:24px;border-radius:7px;flex-shrink:0;margin-top:.1rem;
+  background:var(--mint-glow);border:0.5px solid var(--border-accent);
+  display:flex;align-items:center;justify-content:center;
+}
+.check-box svg{width:11px;height:11px}
+.check-content strong{display:block;font-size:.9rem;font-weight:600;color:var(--text);margin-bottom:.15rem}
+.check-content span{font-size:.82rem;color:var(--text2);line-height:1.5}
+
+/* ── METRICS BAND ──────────────────────────────── */
+.metrics-band{
+  background:linear-gradient(180deg,var(--bg2),var(--bg3));
+  border-top:0.5px solid var(--border);border-bottom:0.5px solid var(--border);
+  padding:4.5rem 1.5rem;
+}
+.metrics-inner{max-width:1200px;margin:0 auto}
+.metrics-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem;margin-top:2.5rem}
+.metric-card{
+  background:var(--surface);border:0.5px solid var(--border);border-radius:var(--radius);
+  padding:1.75rem;text-align:center;transition:all .3s;position:relative;overflow:hidden;
+}
+.metric-card:hover{border-color:var(--border-accent);transform:translateY(-3px)}
+.metric-card::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(82,217,168,.2),transparent);
+}
+.metric-num{
+  font-family:'Instrument Serif',serif;font-size:2.6rem;color:#fff;
+  line-height:1;margin-bottom:.3rem;
+}
+.metric-num em{color:var(--mint);font-style:normal}
+.metric-label{font-size:.82rem;color:var(--text2);line-height:1.4}
+.metric-mono{font-family:'Geist Mono',monospace;font-size:.65rem;color:var(--text3);margin-top:.35rem;letter-spacing:.06em}
+
+/* ── OPEN BANKING ──────────────────────────────── */
+.ob-layout{display:grid;grid-template-columns:3fr 2fr;gap:3rem;align-items:start;margin-top:3rem}
+.ob-phases{display:flex;flex-direction:column;gap:.75rem;margin-top:1.75rem}
+.phase-card{
+  display:flex;gap:1rem;padding:1.1rem 1.25rem;
+  background:var(--surface);border:0.5px solid var(--border);border-radius:var(--radius);
+  transition:all .3s;cursor:default;
+}
+.phase-card:hover,.phase-card.active{border-color:var(--border-accent);background:var(--mint-glow)}
+.phase-badge{
+  font-family:'Geist Mono',monospace;font-size:.65rem;font-weight:700;
+  color:var(--mint);letter-spacing:.08em;flex-shrink:0;padding-top:.1rem;
+}
+.phase-title{font-size:.9rem;font-weight:600;color:var(--text);margin-bottom:.2rem}
+.phase-desc{font-size:.8rem;color:var(--text2);line-height:1.55}
+.ob-panel{
+  background:var(--surface);border:0.5px solid var(--border);
+  border-radius:var(--radius-lg);padding:1.75rem;position:sticky;top:80px;
+}
+.ob-panel-head{
+  font-family:'Geist Mono',monospace;font-size:.68rem;color:var(--mint);
+  letter-spacing:.08em;margin-bottom:1.25rem;
+}
+.consent-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:.7rem 0;border-bottom:0.5px solid var(--border);
+}
+.consent-row:last-of-type{border-bottom:none}
+.consent-name{font-size:.85rem;font-weight:500;color:var(--text)}
+.consent-date{font-size:.7rem;color:var(--text3);margin-top:.1rem}
+.toggle{
+  width:36px;height:20px;border-radius:999px;background:var(--mint);
+  position:relative;cursor:pointer;flex-shrink:0;transition:background .2s;
+}
+.toggle.off{background:var(--surface3)}
+.toggle-knob{
+  width:14px;height:14px;border-radius:50%;background:#fff;
+  position:absolute;top:3px;right:3px;transition:right .2s,left .2s;
+}
+.toggle.off .toggle-knob{right:auto;left:3px}
+.ob-total{
+  margin-top:1.25rem;padding:1rem;background:var(--bg3);border-radius:10px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.ob-total-label{font-size:.78rem;color:var(--text2)}
+.ob-total-val{font-family:'Instrument Serif',serif;font-size:1.5rem;color:var(--mint)}
+
+/* ── TESTIMONIALS ──────────────────────────────── */
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:2.5rem}
+.testi-card{
+  background:var(--surface);border:0.5px solid var(--border);
+  border-radius:var(--radius-lg);padding:1.75rem;transition:all .3s;
+}
+.testi-card:hover{border-color:var(--border2);transform:translateY(-3px)}
+.testi-stars{color:var(--gold);font-size:.85rem;margin-bottom:1rem;letter-spacing:.1em}
+.testi-text{font-size:.88rem;color:var(--text2);line-height:1.7;margin-bottom:1.25rem;font-style:italic}
+.testi-person{display:flex;align-items:center;gap:.75rem}
+.testi-avatar{
+  width:38px;height:38px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.82rem;font-weight:700;flex-shrink:0;
+}
+.av-mint{background:var(--mint-glow);color:var(--mint);border:0.5px solid var(--border-accent)}
+.av-gold{background:var(--gold-glow);color:var(--gold);border:0.5px solid rgba(244,201,90,.25)}
+.av-blue{background:var(--blue-glow);color:var(--blue);border:0.5px solid rgba(78,159,255,.25)}
+.testi-name{font-size:.88rem;font-weight:600;color:var(--text)}
+.testi-role{font-size:.75rem;color:var(--text3)}
+
+/* ── PRICING ───────────────────────────────────── */
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:3rem}
+.plan{
+  background:var(--surface);border:0.5px solid var(--border);
+  border-radius:var(--radius-lg);padding:2rem;position:relative;overflow:hidden;
+  transition:all .3s;
+}
+.plan.featured{
+  border-color:var(--border-accent);
+  background:linear-gradient(160deg,rgba(82,217,168,.06),var(--surface));
+}
+.plan:hover{transform:translateY(-3px);border-color:var(--border2)}
+.plan.featured:hover{border-color:var(--border-accent)}
+.plan-badge{
+  position:absolute;top:1.25rem;right:1.25rem;
+  padding:.2rem .65rem;background:var(--mint-glow);border:0.5px solid var(--border-accent);
+  border-radius:999px;font-size:.68rem;font-weight:700;color:var(--mint);letter-spacing:.06em;
+}
+.plan-name{
+  font-family:'Geist Mono',monospace;font-size:.72rem;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--text2);margin-bottom:.75rem;
+}
+.plan-price{
+  font-family:'Instrument Serif',serif;font-size:2.5rem;color:#fff;
+  line-height:1;margin-bottom:.25rem;
+}
+.plan-price sup{font-size:1.2rem;vertical-align:top;margin-top:.4rem;display:inline-block}
+.plan-price .period{font-size:1rem;color:var(--text2);font-family:'Geist',sans-serif}
+.plan-tagline{font-size:.82rem;color:var(--text2);margin-bottom:1.5rem}
+.plan-divider{height:0.5px;background:var(--border);margin-bottom:1.25rem}
+.plan-features{display:flex;flex-direction:column;gap:.65rem;margin-bottom:1.75rem}
+.plan-feature{display:flex;align-items:center;gap:.6rem;font-size:.83rem;color:var(--text2)}
+.pf-check{color:var(--mint);font-size:.9rem;flex-shrink:0}
+.pf-x{color:var(--text3);font-size:.9rem;flex-shrink:0}
+.plan-cta{
+  width:100%;padding:.75rem;font-size:.88rem;font-weight:600;
+  border-radius:999px;cursor:pointer;font-family:'Geist',sans-serif;
+  border:0.5px solid var(--border2);background:transparent;color:var(--text);
+  transition:all .25s;
+}
+.plan-cta:hover{border-color:var(--border-accent);color:var(--mint)}
+.plan-cta.cta-mint{background:var(--mint);color:var(--bg);border:none}
+.plan-cta.cta-mint:hover{background:var(--mint2)}
+
+/* ── FAQ ───────────────────────────────────────── */
+.faq-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-top:2.5rem}
+.faq-item{
+  background:var(--surface);border:0.5px solid var(--border);
+  border-radius:var(--radius);padding:1.5rem;cursor:pointer;transition:all .3s;
+}
+.faq-item:hover{border-color:var(--border2);background:var(--surface2)}
+.faq-q{font-size:.9rem;font-weight:600;color:var(--text);margin-bottom:.5rem;display:flex;justify-content:space-between;align-items:start;gap:.5rem}
+.faq-q span:last-child{color:var(--mint);flex-shrink:0;font-size:1.1rem}
+.faq-a{font-size:.83rem;color:var(--text2);line-height:1.65}
+
+/* ── CTA BANNER ────────────────────────────────── */
+.cta-banner{
+  position:relative;overflow:hidden;
+  background:linear-gradient(135deg,var(--bg2),var(--bg3));
+  border-top:0.5px solid var(--border);
+  padding:7rem 1.5rem;text-align:center;
+}
+.cta-banner-mesh{
+  position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 70% 60% at 50% 50%,rgba(82,217,168,.07),transparent),
+    radial-gradient(ellipse 50% 40% at 20% 80%,rgba(78,159,255,.04),transparent);
+}
+.cta-banner-grid{
+  position:absolute;inset:0;pointer-events:none;
+  background-image:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);
+  background-size:40px 40px;
+}
+.cta-banner-inner{position:relative;z-index:1;max-width:740px;margin:0 auto}
+.cta-banner h2{margin-bottom:1rem}
+.cta-banner p{color:var(--text2);font-size:1.05rem;margin-bottom:2.5rem}
+.cta-actions{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap}
+
+/* ── FOOTER ────────────────────────────────────── */
+footer{
+  background:var(--bg);border-top:0.5px solid var(--border);
+  padding:3rem 1.5rem 2rem;
+}
+.footer-inner{max-width:1200px;margin:0 auto}
+.footer-top{display:grid;grid-template-columns:2fr repeat(4,1fr);gap:2rem;margin-bottom:3rem}
+.footer-brand p{font-size:.85rem;color:var(--text3);margin-top:.75rem;max-width:220px;line-height:1.6}
+.footer-col-title{font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text2);margin-bottom:1rem}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:.5rem}
+.footer-links a{font-size:.83rem;color:var(--text3);transition:color .2s}
+.footer-links a:hover{color:var(--mint)}
+.footer-bottom{
+  display:flex;align-items:center;justify-content:space-between;
+  padding-top:2rem;border-top:0.5px solid var(--border);flex-wrap:wrap;gap:.75rem;
+}
+.footer-copy{font-size:.78rem;color:var(--text3)}
+.footer-badges{display:flex;gap:.5rem}
+.footer-badge{
+  padding:.2rem .65rem;font-size:.68rem;font-weight:600;border-radius:999px;letter-spacing:.04em;
+  background:var(--surface);border:0.5px solid var(--border);color:var(--text3);
+}
+
+/* ── RESPONSIVE ────────────────────────────────── */
+@media(max-width:900px){
+  .bento-3,.feature-grid,.aml-layout,.metrics-grid,.ob-layout,.testi-grid,.pricing-grid,.faq-grid,.footer-top{grid-template-columns:1fr}
+  .feat.span2{grid-column:1}
+  .mockup-body{grid-template-columns:1fr}
+  .mock-sidebar{display:none}
+  nav .nav-center{display:none}
+  .hero{padding:5rem 1.25rem 4rem}
+  h1{font-size:2.8rem}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <div class="logo-icon">
+      <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="2" y="2" width="5" height="5" rx="1.5" fill="rgba(6,9,18,0.7)"/>
+        <rect x="9" y="2" width="5" height="5" rx="1.5" fill="rgba(6,9,18,0.5)"/>
+        <rect x="2" y="9" width="5" height="5" rx="1.5" fill="rgba(6,9,18,0.5)"/>
+        <rect x="9" y="9" width="5" height="5" rx="1.5" fill="rgba(6,9,18,0.7)"/>
+      </svg>
+    </div>
+    <span class="logo-text">Nexus<span>AI</span></span>
+  </div>
+  <div class="nav-center">
+    <span class="nav-link active">Platform</span>
+    <span class="nav-link">Compliance</span>
+    <span class="nav-link">Open Banking</span>
+    <span class="nav-link">Advisory</span>
+    <span class="nav-link">Government</span>
+    <span class="nav-link">Pricing</span>
+  </div>
+  <div class="nav-right">
+    <button class="btn-ghost">Sign In</button>
+    <button class="btn-nav-cta">Request Demo →</button>
+  </div>
+</nav>
+
+<!-- ANNOUNCE BAR -->
+<div class="announce">
+  <span class="announce-badge">NEW</span>
+  NexusAI is CDBA Phase 1 compliant — Canada's Consumer-Driven Banking Act.
+  <a href="#">Read the release →</a>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-mesh"></div>
+  <div class="hero-grid"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+  <div class="hero-inner">
+    <div class="hero-chip">
+      <div class="chip-dot">🇨🇦</div>
+      Built for Canadian banks, fintechs &amp; federal institutions
+      <span class="chip-live"></span>
+    </div>
+    <h1>
+      The AI Platform<br>
+      <em>Trusted</em> by<br>
+      <span class="dim">Institutions That Matter</span>
+    </h1>
+    <p class="hero-sub">
+      NexusAI unifies AML compliance, personalized financial advisory, open banking infrastructure, and government-grade security — in one intelligent enterprise platform built for Canada's Big Six and beyond.
+    </p>
+    <div class="hero-actions">
+      <button class="btn-primary">Explore the Platform <span>→</span></button>
+      <button class="btn-secondary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg>
+        Watch Demo
+      </button>
+    </div>
+
+    <!-- DASHBOARD MOCKUP -->
+    <div class="hero-mockup">
+      <div class="mockup-bar">
+        <div class="mockup-dots">
+          <div class="dot dot-r"></div>
+          <div class="dot dot-y"></div>
+          <div class="dot dot-g"></div>
+        </div>
+        <div class="mockup-url">app.nexusai.ca — Compliance Dashboard</div>
+      </div>
+      <div class="mockup-body">
+        <!-- sidebar -->
+        <div class="mock-sidebar">
+          <div class="mock-sidebar-logo">
+            <div class="logo-icon" style="width:24px;height:24px">
+              <svg viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="5" height="5" rx="1" fill="rgba(6,9,18,0.7)"/><rect x="9" y="2" width="5" height="5" rx="1" fill="rgba(6,9,18,0.5)"/><rect x="2" y="9" width="5" height="5" rx="1" fill="rgba(6,9,18,0.5)"/><rect x="9" y="9" width="5" height="5" rx="1" fill="rgba(6,9,18,0.7)"/></svg>
+            </div>
+            <span>Nexus<em>AI</em></span>
+          </div>
+          <div class="mock-nav-item active"><div class="mock-nav-dot"></div> Overview</div>
+          <div class="mock-nav-item"><div class="mock-nav-dot"></div> AML Alerts <span class="mock-nav-badge">3</span></div>
+          <div class="mock-nav-item"><div class="mock-nav-dot"></div> Transactions</div>
+          <div class="mock-nav-item"><div class="mock-nav-dot"></div> Advisory</div>
+          <div class="mock-nav-item"><div class="mock-nav-dot"></div> Open Banking</div>
+          <div class="mock-nav-item"><div class="mock-nav-dot"></div> SAR Reports <span class="mock-nav-badge green">4</span></div>
+          <div class="mock-nav-item"><div class="mock-nav-dot"></div> Analytics</div>
+          <div class="mock-nav-item"><div class="mock-nav-dot"></div> Settings</div>
+        </div>
+        <!-- main -->
+        <div class="mock-main">
+          <div class="mock-topbar">
+            <div class="mock-greeting">Good morning, <strong>Officer Chen</strong> — 3 alerts need review</div>
+            <div class="mock-actions">
+              <button class="mock-btn ghost">Export</button>
+              <button class="mock-btn">+ New SAR</button>
+            </div>
+          </div>
+          <div class="mock-stats">
+            <div class="mock-stat">
+              <div class="mock-stat-label">Risk Score</div>
+              <div class="mock-stat-val"><em>97</em>/100</div>
+              <div class="mock-stat-sub">Highest active alert</div>
+              <span class="mock-stat-badge badge-down">↑ HIGH</span>
+            </div>
+            <div class="mock-stat">
+              <div class="mock-stat-label">Alerts Today</div>
+              <div class="mock-stat-val">12</div>
+              <div class="mock-stat-sub">3 unreviewed</div>
+              <span class="mock-stat-badge badge-warn">↑ 3</span>
+            </div>
+            <div class="mock-stat">
+              <div class="mock-stat-label">SARs Filed</div>
+              <div class="mock-stat-val"><em>4</em></div>
+              <div class="mock-stat-sub">This month</div>
+              <span class="mock-stat-badge badge-up">✓ OK</span>
+            </div>
+          </div>
+          <div class="mock-alerts">
+            <div class="mock-alerts-head">
+              <span class="mock-alerts-title">// Live Alert Queue</span>
+              <span class="mock-alerts-count">3 HIGH</span>
+            </div>
+            <div class="mock-alert-row">
+              <div class="mock-alert-ind ind-red"></div>
+              <div class="mock-alert-info">
+                <div class="mock-alert-name">Structuring — Acct #CA-4471</div>
+                <div class="mock-alert-meta">$49,800 × 3 txns · Royal Trust · 2h ago</div>
+              </div>
+              <span class="mock-alert-score score-r">97</span>
+            </div>
+            <div class="mock-alert-row">
+              <div class="mock-alert-ind ind-red"></div>
+              <div class="mock-alert-info">
+                <div class="mock-alert-name">Network Anomaly — 6-Node Ring</div>
+                <div class="mock-alert-meta">Shell co. cluster detected · Toronto</div>
+              </div>
+              <span class="mock-alert-score score-r">92</span>
+            </div>
+            <div class="mock-alert-row">
+              <div class="mock-alert-ind ind-amber"></div>
+              <div class="mock-alert-info">
+                <div class="mock-alert-name">PEP Match — Unverified Source</div>
+                <div class="mock-alert-meta">Cross-border wire · origin unclear</div>
+              </div>
+              <span class="mock-alert-score score-a">74</span>
+            </div>
+            <div class="mock-alert-row">
+              <div class="mock-alert-ind ind-green"></div>
+              <div class="mock-alert-info">
+                <div class="mock-alert-name">SAR #2026-004 — Submitted</div>
+                <div class="mock-alert-meta">FINTRAC · AI-drafted + officer reviewed</div>
+              </div>
+              <span class="mock-alert-score score-g">✓</span>
+            </div>
+          </div>
+          <div class="mock-chart">
+            <div class="mock-chart-head">
+              <span class="mock-chart-title">// Transaction Volume</span>
+              <span class="mock-chart-val">CA$2.4M <span>↑ 12%</span></span>
+            </div>
+            <div class="sparkline-wrap">
+              <svg viewBox="0 0 400 48" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="sg" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#52D9A8" stop-opacity=".3"/>
+                    <stop offset="100%" stop-color="#52D9A8" stop-opacity="0"/>
+                  </linearGradient>
+                </defs>
+                <path d="M0,38 L20,34 L40,36 L60,28 L80,30 L100,22 L120,25 L140,18 L160,20 L180,14 L200,16 L220,10 L240,13 L260,8 L280,10 L300,6 L320,8 L340,4 L360,6 L380,2 L400,4" stroke="#52D9A8" stroke-width="1.5" fill="none"/>
+                <path d="M0,38 L20,34 L40,36 L60,28 L80,30 L100,22 L120,25 L140,18 L160,20 L180,14 L200,16 L220,10 L240,13 L260,8 L280,10 L300,6 L320,8 L340,4 L360,6 L380,2 L400,4 L400,48 L0,48Z" fill="url(#sg)"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats row below mockup -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:2.5rem;padding-top:2.5rem;border-top:0.5px solid var(--border)">
+      <div style="text-align:center">
+        <div style="font-family:'Instrument Serif',serif;font-size:2rem;color:#fff;line-height:1"><span style="color:var(--mint)">$3.09</span>B</div>
+        <div style="font-size:.75rem;color:var(--text2);margin-top:.2rem">AML penalties preventable</div>
+      </div>
+      <div style="text-align:center">
+        <div style="font-family:'Instrument Serif',serif;font-size:2rem;color:#fff;line-height:1"><span style="color:var(--mint)">89.5</span>%</div>
+        <div style="font-size:.75rem;color:var(--text2);margin-top:.2rem">Canadian banking market</div>
+      </div>
+      <div style="text-align:center">
+        <div style="font-family:'Instrument Serif',serif;font-size:2rem;color:#fff;line-height:1"><span style="color:var(--mint)">94</span>%</div>
+        <div style="font-size:.75rem;color:var(--text2);margin-top:.2rem">Canadians want AI + human oversight</div>
+      </div>
+      <div style="text-align:center">
+        <div style="font-family:'Instrument Serif',serif;font-size:2rem;color:#fff;line-height:1;font-size:1.3rem;padding-top:.35rem">Phase <span style="color:var(--mint)">1+2</span></div>
+        <div style="font-size:.75rem;color:var(--text2);margin-top:.2rem">CDBA open banking ready</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-track">
+    <div class="ticker-item"><span class="ticker-label">RBC</span><span class="ticker-val">↑ Compliance ✓</span></div>
+    <div class="ticker-item"><span class="ticker-label">TD BANK</span><span class="ticker-val">AML Score 98/100</span></div>
+    <div class="ticker-item"><span class="ticker-label">BMO</span><span class="ticker-val">↑ SAR Filed</span></div>
+    <div class="ticker-item"><span class="ticker-label">FINTRAC</span><span class="ticker-val">Report Submitted</span></div>
+    <div class="ticker-item"><span class="ticker-label">SCOTIABANK</span><span class="ticker-val">↑ Risk Clear</span></div>
+    <div class="ticker-item"><span class="ticker-label">CIBC</span><span class="ticker-val">Consent Active</span></div>
+    <div class="ticker-item"><span class="ticker-label">OSFI</span><span class="ticker-val">↑ Audit Ready</span></div>
+    <div class="ticker-item"><span class="ticker-label">CDBA Phase 1</span><span class="ticker-val">✓ Compliant</span></div>
+    <div class="ticker-item"><span class="ticker-label">BANK OF CANADA</span><span class="ticker-val">↑ API Active</span></div>
+    <div class="ticker-item"><span class="ticker-label">NATIONAL BANK</span><span class="ticker-val">Advisory Live</span></div>
+    <!-- duplicate for seamless loop -->
+    <div class="ticker-item"><span class="ticker-label">RBC</span><span class="ticker-val">↑ Compliance ✓</span></div>
+    <div class="ticker-item"><span class="ticker-label">TD BANK</span><span class="ticker-val">AML Score 98/100</span></div>
+    <div class="ticker-item"><span class="ticker-label">BMO</span><span class="ticker-val">↑ SAR Filed</span></div>
+    <div class="ticker-item"><span class="ticker-label">FINTRAC</span><span class="ticker-val">Report Submitted</span></div>
+    <div class="ticker-item"><span class="ticker-label">SCOTIABANK</span><span class="ticker-val">↑ Risk Clear</span></div>
+    <div class="ticker-item"><span class="ticker-label">CIBC</span><span class="ticker-val">Consent Active</span></div>
+    <div class="ticker-item"><span class="ticker-label">OSFI</span><span class="ticker-val">↑ Audit Ready</span></div>
+    <div class="ticker-item"><span class="ticker-label">CDBA Phase 1</span><span class="ticker-val">✓ Compliant</span></div>
+    <div class="ticker-item"><span class="ticker-label">BANK OF CANADA</span><span class="ticker-val">↑ API Active</span></div>
+    <div class="ticker-item"><span class="ticker-label">NATIONAL BANK</span><span class="ticker-val">Advisory Live</span></div>
+  </div>
+</div>
+
+<!-- WHO WE SERVE -->
+<div class="section">
+  <div class="eyebrow">Who We Serve</div>
+  <h2 class="section-h">Built for Every Institution<br>in Canada's <em>Financial Ecosystem</em></h2>
+  <p class="section-sub">From the Big Six to federal regulators — engineered for the full spectrum of Canadian financial infrastructure.</p>
+  <div class="bento bento-3" style="margin-top:2.5rem">
+    <div class="bento-card accent-mint">
+      <div class="bento-icon bento-icon-mint">🏦</div>
+      <div class="bento-title">Canadian Banks</div>
+      <p class="bento-desc">Enterprise AML, compliance automation, personalized advisory, and fraud detection for retail and commercial banking operations — from the Big Six to credit unions.</p>
+      <div class="bento-tags">
+        <span class="tag tag-m">Big Six</span>
+        <span class="tag tag-m">Credit Unions</span>
+        <span class="tag tag-m">Neobanks</span>
+      </div>
+    </div>
+    <div class="bento-card accent-gold">
+      <div class="bento-icon bento-icon-gold">🏛️</div>
+      <div class="bento-title">Government of Canada</div>
+      <p class="bento-desc">FINTRAC reporting, CDBA compliance infrastructure, inter-agency data sharing with consent management and immutable audit-grade logging for federal mandates.</p>
+      <div class="bento-tags">
+        <span class="tag tag-g">FINTRAC</span>
+        <span class="tag tag-g">OSFI</span>
+        <span class="tag tag-g">Bank of Canada</span>
+      </div>
+    </div>
+    <div class="bento-card accent-blue">
+      <div class="bento-icon bento-icon-blue">⚡</div>
+      <div class="bento-title">Fintechs &amp; Financial Services</div>
+      <p class="bento-desc">Open banking APIs, embedded finance rails, AI advisory modules — white-labeled and ready to integrate into any financial product or BaaS stack.</p>
+      <div class="bento-tags">
+        <span class="tag tag-b">Embedded Finance</span>
+        <span class="tag tag-b">BaaS</span>
+        <span class="tag tag-b">Wealthtech</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<div style="background:var(--bg2);border-top:0.5px solid var(--border);border-bottom:0.5px solid var(--border);padding:6rem 0">
+  <div class="section" style="padding-top:0;padding-bottom:0">
+    <div class="eyebrow">Core Platform</div>
+    <h2 class="section-h">Every Layer of Intelligence<br>Your Institution <em>Needs</em></h2>
+    <div class="feature-grid">
+      <div class="feat">
+        <div class="feat-num">01 — AML &amp; COMPLIANCE</div>
+        <div class="feat-title">AI-Native Anti-Money Laundering</div>
+        <p class="feat-desc">Graph-based network analysis surfaces hidden relationships across billions of transactions in real time. Explainable risk scores, automated alert triage, and one-click SAR generation built for FINTRAC and OSFI.</p>
+        <div class="feat-callout"><strong>90–95% reduction</strong> in analyst workload. Every alert traceable, audit-ready, and explainable to regulators.</div>
+      </div>
+      <div class="feat">
+        <div class="feat-num">02 — FINANCIAL ADVISORY</div>
+        <div class="feat-title">Personalized Financial Intelligence</div>
+        <p class="feat-desc">AI-generated spending insights, investment recommendations, and goal tracking — all human-led and fully explainable. The blended model Canadians actually trust: AI speed + human judgment at every critical decision.</p>
+        <div class="feat-callout">Only <strong>18% of Canadians</strong> trust AI alone for financial advice. NexusAI's HITL architecture closes that gap — permanently.</div>
+      </div>
+      <div class="feat">
+        <div class="feat-num">03 — OPEN BANKING</div>
+        <div class="feat-title">Consumer-Driven Banking Infrastructure</div>
+        <p class="feat-desc">Full CDBA Phase 1 compliance with read-only data sharing via secure APIs. Phase 2-ready architecture for payment initiation and account switching — built ahead of the 2027 deadline.</p>
+        <div class="feat-callout">Consent management, institution OAuth flows, aggregated account views, and financial health scoring — <strong>privacy-by-design</strong> at every layer.</div>
+      </div>
+      <div class="feat">
+        <div class="feat-num">04 — CUSTOMER SUPPORT</div>
+        <div class="feat-title">AI Support &amp; Sentiment Engine</div>
+        <p class="feat-desc">Context-aware AI handles tier-1 queries, escalates intelligently to human agents, and continuously scores sentiment across all customer interactions for proactive intervention before churn.</p>
+        <div class="feat-callout"><strong>7% of Canadians</strong> switch banks over poor fraud response. Real-time sentiment alerts stop attrition before it starts.</div>
+      </div>
+      <div class="feat span2">
+        <div class="feat-num">05 — GOVERNMENT &amp; REGULATORY GRADE</div>
+        <div class="feat-title">Audit Infrastructure Built for Federal Institutions</div>
+        <p class="feat-desc">Full audit logging on every compliance action. FINTRAC SAR submissions, OSFI risk reporting, inter-agency data sharing with granular consent trails. Role-based access control enforced at every API boundary — Bank Admin, Compliance Officer, Financial Advisor, Retail Customer. Every action logged, timestamped, cryptographically attributable, and explainable. Government-grade security: all data encrypted in transit and at rest, JWT session management, tRPC-hardened APIs, zero-trust architecture ready.</p>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem;margin-top:1.5rem">
+          <div style="background:var(--bg3);border:0.5px solid var(--border);border-radius:10px;padding:.85rem;text-align:center">
+            <div style="font-family:'Geist Mono',monospace;font-size:.65rem;color:var(--mint);letter-spacing:.08em;margin-bottom:.3rem">FINTRAC</div>
+            <div style="font-size:.78rem;color:var(--text2)">SAR Filing &amp; Reporting</div>
+          </div>
+          <div style="background:var(--bg3);border:0.5px solid var(--border);border-radius:10px;padding:.85rem;text-align:center">
+            <div style="font-family:'Geist Mono',monospace;font-size:.65rem;color:var(--mint);letter-spacing:.08em;margin-bottom:.3rem">OSFI</div>
+            <div style="font-size:.78rem;color:var(--text2)">Risk Reporting</div>
+          </div>
+          <div style="background:var(--bg3);border:0.5px solid var(--border);border-radius:10px;padding:.85rem;text-align:center">
+            <div style="font-family:'Geist Mono',monospace;font-size:.65rem;color:var(--mint);letter-spacing:.08em;margin-bottom:.3rem">CDBA</div>
+            <div style="font-size:.78rem;color:var(--text2)">Phase 1 + 2 Ready</div>
+          </div>
+          <div style="background:var(--bg3);border:0.5px solid var(--border);border-radius:10px;padding:.85rem;text-align:center">
+            <div style="font-family:'Geist Mono',monospace;font-size:.65rem;color:var(--mint);letter-spacing:.08em;margin-bottom:.3rem">PCMLTFA</div>
+            <div style="font-size:.78rem;color:var(--text2)">Full Compliance</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- AML SECTION -->
+<div class="section">
+  <div class="eyebrow">Compliance Intelligence</div>
+  <h2 class="section-h">Real-Time AML — Designed After<br>TD's <em>$3.09B</em> Lesson</h2>
+  <p class="section-sub">The system TD Bank needed before 2024. Graph intelligence, continuous monitoring, and explainable AI — built for OSFI and FINTRAC from the ground up.</p>
+  <div class="aml-layout">
+    <div class="aml-panel">
+      <div class="panel-head">
+        <span class="panel-label">// LIVE ALERT QUEUE — NexusAI</span>
+        <div class="status-pill"><span class="pill-dot"></span> 3 HIGH RISK</div>
+      </div>
+      <div class="alert-row">
+        <div class="al-ind al-red"></div>
+        <div class="al-info">
+          <div class="al-name">Structuring Pattern — Account #CA-4471</div>
+          <div class="al-meta">Royal Trust Branch · $49,800 × 3 transactions · 2h ago</div>
+        </div>
+        <span class="al-score sc-r">97</span>
+      </div>
+      <div class="alert-row">
+        <div class="al-ind al-red"></div>
+        <div class="al-info">
+          <div class="al-name">Network Anomaly — 6-Node Shell Ring</div>
+          <div class="al-meta">Graph detected shell co. cluster · Toronto ON · 4h ago</div>
+        </div>
+        <span class="al-score sc-r">92</span>
+      </div>
+      <div class="alert-row">
+        <div class="al-ind al-amber"></div>
+        <div class="al-info">
+          <div class="al-name">PEP Match — Unverified Wire Source</div>
+          <div class="al-meta">Politically Exposed Person · cross-border origin unclear</div>
+        </div>
+        <span class="al-score sc-a">74</span>
+      </div>
+      <div class="alert-row">
+        <div class="al-ind al-amber"></div>
+        <div class="al-info">
+          <div class="al-name">Velocity Alert — Cross-Border</div>
+          <div class="al-meta">12 txns in 48h · CAD→USD→BTC pathway</div>
+        </div>
+        <span class="al-score sc-a">61</span>
+      </div>
+      <div class="alert-row">
+        <div class="al-ind al-green"></div>
+        <div class="al-info">
+          <div class="al-name">SAR #2026-004 — Filed to FINTRAC</div>
+          <div class="al-meta">AI-drafted · reviewed by Officer Chen · submitted</div>
+        </div>
+        <span class="al-score sc-g">✓</span>
+      </div>
+      <!-- mini chart -->
+      <div style="margin-top:1.25rem;padding:1rem;background:var(--bg3);border-radius:10px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.6rem">
+          <span style="font-family:'Geist Mono',monospace;font-size:.65rem;color:var(--text3);letter-spacing:.06em">ALERT VOLUME — 30 DAYS</span>
+          <span style="font-size:.78rem;color:var(--mint);font-weight:600">↑ 12%</span>
+        </div>
+        <svg viewBox="0 0 300 40" preserveAspectRatio="none" style="width:100%;height:40px">
+          <defs><linearGradient id="ag" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#52D9A8" stop-opacity=".2"/><stop offset="100%" stop-color="#52D9A8" stop-opacity="0"/></linearGradient></defs>
+          <path d="M0,35 L15,30 L30,32 L45,25 L60,28 L75,20 L90,22 L105,16 L120,18 L135,12 L150,14 L165,10 L180,12 L195,8 L210,6 L225,9 L240,5 L255,7 L270,3 L285,5 L300,2" stroke="#52D9A8" stroke-width="1.5" fill="none"/>
+          <path d="M0,35 L15,30 L30,32 L45,25 L60,28 L75,20 L90,22 L105,16 L120,18 L135,12 L150,14 L165,10 L180,12 L195,8 L210,6 L225,9 L240,5 L255,7 L270,3 L285,5 L300,2 L300,40 L0,40Z" fill="url(#ag)"/>
+        </svg>
+      </div>
+    </div>
+    <div>
+      <div class="check-list">
+        <div class="check-item">
+          <div class="check-box">
+            <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 6l3 3 5-5" stroke="#52D9A8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="check-content">
+            <strong>Graph-Based Network Detection</strong>
+            <span>Uncovers hidden shell company rings and layering patterns invisible to rule-based systems — maps relationships across millions of accounts in real time.</span>
+          </div>
+        </div>
+        <div class="check-item">
+          <div class="check-box">
+            <svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#52D9A8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="check-content">
+            <strong>Explainable Risk Scores (XAI)</strong>
+            <span>Every score shows exactly why — traceable reasoning satisfies regulators, reduces false positives, and rebuilds institutional trust.</span>
+          </div>
+        </div>
+        <div class="check-item">
+          <div class="check-box">
+            <svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#52D9A8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="check-content">
+            <strong>AI-Drafted SAR Generation</strong>
+            <span>LLM drafts Suspicious Activity Reports from investigation data — compliance officers review and submit. SAR time cut by 80%.</span>
+          </div>
+        </div>
+        <div class="check-item">
+          <div class="check-box">
+            <svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#52D9A8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="check-content">
+            <strong>Continuous Trigger-Based Monitoring</strong>
+            <span>No batch reviews. Every transaction evaluated in real time against dynamic risk profiles — always current, never behind.</span>
+          </div>
+        </div>
+        <div class="check-item">
+          <div class="check-box">
+            <svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#52D9A8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="check-content">
+            <strong>FINTRAC &amp; OSFI Native</strong>
+            <span>Built-in regulatory reporting, immutable audit logs, and role-gated access. PCMLTFA compliant from day one.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- METRICS BAND -->
+<div class="metrics-band">
+  <div class="metrics-inner">
+    <div class="eyebrow">Why NexusAI — By the Numbers</div>
+    <h2 class="section-h">The Market Opportunity<br>Is <em>Not Optional</em></h2>
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-num"><em>$3.09</em>B</div>
+        <div class="metric-label">TD Bank AML penalty — the cost of inadequate monitoring</div>
+        <div class="metric-mono">OCT 2024 — US DOJ / FINCEN</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-num"><em>89.5</em>%</div>
+        <div class="metric-label">of Canadian banking assets held by the Big Six — our core addressable market</div>
+        <div class="metric-mono">CA BANKING SECTOR 2026</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-num"><em>94</em>%</div>
+        <div class="metric-label">of Canadians have AI privacy concerns with their bank — the trust gap NexusAI closes</div>
+        <div class="metric-mono">TRUST GAP = OPPORTUNITY</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-num" style="font-size:2rem;padding-top:.3rem">Phase <em>1+2</em></div>
+        <div class="metric-label">CDBA open banking architecture — Phase 2 ready before the 2027 mandate</div>
+        <div class="metric-mono">CONSUMER-DRIVEN BANKING ACT</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- OPEN BANKING -->
+<div class="section">
+  <div class="eyebrow">Consumer-Driven Banking</div>
+  <h2 class="section-h">Open Banking Infrastructure<br><em>Built Ahead</em> of the Mandate</h2>
+  <div class="ob-layout">
+    <div class="ob-content">
+      <p class="section-sub">Canada's Consumer-Driven Banking Act is reshaping data access. NexusAI ships full compliance for Phase 1 and Phase 2 — before most institutions have started planning.</p>
+      <div class="ob-phases">
+        <div class="phase-card active">
+          <div class="phase-badge">PHASE 1 — NOW</div>
+          <div>
+            <div class="phase-title">Read-Only Data Sharing ✓</div>
+            <p class="phase-desc">Secure API-based data access. Eliminates dangerous screen scraping. Full consent management, audit trails, and privacy-by-design architecture.</p>
+          </div>
+        </div>
+        <div class="phase-card">
+          <div class="phase-badge">PHASE 2 — 2027</div>
+          <div>
+            <div class="phase-title">Write Access + Payment Initiation</div>
+            <p class="phase-desc">Account switching, payment rails, direct third-party actions. NexusAI architecture is already Phase 2 ready — your institution won't scramble.</p>
+          </div>
+        </div>
+        <div class="phase-card">
+          <div class="phase-badge">BEYOND</div>
+          <div>
+            <div class="phase-title">Embedded Finance &amp; BaaS Rails</div>
+            <p class="phase-desc">Fee-based revenue without balance sheet expansion. The asset-light growth model regulators reward and investors want — built into the NexusAI stack.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ob-panel">
+      <div class="ob-panel-head">// DATA CONSENT MANAGER</div>
+      <div class="consent-row">
+        <div>
+          <div class="consent-name">RBC — Account Balances</div>
+          <div class="consent-date">Granted 12 Jan 2026 · Read-only</div>
+        </div>
+        <div class="toggle"><div class="toggle-knob"></div></div>
+      </div>
+      <div class="consent-row">
+        <div>
+          <div class="consent-name">Wealthsimple — Transactions</div>
+          <div class="consent-date">Granted 3 Mar 2026 · Read-only</div>
+        </div>
+        <div class="toggle"><div class="toggle-knob"></div></div>
+      </div>
+      <div class="consent-row">
+        <div>
+          <div class="consent-name">Simplii Financial — Credit Data</div>
+          <div class="consent-date">Revoked 1 May 2026 by user</div>
+        </div>
+        <div class="toggle off"><div class="toggle-knob"></div></div>
+      </div>
+      <div class="consent-row">
+        <div>
+          <div class="consent-name">EQ Bank — Savings Rate</div>
+          <div class="consent-date">Granted 9 May 2026 · Read-only</div>
+        </div>
+        <div class="toggle"><div class="toggle-knob"></div></div>
+      </div>
+      <div class="ob-total">
+        <span class="ob-total-label">Aggregated Net Worth</span>
+        <span class="ob-total-val">CA$247,880</span>
+      </div>
+      <div style="margin-top:.75rem;padding:.75rem;background:var(--mint-glow);border-radius:8px;border:0.5px solid var(--border-accent)">
+        <div style="font-family:'Geist Mono',monospace;font-size:.65rem;color:var(--mint);margin-bottom:.3rem;letter-spacing:.06em">// AI INSIGHT</div>
+        <p style="font-size:.78rem;color:var(--text2);line-height:1.55">Your EQ Bank rate is 1.2% above your current savings — moving $15K could earn an additional $180/year.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TESTIMONIALS -->
+<div style="background:var(--bg2);border-top:0.5px solid var(--border);border-bottom:0.5px solid var(--border);padding:6rem 0">
+  <div class="section" style="padding-top:0;padding-bottom:0">
+    <div class="eyebrow">Testimonials</div>
+    <h2 class="section-h">What Institutions Are <em>Saying</em></h2>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"NexusAI's explainable AML alerts transformed our compliance posture. Our team resolves investigations in hours instead of days, and regulators appreciate the full audit trail."</p>
+        <div class="testi-person">
+          <div class="testi-avatar av-mint">MC</div>
+          <div>
+            <div class="testi-name">Marie Chen</div>
+            <div class="testi-role">Chief Compliance Officer, Major Canadian Bank</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"We went from dreading FINTRAC submissions to generating and filing SARs in under 20 minutes. The AI drafts, we review, we submit. It's the human-in-the-loop model done right."</p>
+        <div class="testi-person">
+          <div class="testi-avatar av-gold">DJ</div>
+          <div>
+            <div class="testi-name">David Johnson</div>
+            <div class="testi-role">VP Financial Crimes, Regional Credit Union</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"The open banking consent manager is exactly what we needed for CDBA Phase 1. Our customers love the aggregated view, and our product team is already building on Phase 2 APIs."</p>
+        <div class="testi-person">
+          <div class="testi-avatar av-blue">SP</div>
+          <div>
+            <div class="testi-name">Sarah Park</div>
+            <div class="testi-role">Head of Product, Canadian Fintech Scale-Up</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PRICING -->
+<div class="section">
+  <div class="eyebrow">Pricing</div>
+  <h2 class="section-h">Transparent Pricing for<br>Every <em>Institution Size</em></h2>
+  <p class="section-sub">From credit unions to federal agencies — a plan built for your scale and regulatory complexity.</p>
+  <div class="pricing-grid">
+    <div class="plan">
+      <div class="plan-name">Startup</div>
+      <div class="plan-price"><sup>CA$</sup>2,500<span class="period">/mo</span></div>
+      <p class="plan-tagline">For fintechs and credit unions getting started with AI compliance</p>
+      <div class="plan-divider"></div>
+      <div class="plan-features">
+        <div class="plan-feature"><span class="pf-check">✓</span> AML Alert Dashboard</div>
+        <div class="plan-feature"><span class="pf-check">✓</span> SAR Generation (AI-drafted)</div>
+        <div class="plan-feature"><span class="pf-check">✓</span> Customer AI Chat Support</div>
+        <div class="plan-feature"><span class="pf-check">✓</span> CDBA Phase 1 APIs</div>
+        <div class="plan-feature"><span class="pf-check">✓</span> Up to 5 compliance users</div>
+        <div class="plan-feature"><span class="pf-x">✗</span> Transaction Network Graph</div>
+        <div class="plan-feature"><span class="pf-x">✗</span> Government Reporting Suite</div>
+      </div>
+      <button class="plan-cta">Get Started →</button>
+    </div>
+    <div class="plan featured">
+      <div class="plan-badge">Most Popular</div>
+      <div class="plan-name">Enterprise</div>
+      <div class="plan-price"><sup>CA$</sup>12,000<span class="period">/mo</span></div>
+      <p class="plan-tagline">For Canadian banks and large financial institutions</p>
+      <div class="plan-divider"></div>
+      <div class="plan-features">
+        <div class="plan-feature"><span class="pf-check">✓</span> Full AML Suite + Graph Analysis</div>
+        <div class="plan-feature"><span class="pf-check">✓</span> Unlimited SAR Generation</div>
+        <div class="plan-feature"><span class="pf-check">✓</span> Financial Advisory Module</div>
+        <div class="plan-feature"><span class="pf-check">✓</span> Full Open Banking Stack</div>
+        <div class="plan-feature"><span class="pf-check">✓</span> Sentiment Analysis Engine</div>
+        <div class="plan-feature"><span class="pf-check">✓</span> FINTRAC + OSFI Reporting</div>
+        <div class="plan-feature"><span class="pf-check">✓</span> Unlimited compliance users</div>
+      </div>
+      <button class="plan-cta cta-mint">Start Free Trial →</button>
+    </div>
+    <div class="plan">
+      <div class="plan-name">Government</div>
+      <div class="plan-price" style="font-size:2rem;padding-top:.3rem">Custom</div>
+      <p class="plan-tagline">For FINTRAC, OSFI, Bank of Canada, and federal agencies</p>
+      <div class="plan-divider"></div>
+      <div class="plan-features">
+        <div class="plan-feature"><span class="pf-check">✓</span> Everything in Enterprise</div>
+        <div class="plan-feature"><span class="pf-check">✓</span> On-premise deployment option</div>
+        <div class="plan-feature"><span class="pf-check">✓</span> Inter-agency data sharing</div>
+        <div class="plan-feature"><span class="pf-check">✓</span> Dedicated security audit</div>
+        <div class="plan-feature"><span class="pf-check">✓</span> Custom compliance workflows</div>
+        <div class="plan-feature"><span class="pf-check">✓</span> SLA with 99.99% uptime</div>
+        <div class="plan-feature"><span class="pf-check">✓</span> White-glove onboarding</div>
+      </div>
+      <button class="plan-cta">Contact Us →</button>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div style="background:var(--bg2);border-top:0.5px solid var(--border);border-bottom:0.5px solid var(--border);padding:6rem 0">
+  <div class="section" style="padding-top:0;padding-bottom:0">
+    <div class="eyebrow">FAQ</div>
+    <h2 class="section-h">Questions We <em>Always</em> Get</h2>
+    <div class="faq-grid">
+      <div class="faq-item">
+        <div class="faq-q"><span>Is NexusAI compliant with FINTRAC and OSFI requirements?</span><span>+</span></div>
+        <p class="faq-a">Yes. NexusAI was built PCMLTFA-compliant from the ground up. SAR submissions, audit trails, and risk reporting are all natively integrated and designed to satisfy FINTRAC and OSFI examination standards.</p>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span>How does NexusAI handle the CDBA open banking mandate?</span><span>+</span></div>
+        <p class="faq-a">We are fully Phase 1 compliant with read-only API data sharing and consent management. Our architecture is Phase 2 ready — when write access and payment initiation go live in 2027, you will not need to rebuild.</p>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span>Does AI replace compliance officers and financial advisors?</span><span>+</span></div>
+        <p class="faq-a">Absolutely not. NexusAI is built on a Human-in-the-Loop (HITL) philosophy. AI handles triage, drafting, and pattern detection — humans make every critical compliance and advisory decision. This is the model Canadians trust and regulators require.</p>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span>Can government institutions deploy NexusAI on-premise?</span><span>+</span></div>
+        <p class="faq-a">Yes. Our Government tier includes on-premise deployment options, dedicated security audits, and custom compliance workflows designed for federal data sovereignty requirements. Contact our government team for a tailored assessment.</p>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span>How does NexusAI's AML perform compared to rule-based systems?</span><span>+</span></div>
+        <p class="faq-a">Graph-based AI detection surfaces complex layering patterns and shell company networks that traditional rule-based systems miss entirely. Our AI-native approach reduces false positives by up to 70% while catching sophisticated money laundering that evades legacy systems.</p>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span>What makes NexusAI different from other fintech AI platforms?</span><span>+</span></div>
+        <p class="faq-a">NexusAI is the only platform purpose-built for the Canadian regulatory environment — not adapted from a US or European product. Every feature from SAR generation to CDBA consent management to OSFI reporting is designed specifically for how Canadian institutions operate.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA BANNER -->
+<div class="cta-banner">
+  <div class="cta-banner-mesh"></div>
+  <div class="cta-banner-grid"></div>
+  <div class="cta-banner-inner">
+    <div class="eyebrow" style="display:flex;justify-content:center;margin-bottom:1rem">Ready to Deploy</div>
+    <h2 class="section-h" style="text-align:center">The Platform Canadian Finance<br>Has Been <em>Waiting For</em></h2>
+    <p style="text-align:center">Join the institutions building the next generation of compliant, intelligent, and trusted financial infrastructure — with NexusAI at the centre.</p>
+    <div class="cta-actions">
+      <button class="btn-primary">Request Enterprise Demo →</button>
+      <button class="btn-secondary">View Pricing Plans</button>
+      <button class="btn-secondary">Government Inquiry</button>
+    </div>
+    <p style="font-size:.78rem;color:var(--text3);margin-top:1.5rem;text-align:center">No credit card required · 14-day free trial · CDBA Phase 1 ready on day one</p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="nav-logo" style="margin-bottom:.75rem">
+          <div class="logo-icon">
+            <svg viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="5" height="5" rx="1.5" fill="rgba(6,9,18,0.7)"/><rect x="9" y="2" width="5" height="5" rx="1.5" fill="rgba(6,9,18,0.5)"/><rect x="2" y="9" width="5" height="5" rx="1.5" fill="rgba(6,9,18,0.5)"/><rect x="9" y="9" width="5" height="5" rx="1.5" fill="rgba(6,9,18,0.7)"/></svg>
+          </div>
+          <span class="logo-text">Nexus<span>AI</span></span>
+        </div>
+        <p>Intelligent Banking, Trusted Future. The enterprise AI platform for Canadian financial institutions and government.</p>
+        <div style="margin-top:1rem;display:flex;gap:.5rem">
+          <div class="footer-badge">🇨🇦 Canadian</div>
+          <div class="footer-badge">FINTRAC Ready</div>
+          <div class="footer-badge">CDBA Phase 1</div>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Platform</div>
+        <ul class="footer-links">
+          <li><a href="#">AML &amp; Compliance</a></li>
+          <li><a href="#">Financial Advisory</a></li>
+          <li><a href="#">Open Banking</a></li>
+          <li><a href="#">Customer Support AI</a></li>
+          <li><a href="#">Admin Dashboard</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">For Institutions</div>
+        <ul class="footer-links">
+          <li><a href="#">Canadian Banks</a></li>
+          <li><a href="#">Credit Unions</a></li>
+          <li><a href="#">Government</a></li>
+          <li><a href="#">Fintechs</a></li>
+          <li><a href="#">Wealth Managers</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Regulatory</div>
+        <ul class="footer-links">
+          <li><a href="#">FINTRAC Compliance</a></li>
+          <li><a href="#">OSFI Reporting</a></li>
+          <li><a href="#">CDBA Open Banking</a></li>
+          <li><a href="#">PCMLTFA Guide</a></li>
+          <li><a href="#">Security &amp; Privacy</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Company</div>
+        <ul class="footer-links">
+          <li><a href="#">About NexusAI</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Investors</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 NexusAI Technologies Inc. All rights reserved. Built in Canada for Canada.</span>
+      <div class="footer-badges">
+        <span class="footer-badge">Privacy Policy</span>
+        <span class="footer-badge">Terms of Service</span>
+        <span class="footer-badge">SOC 2 Type II</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

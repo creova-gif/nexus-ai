@@ -1,0 +1,30 @@
+import { COOKIE_NAME } from "@shared/const";
+import { getSessionCookieOptions } from "./_core/cookies";
+import { systemRouter } from "./_core/systemRouter";
+import { publicProcedure, router } from "./_core/trpc";
+import { amlRouter } from "./routers/aml";
+import { advisoryRouter } from "./routers/advisory";
+import { openbankingRouter } from "./routers/openbanking";
+import { supportRouter } from "./routers/support";
+import { adminRouter } from "./routers/admin";
+
+export const appRouter = router({
+  system: systemRouter,
+  auth: router({
+    me: publicProcedure.query(opts => opts.ctx.user),
+    logout: publicProcedure.mutation(({ ctx }) => {
+      const cookieOptions = getSessionCookieOptions(ctx.req);
+      ctx.res.clearCookie(COOKIE_NAME, { ...cookieOptions, maxAge: -1 });
+      return {
+        success: true,
+      } as const;
+    }),
+  }),
+  aml: amlRouter,
+  advisory: advisoryRouter,
+  openbanking: openbankingRouter,
+  support: supportRouter,
+  admin: adminRouter,
+});
+
+export type AppRouter = typeof appRouter;

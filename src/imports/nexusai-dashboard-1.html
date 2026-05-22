@@ -1,0 +1,1725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NexusAI — Compliance Intelligence Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ══ RESET + ROOT ══════════════════════════════════════════ */
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-size:14px;height:100%}
+:root{
+  --bg:    #06040F;
+  --bg1:   #09071A;
+  --bg2:   #0D0B20;
+  --bg3:   #130F2C;
+  --bg4:   #1A1438;
+
+  --brand:   #8B5CF6;
+  --brand2:  #7C3AED;
+  --brand3:  #6D28D9;
+  --brand-hi:#A78BFA;
+  --brand-g: rgba(139,92,246,.12);
+  --brand-g2:rgba(139,92,246,.06);
+  --brand-b: rgba(139,92,246,.28);
+
+  --gold:   #F5C842; --gold-g:rgba(245,200,66,.10); --gold-b:rgba(245,200,66,.28);
+  --sky:    #60A5FA; --sky-g:rgba(96,165,250,.10);  --sky-b:rgba(96,165,250,.28);
+  --coral:  #F87171; --coral-g:rgba(248,113,113,.10);
+  --amber:  #FBBF24; --amber-g:rgba(251,191,36,.10); --amber-b:rgba(251,191,36,.28);
+  --rose:   #FB7185;
+  --teal:   #34D399; --teal-g:rgba(52,211,153,.10); --teal-b:rgba(52,211,153,.28);
+
+  --glass:  rgba(255,255,255,.030);
+  --glass2: rgba(255,255,255,.055);
+  --glass3: rgba(255,255,255,.085);
+  --border: rgba(255,255,255,.07);
+  --border2:rgba(255,255,255,.12);
+
+  --t1: #EDE9FE;
+  --t2: #7B6FAA;
+  --t3: #3D3460;
+
+  --sidebar-w: 220px;
+  --topbar-h:  54px;
+}
+body{
+  background:var(--bg);color:var(--t1);
+  font-family:'Geist',sans-serif;line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  display:flex;height:100vh;overflow:hidden;
+}
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--glass3);border-radius:4px}
+button{cursor:pointer;font-family:'Geist',sans-serif}
+input,select{font-family:'Geist',sans-serif;color:var(--t1);background:var(--bg3);border:.5px solid var(--border);border-radius:6px;padding:.35rem .65rem;font-size:.8rem;outline:none}
+input:focus,select:focus{border-color:var(--brand-b)}
+select option{background:var(--bg2)}
+
+/* ══ SIDEBAR ═══════════════════════════════════════════════ */
+.sidebar{
+  width:var(--sidebar-w);flex-shrink:0;height:100vh;overflow-y:auto;
+  background:var(--bg1);border-right:.5px solid var(--border);
+  display:flex;flex-direction:column;position:relative;z-index:10;
+}
+.sb-logo{
+  display:flex;align-items:center;gap:9px;
+  padding:1.1rem 1rem;border-bottom:.5px solid var(--border);
+}
+.sb-gem{
+  width:28px;height:28px;border-radius:7px;flex-shrink:0;
+  background:linear-gradient(135deg,var(--brand),var(--brand2));
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 14px rgba(139,92,246,.3);
+}
+.sb-gem svg{width:13px;height:13px}
+.sb-logo-txt{font-family:'Instrument Serif',serif;font-size:1.05rem;color:#fff}
+.sb-logo-txt b{color:var(--brand-hi)}
+.sb-role{
+  margin:.75rem .9rem .4rem;
+  padding:.4rem .7rem;
+  background:var(--brand-g2);border:.5px solid var(--brand-b);
+  border-radius:6px;display:flex;align-items:center;gap:.5rem;
+}
+.sb-role-dot{width:6px;height:6px;border-radius:50%;background:var(--brand-hi);flex-shrink:0;animation:gp 2s infinite}
+.sb-role-label{font-size:.68rem;font-weight:600;color:var(--brand-hi);letter-spacing:.05em;font-family:'Geist Mono',monospace}
+@keyframes gp{0%,100%{opacity:1;box-shadow:0 0 0 3px rgba(139,92,246,.2)}50%{opacity:.3;box-shadow:none}}
+
+.sb-section{
+  font-size:.58rem;font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--t3);
+  font-family:'Geist Mono',monospace;
+  padding:.7rem .9rem .25rem;margin-top:.35rem;
+}
+.sb-link{
+  display:flex;align-items:center;gap:.6rem;
+  padding:.48rem .9rem;border-radius:7px;
+  margin:0 .35rem;
+  font-size:.8rem;color:var(--t2);transition:all .18s;position:relative;
+}
+.sb-link:hover{background:var(--glass2);color:var(--t1)}
+.sb-link.on{background:var(--brand-g);color:var(--brand-hi)}
+.sb-link.on::before{
+  content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);
+  width:2.5px;height:65%;background:var(--brand-hi);border-radius:0 2px 2px 0;
+}
+.sb-link svg{flex-shrink:0;width:14px;height:14px;opacity:.65}
+.sb-link.on svg{opacity:1}
+.sb-badge{
+  margin-left:auto;padding:.1rem .44rem;border-radius:999px;
+  font-size:.6rem;font-weight:700;font-family:'Geist Mono',monospace;
+}
+.badge-r{background:rgba(248,113,113,.15);color:var(--coral)}
+.badge-v{background:var(--brand-g);color:var(--brand-hi)}
+.badge-g{background:var(--teal-g);color:var(--teal)}
+.badge-a{background:var(--amber-g);color:var(--amber)}
+
+.sb-user{
+  margin-top:auto;padding:.9rem;border-top:.5px solid var(--border);
+  display:flex;align-items:center;gap:.65rem;
+}
+.sb-avatar{
+  width:30px;height:30px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,var(--brand),var(--brand2));
+  display:flex;align-items:center;justify-content:center;
+  font-size:.72rem;font-weight:700;color:#fff;
+}
+.sb-user-name{font-size:.78rem;font-weight:600;color:var(--t1)}
+.sb-user-role{font-size:.65rem;color:var(--t3)}
+.sb-user-btn{
+  margin-left:auto;width:26px;height:26px;border-radius:6px;
+  background:var(--glass2);border:.5px solid var(--border);
+  display:flex;align-items:center;justify-content:center;transition:all .2s;
+}
+.sb-user-btn:hover{background:var(--glass3)}
+.sb-user-btn svg{width:12px;height:12px;opacity:.5}
+
+/* ══ MAIN AREA ═════════════════════════════════════════════ */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
+
+/* topbar */
+.topbar{
+  height:var(--topbar-h);flex-shrink:0;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 1.5rem;
+  background:rgba(9,7,26,.85);backdrop-filter:blur(16px);
+  border-bottom:.5px solid var(--border);
+  position:relative;z-index:5;
+}
+.tb-left{display:flex;align-items:center;gap:1rem}
+.tb-page{font-family:'Instrument Serif',serif;font-size:1.1rem;color:#fff}
+.tb-breadcrumb{
+  font-size:.7rem;color:var(--t3);
+  display:flex;align-items:center;gap:.3rem;font-family:'Geist Mono',monospace;
+}
+.tb-breadcrumb span{color:var(--t2)}
+.tb-search{
+  display:flex;align-items:center;gap:.5rem;
+  background:var(--bg2);border:.5px solid var(--border);border-radius:8px;
+  padding:.32rem .75rem;width:220px;transition:border-color .2s;
+}
+.tb-search:focus-within{border-color:var(--brand-b)}
+.tb-search svg{flex-shrink:0;opacity:.4;width:13px;height:13px}
+.tb-search input{background:transparent;border:none;font-size:.78rem;color:var(--t1);width:100%;padding:0}
+.tb-search input::placeholder{color:var(--t3)}
+.tb-right{display:flex;align-items:center;gap:.6rem}
+.tb-btn{
+  width:32px;height:32px;border-radius:8px;
+  background:var(--glass);border:.5px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  transition:all .2s;position:relative;
+}
+.tb-btn:hover{background:var(--glass2);border-color:var(--border2)}
+.tb-btn svg{width:15px;height:15px;opacity:.6}
+.tb-notif-dot{
+  position:absolute;top:5px;right:5px;
+  width:6px;height:6px;border-radius:50%;
+  background:var(--coral);border:1.5px solid var(--bg1);
+}
+.tb-period{display:flex;gap:.25rem;background:var(--glass);border:.5px solid var(--border);border-radius:7px;padding:2px}
+.tb-period button{
+  padding:.28rem .7rem;font-size:.72rem;font-weight:500;
+  color:var(--t2);background:transparent;border:none;border-radius:5px;transition:all .2s;
+}
+.tb-period button.on{background:var(--brand);color:#fff;font-weight:600}
+
+/* scroll area */
+.scroll{flex:1;overflow-y:auto;padding:1.25rem 1.5rem;display:flex;flex-direction:column;gap:1rem}
+
+/* ══ LAYOUT HELPERS ════════════════════════════════════════ */
+.row{display:flex;gap:1rem;align-items:stretch}
+.col{display:flex;flex-direction:column;gap:1rem}
+.card{
+  background:var(--bg2);border:.5px solid var(--border);
+  border-radius:12px;position:relative;overflow:hidden;
+}
+.card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.06),transparent);
+  pointer-events:none;
+}
+.card-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:.75rem 1rem .6rem;border-bottom:.5px solid var(--border);
+}
+.card-title{
+  font-size:.72rem;font-weight:700;letter-spacing:.07em;
+  text-transform:uppercase;color:var(--t2);font-family:'Geist Mono',monospace;
+  display:flex;align-items:center;gap:.4rem;
+}
+.card-title-dot{width:5px;height:5px;border-radius:50%}
+.card-body{padding:.85rem 1rem}
+.flex-between{display:flex;align-items:center;justify-content:space-between}
+.flex-center{display:flex;align-items:center}
+.gap4{gap:.4rem}.gap6{gap:.6rem}.gap8{gap:.8rem}
+
+/* ══ KPI STRIP ═════════════════════════════════════════════ */
+.kpi-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:.75rem}
+.kpi{
+  background:var(--bg2);border:.5px solid var(--border);border-radius:10px;
+  padding:.85rem 1rem;position:relative;overflow:hidden;transition:all .25s;
+}
+.kpi:hover{border-color:var(--border2);transform:translateY(-2px)}
+.kpi::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1.5px;
+  background:linear-gradient(90deg,transparent,var(--kc,var(--brand)),transparent);
+  opacity:.55;
+}
+.kpi::after{
+  content:'';position:absolute;bottom:-30px;right:-30px;
+  width:80px;height:80px;border-radius:50%;
+  background:radial-gradient(circle,var(--kc,var(--brand)),transparent 70%);
+  opacity:.06;pointer-events:none;
+}
+.kpi-label{font-size:.6rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--t3);font-family:'Geist Mono',monospace;margin-bottom:.4rem}
+.kpi-val{font-family:'Instrument Serif',serif;font-size:1.7rem;color:#fff;line-height:1;margin-bottom:.2rem}
+.kpi-val em{font-style:normal;color:var(--kc,var(--brand-hi))}
+.kpi-sub{font-size:.65rem;color:var(--t3);display:flex;align-items:center;gap:.3rem}
+.kpi-badge{
+  margin-left:auto;position:absolute;top:.65rem;right:.7rem;
+  padding:.12rem .48rem;border-radius:999px;font-size:.58rem;font-weight:700;
+  font-family:'Geist Mono',monospace;
+}
+.kb-up{background:rgba(52,211,153,.12);color:var(--teal)}
+.kb-dn{background:rgba(248,113,113,.12);color:var(--coral)}
+.kb-wn{background:rgba(251,191,36,.12);color:var(--amber)}
+.kb-br{background:var(--brand-g);color:var(--brand-hi)}
+
+/* ══ ALERT QUEUE ═══════════════════════════════════════════ */
+.alert-table{width:100%;border-collapse:collapse;font-size:.78rem}
+.alert-table th{
+  padding:.5rem .75rem;text-align:left;font-size:.6rem;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--t3);
+  font-family:'Geist Mono',monospace;border-bottom:.5px solid var(--border);
+  background:var(--bg3);white-space:nowrap;
+}
+.alert-table td{padding:.58rem .75rem;border-bottom:.5px solid var(--border);color:var(--t1);vertical-align:middle}
+.alert-table tr:last-child td{border-bottom:none}
+.alert-table tr:hover td{background:var(--glass)}
+.at-ind{display:flex;align-items:center;gap:.5rem}
+.ind-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;position:relative}
+.ind-dot::after{content:'';position:absolute;inset:-3px;border-radius:50%;border:1px solid currentColor;opacity:.25}
+.d-cr{background:var(--coral);color:var(--coral)}
+.d-am{background:var(--amber);color:var(--amber)}
+.d-vt{background:var(--brand-hi);color:var(--brand-hi)}
+.d-tl{background:var(--teal);color:var(--teal)}
+.score-pill{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:36px;height:20px;border-radius:5px;
+  font-family:'Geist Mono',monospace;font-size:.68rem;font-weight:700;
+}
+.sp-cr{color:var(--coral);background:rgba(248,113,113,.12)}
+.sp-am{color:var(--amber);background:rgba(251,191,36,.12)}
+.sp-vt{color:var(--brand-hi);background:var(--brand-g)}
+.sp-tl{color:var(--teal);background:var(--teal-g)}
+.status-tag{
+  padding:.18rem .6rem;border-radius:999px;
+  font-size:.62rem;font-weight:700;letter-spacing:.04em;
+  font-family:'Geist Mono',monospace;
+}
+.st-new{background:rgba(248,113,113,.12);color:var(--coral);border:.5px solid rgba(248,113,113,.22)}
+.st-rev{background:var(--amber-g);color:var(--amber);border:.5px solid var(--amber-b)}
+.st-inv{background:var(--brand-g);color:var(--brand-hi);border:.5px solid var(--brand-b)}
+.st-cls{background:var(--teal-g);color:var(--teal);border:.5px solid var(--teal-b)}
+.at-actions{display:flex;gap:.35rem}
+.at-act{
+  padding:.22rem .55rem;font-size:.65rem;font-weight:600;border-radius:5px;
+  border:.5px solid var(--border);background:var(--glass);color:var(--t2);transition:all .18s;
+}
+.at-act:hover{border-color:var(--border2);color:var(--t1)}
+.at-act.p{background:var(--brand);color:#fff;border:none}
+.at-act.p:hover{background:var(--brand2)}
+
+/* ══ RISK SCORE RING ════════════════════════════════════════ */
+.risk-ring-wrap{display:flex;align-items:center;gap:1.25rem}
+.risk-ring{position:relative;flex-shrink:0}
+.risk-ring svg{transform:rotate(-90deg)}
+.risk-ring-inner{
+  position:absolute;inset:0;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+}
+.risk-ring-val{font-family:'Instrument Serif',serif;font-size:1.5rem;color:#fff;line-height:1}
+.risk-ring-label{font-size:.58rem;color:var(--t3);font-family:'Geist Mono',monospace;letter-spacing:.05em;margin-top:.15rem}
+.risk-breakdown{flex:1;display:flex;flex-direction:column;gap:.5rem}
+.rb-item{display:flex;align-items:center;gap:.5rem}
+.rb-label{font-size:.72rem;color:var(--t2);width:80px;flex-shrink:0}
+.rb-bar{flex:1;height:5px;background:var(--glass3);border-radius:3px;overflow:hidden}
+.rb-fill{height:100%;border-radius:3px;transition:width .6s ease}
+.rb-val{font-family:'Geist Mono',monospace;font-size:.65rem;color:var(--t2);width:30px;text-align:right;flex-shrink:0}
+
+/* ══ NETWORK GRAPH ══════════════════════════════════════════ */
+.graph-canvas{position:relative;height:220px;background:var(--bg3);border-radius:8px;overflow:hidden}
+.graph-canvas svg{width:100%;height:100%}
+.graph-legend{display:flex;gap:.85rem;flex-wrap:wrap}
+.gl{display:flex;align-items:center;gap:.35rem;font-size:.66rem;color:var(--t2)}
+.gl-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+
+/* ══ SPARKLINE ══════════════════════════════════════════════ */
+.sparkline-mini{height:40px;position:relative}
+.sparkline-mini svg{width:100%;height:100%}
+
+/* ══ TIMELINE ═══════════════════════════════════════════════ */
+.timeline{display:flex;flex-direction:column;gap:0}
+.tl-item{display:flex;gap:.75rem;padding:.6rem 0;position:relative}
+.tl-item::before{
+  content:'';position:absolute;left:8px;top:26px;bottom:0;
+  width:.5px;background:var(--border);
+}
+.tl-item:last-child::before{display:none}
+.tl-dot{
+  width:16px;height:16px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.55rem;z-index:1;
+}
+.tl-content{flex:1;min-width:0}
+.tl-title{font-size:.78rem;font-weight:600;color:var(--t1)}
+.tl-meta{font-size:.65rem;color:var(--t3);margin-top:.1rem}
+.tl-time{font-family:'Geist Mono',monospace;font-size:.62rem;color:var(--t3);flex-shrink:0}
+
+/* ══ HEAT MAP ═══════════════════════════════════════════════ */
+.heatmap{display:grid;grid-template-columns:repeat(12,1fr);gap:3px}
+.hm-cell{
+  aspect-ratio:1;border-radius:3px;cursor:default;transition:transform .15s;
+}
+.hm-cell:hover{transform:scale(1.3);z-index:2;position:relative}
+.hm-0{background:var(--glass2)}
+.hm-1{background:rgba(139,92,246,.2)}
+.hm-2{background:rgba(139,92,246,.4)}
+.hm-3{background:rgba(139,92,246,.65)}
+.hm-4{background:rgba(139,92,246,.85)}
+.hm-5{background:var(--brand-hi)}
+
+/* ══ PERPETUAL KYC TABLE ════════════════════════════════════ */
+.kyc-table{width:100%;border-collapse:collapse;font-size:.77rem}
+.kyc-table th{
+  padding:.48rem .7rem;text-align:left;font-size:.59rem;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--t3);
+  border-bottom:.5px solid var(--border);background:var(--bg3);
+  font-family:'Geist Mono',monospace;
+}
+.kyc-table td{padding:.55rem .7rem;border-bottom:.5px solid var(--border);vertical-align:middle}
+.kyc-table tr:last-child td{border-bottom:none}
+.kyc-table tr:hover td{background:var(--glass)}
+.risk-meter{display:flex;align-items:center;gap:.5rem}
+.rm-bar{width:60px;height:5px;background:var(--glass3);border-radius:3px;overflow:hidden;flex-shrink:0}
+.rm-fill{height:100%;border-radius:3px}
+.rm-val{font-family:'Geist Mono',monospace;font-size:.65rem;font-weight:700;width:22px}
+
+/* ══ SANCTION SCREENING ═════════════════════════════════════ */
+.screening-list{display:flex;flex-direction:column;gap:.5rem}
+.sl-item{
+  display:flex;align-items:center;gap:.65rem;
+  padding:.6rem .75rem;background:var(--bg3);border-radius:8px;
+  border:.5px solid var(--border);transition:all .2s;
+}
+.sl-item:hover{border-color:var(--border2)}
+.sl-status{
+  width:28px;height:28px;border-radius:7px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+}
+.sl-info{flex:1;min-width:0}
+.sl-name{font-size:.78rem;font-weight:600;color:var(--t1)}
+.sl-detail{font-size:.65rem;color:var(--t3)}
+.sl-score{text-align:right}
+.sl-pct{font-family:'Geist Mono',monospace;font-size:.72rem;font-weight:700}
+.sl-list{font-size:.6rem;color:var(--t3)}
+.sl-action{
+  padding:.22rem .6rem;font-size:.65rem;font-weight:600;border-radius:5px;
+  border:.5px solid var(--border);background:var(--glass);color:var(--t2);transition:all .18s;flex-shrink:0;
+}
+.sl-action:hover{border-color:var(--border2);color:var(--t1)}
+
+/* ══ AI ASSISTANT CHAT ══════════════════════════════════════ */
+.ai-chat{display:flex;flex-direction:column;gap:.5rem;max-height:200px;overflow-y:auto;padding-bottom:.25rem}
+.ai-msg{display:flex;gap:.5rem;align-items:flex-start}
+.ai-msg.user{flex-direction:row-reverse}
+.ai-avatar{
+  width:22px;height:22px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,var(--brand),var(--brand2));
+  display:flex;align-items:center;justify-content:center;font-size:.55rem;color:#fff;font-weight:700;
+}
+.ai-avatar.user-av{background:var(--glass3);border:.5px solid var(--border2)}
+.ai-bubble{
+  max-width:80%;padding:.5rem .75rem;border-radius:10px;font-size:.75rem;
+  line-height:1.5;color:var(--t1);
+}
+.ai-bubble.bot{background:var(--bg3);border:.5px solid var(--border)}
+.ai-bubble.user-b{background:linear-gradient(135deg,var(--brand),var(--brand2));border-radius:10px 10px 3px 10px;color:#fff}
+.ai-input-row{display:flex;gap:.5rem;margin-top:.5rem}
+.ai-input{flex:1;font-size:.78rem;padding:.42rem .75rem;border-radius:7px}
+.ai-send{
+  padding:.4rem .8rem;background:var(--brand);color:#fff;border:none;
+  border-radius:7px;font-size:.75rem;font-weight:600;transition:all .2s;
+}
+.ai-send:hover{background:var(--brand2)}
+
+/* ══ SAR GENERATOR ══════════════════════════════════════════ */
+.sar-form{display:flex;flex-direction:column;gap:.65rem}
+.sf-row{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+.sf-label{font-size:.65rem;font-weight:600;color:var(--t2);margin-bottom:.2rem;display:block}
+.sf-field{width:100%;padding:.4rem .65rem;font-size:.77rem}
+.sf-textarea{
+  width:100%;padding:.5rem .65rem;font-size:.77rem;
+  background:var(--bg3);border:.5px solid var(--border);
+  border-radius:6px;color:var(--t1);resize:none;height:60px;
+  font-family:'Geist',sans-serif;
+}
+.sf-textarea:focus{border-color:var(--brand-b);outline:none}
+.sar-actions{display:flex;gap:.5rem;justify-content:flex-end;margin-top:.25rem}
+.sar-btn{
+  padding:.42rem 1rem;font-size:.75rem;font-weight:600;border-radius:7px;
+  border:.5px solid var(--border);background:var(--glass);color:var(--t2);transition:all .2s;
+}
+.sar-btn:hover{border-color:var(--border2);color:var(--t1)}
+.sar-btn.primary{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;border:none}
+.sar-btn.primary:hover{box-shadow:0 4px 16px rgba(139,92,246,.35)}
+
+/* ══ SPENDING CHART (ADVISOR) ═══════════════════════════════ */
+.chart-bars{
+  display:flex;align-items:flex-end;gap:.45rem;height:90px;padding:.5rem 0;
+}
+.chart-bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:.25rem}
+.chart-bar{width:100%;border-radius:4px 4px 0 0;min-height:4px;transition:height .4s ease}
+.chart-bar-label{font-size:.58rem;color:var(--t3);font-family:'Geist Mono',monospace;white-space:nowrap}
+.chart-bar-val{font-size:.62rem;color:var(--t2);font-family:'Geist Mono',monospace}
+
+/* ══ DONUT ══════════════════════════════════════════════════ */
+.donut-wrap{display:flex;align-items:center;gap:1rem}
+.donut{position:relative;flex-shrink:0}
+.donut svg{transform:rotate(-90deg)}
+.donut-inner{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.donut-val{font-family:'Instrument Serif',serif;font-size:1.2rem;color:#fff;line-height:1}
+.donut-sub{font-size:.55rem;color:var(--t3);font-family:'Geist Mono',monospace}
+.donut-legend{flex:1;display:flex;flex-direction:column;gap:.4rem}
+.dl{display:flex;align-items:center;gap:.45rem;font-size:.72rem;color:var(--t2)}
+.dl-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0}
+.dl-val{margin-left:auto;font-family:'Geist Mono',monospace;font-size:.68rem;color:var(--t1)}
+
+/* ══ GOAL PROGRESS ══════════════════════════════════════════ */
+.goals{display:flex;flex-direction:column;gap:.6rem}
+.goal-item{
+  background:var(--bg3);border-radius:8px;padding:.7rem .85rem;
+  border:.5px solid var(--border);transition:all .2s;
+}
+.goal-item:hover{border-color:var(--border2)}
+.goal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.4rem}
+.goal-name{font-size:.78rem;font-weight:600;color:var(--t1);display:flex;align-items:center;gap:.4rem}
+.goal-icon{font-size:.72rem}
+.goal-pct{font-family:'Geist Mono',monospace;font-size:.7rem;color:var(--t2)}
+.goal-bar{height:5px;background:var(--glass3);border-radius:3px;overflow:hidden;margin-bottom:.3rem}
+.goal-fill{height:100%;border-radius:3px;transition:width .6s ease}
+.goal-meta{font-size:.64rem;color:var(--t3);display:flex;justify-content:space-between}
+
+/* ══ OPEN BANKING PANEL ═════════════════════════════════════ */
+.ob-accounts{display:flex;flex-direction:column;gap:.5rem}
+.ob-acc{
+  display:flex;align-items:center;gap:.65rem;
+  padding:.55rem .75rem;background:var(--bg3);border-radius:8px;border:.5px solid var(--border);transition:all .2s;
+}
+.ob-acc:hover{border-color:var(--border2)}
+.ob-acc-icon{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.85rem}
+.ob-acc-info{flex:1}
+.ob-acc-name{font-size:.78rem;font-weight:600;color:var(--t1)}
+.ob-acc-type{font-size:.63rem;color:var(--t3)}
+.ob-acc-bal{text-align:right}
+.ob-acc-amount{font-family:'Instrument Serif',serif;font-size:1rem;color:#fff}
+.ob-acc-change{font-size:.62rem;font-family:'Geist Mono',monospace}
+
+/* ══ CONSENT MANAGER ════════════════════════════════════════ */
+.consent-row{
+  display:flex;align-items:center;gap:.65rem;
+  padding:.55rem 0;border-bottom:.5px solid var(--border);
+}
+.consent-row:last-child{border-bottom:none}
+.cr-icon{width:26px;height:26px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.78rem}
+.cr-info{flex:1}
+.cr-name{font-size:.78rem;font-weight:600;color:var(--t1)}
+.cr-detail{font-size:.63rem;color:var(--t3);margin-top:.05rem}
+.tog{width:34px;height:19px;border-radius:999px;position:relative;cursor:pointer;flex-shrink:0;transition:background .2s}
+.tog.on{background:linear-gradient(135deg,var(--brand),var(--brand2));box-shadow:0 0 8px rgba(139,92,246,.3)}
+.tog.off{background:var(--glass3)}
+.tok{width:13px;height:13px;border-radius:50%;background:#fff;position:absolute;top:3px;transition:all .2s;box-shadow:0 1px 3px rgba(0,0,0,.4)}
+.tog.on .tok{right:3px}.tog.off .tok{left:3px}
+
+/* ══ SYSTEM HEALTH ══════════════════════════════════════════ */
+.health-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem}
+.health-card{background:var(--bg3);border-radius:8px;padding:.7rem;border:.5px solid var(--border);text-align:center}
+.hc-icon{font-size:.9rem;margin-bottom:.3rem}
+.hc-val{font-family:'Geist Mono',monospace;font-size:.85rem;font-weight:700;margin-bottom:.1rem}
+.hc-label{font-size:.6rem;color:var(--t3)}
+.health-bar{height:3px;border-radius:2px;background:var(--glass3);overflow:hidden;margin-top:.35rem}
+.hb-fill{height:100%;border-radius:2px}
+
+/* ══ AUDIT LOG ══════════════════════════════════════════════ */
+.audit-list{display:flex;flex-direction:column}
+.audit-row{
+  display:flex;align-items:center;gap:.65rem;
+  padding:.48rem .75rem;border-bottom:.5px solid var(--border);
+  font-size:.73rem;transition:background .15s;
+}
+.audit-row:last-child{border-bottom:none}
+.audit-row:hover{background:var(--glass)}
+.audit-icon{
+  width:22px;height:22px;border-radius:6px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:.65rem;
+}
+.audit-action{flex:1;color:var(--t1)}
+.audit-user{font-size:.65rem;color:var(--t3);flex-shrink:0}
+.audit-time{font-family:'Geist Mono',monospace;font-size:.62rem;color:var(--t3);flex-shrink:0;width:50px;text-align:right}
+
+/* ══ NOTIFICATION PANEL ═════════════════════════════════════ */
+.notif-list{display:flex;flex-direction:column;gap:.45rem}
+.notif{
+  display:flex;gap:.6rem;padding:.55rem .7rem;
+  background:var(--bg3);border-radius:8px;border:.5px solid var(--border);
+  transition:all .2s;cursor:pointer;
+}
+.notif:hover{border-color:var(--border2)}
+.notif-ind{width:3px;border-radius:2px;flex-shrink:0;align-self:stretch}
+.notif-content{flex:1}
+.notif-title{font-size:.76rem;font-weight:600;color:var(--t1)}
+.notif-desc{font-size:.65rem;color:var(--t2);margin-top:.08rem}
+.notif-time{font-size:.6rem;color:var(--t3);font-family:'Geist Mono',monospace;margin-top:.15rem}
+
+/* ══ TAB SWITCHER ═══════════════════════════════════════════ */
+.dash-tabs{display:flex;gap:.25rem;background:var(--glass);border:.5px solid var(--border);border-radius:8px;padding:3px}
+.dash-tab{
+  padding:.32rem .85rem;font-size:.75rem;font-weight:500;
+  color:var(--t2);background:transparent;border:none;border-radius:6px;transition:all .2s;
+}
+.dash-tab.on{background:var(--brand);color:#fff;font-weight:600}
+.dash-tab:hover:not(.on){background:var(--glass3);color:var(--t1)}
+.tab-content{display:none}
+.tab-content.on{display:flex;flex-direction:column;gap:1rem}
+
+/* ══ BADGES/MISC ════════════════════════════════════════════ */
+.mini-badge{
+  padding:.12rem .48rem;border-radius:999px;font-size:.6rem;font-weight:700;
+  font-family:'Geist Mono',monospace;
+}
+.b-cr{background:var(--coral-g);color:var(--coral)}
+.b-am{background:var(--amber-g);color:var(--amber)}
+.b-br{background:var(--brand-g);color:var(--brand-hi)}
+.b-tl{background:var(--teal-g);color:var(--teal)}
+.b-sk{background:var(--sky-g);color:var(--sky)}
+.b-go{background:var(--gold-g);color:var(--gold)}
+
+.divider{height:.5px;background:var(--border);margin:.25rem 0}
+.txt-mono{font-family:'Geist Mono',monospace}
+.txt-sm{font-size:.72rem}
+.txt-xs{font-size:.65rem}
+.txt-muted{color:var(--t2)}
+.txt-faint{color:var(--t3)}
+.brand{color:var(--brand-hi)}
+.teal{color:var(--teal)}
+.coral{color:var(--coral)}
+.amber{color:var(--amber)}
+.sky{color:var(--sky)}
+.gold{color:var(--gold)}
+.bold{font-weight:600}
+
+/* pill toggle for view switches */
+.view-toggle{display:flex;gap:.2rem;background:var(--glass);border:.5px solid var(--border);border-radius:6px;padding:2px}
+.vt{padding:.22rem .6rem;font-size:.68rem;font-weight:500;color:var(--t2);background:transparent;border:none;border-radius:4px;transition:all .2s}
+.vt.on{background:var(--glass3);color:var(--t1)}
+
+/* country flag inline */
+.flag{font-size:.78rem;margin-right:.2rem}
+</style>
+</head>
+<body>
+
+<!-- ═══ SIDEBAR ════════════════════════════════════════════════════ -->
+<div class="sidebar">
+  <div class="sb-logo">
+    <div class="sb-gem">
+      <svg viewBox="0 0 16 16" fill="none">
+        <rect x="1.5" y="1.5" width="5.5" height="5.5" rx="1.5" fill="rgba(5,4,15,.8)"/>
+        <rect x="9"   y="1.5" width="5.5" height="5.5" rx="1.5" fill="rgba(5,4,15,.5)"/>
+        <rect x="1.5" y="9"   width="5.5" height="5.5" rx="1.5" fill="rgba(5,4,15,.5)"/>
+        <rect x="9"   y="9"   width="5.5" height="5.5" rx="1.5" fill="rgba(5,4,15,.8)"/>
+      </svg>
+    </div>
+    <span class="sb-logo-txt">Nexus<b>AI</b></span>
+  </div>
+
+  <div class="sb-role">
+    <div class="sb-role-dot"></div>
+    <span class="sb-role-label">Compliance Officer</span>
+  </div>
+
+  <div class="sb-section">Core</div>
+  <div class="sb-link on" onclick="setTab('compliance')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+    Overview
+  </div>
+  <div class="sb-link" onclick="setTab('alerts')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    AML Alerts <span class="sb-badge badge-r">7</span>
+  </div>
+  <div class="sb-link" onclick="setTab('network')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="5" r="3"/><circle cx="5" cy="19" r="3"/><circle cx="19" cy="19" r="3"/><line x1="12" y1="8" x2="5" y2="16"/><line x1="12" y1="8" x2="19" y2="16"/></svg>
+    Network Graph
+  </div>
+  <div class="sb-link" onclick="setTab('kyc')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+    Perpetual KYC <span class="sb-badge badge-a">3</span>
+  </div>
+  <div class="sb-link" onclick="setTab('sanctions')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    Sanctions Screening
+  </div>
+  <div class="sb-link" onclick="setTab('sar')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+    SAR Generator <span class="sb-badge badge-v">2</span>
+  </div>
+
+  <div class="sb-section">Modules</div>
+  <div class="sb-link" onclick="setTab('advisory')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+    Financial Advisory
+  </div>
+  <div class="sb-link" onclick="setTab('openbanking')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+    Open Banking <span class="sb-badge badge-g">NEW</span>
+  </div>
+  <div class="sb-link" onclick="setTab('audit')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+    Audit Trail
+  </div>
+  <div class="sb-link" onclick="setTab('admin')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M21 12h-3M19.07 19.07l-1.41-1.41M12 21v-3M6.34 19.07l1.41-1.41M3 12h3M6.34 4.93l1.41 1.41"/></svg>
+    System Health
+  </div>
+
+  <div class="sb-user">
+    <div class="sb-avatar">MC</div>
+    <div>
+      <div class="sb-user-name">Marie Chen</div>
+      <div class="sb-user-role">Sr. Compliance Officer</div>
+    </div>
+    <button class="sb-user-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+    </button>
+  </div>
+</div>
+
+<!-- ═══ MAIN ════════════════════════════════════════════════════════ -->
+<div class="main">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="tb-left">
+      <div>
+        <div class="tb-page" id="page-title">Compliance Overview</div>
+        <div class="tb-breadcrumb">NexusAI <span>›</span> <span id="page-crumb">Compliance Dashboard</span></div>
+      </div>
+    </div>
+    <div class="tb-search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" placeholder="Search alerts, entities, SARs…">
+    </div>
+    <div class="tb-right">
+      <div class="tb-period">
+        <button class="on">Today</button>
+        <button onclick="this.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('on'));this.classList.add('on')">7D</button>
+        <button onclick="this.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('on'));this.classList.add('on')">30D</button>
+        <button onclick="this.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('on'));this.classList.add('on')">90D</button>
+      </div>
+      <button class="tb-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0"/></svg>
+        <div class="tb-notif-dot"></div>
+      </button>
+      <button class="tb-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a6 6 0 0112 0v2"/></svg>
+      </button>
+      <button class="tb-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- SCROLL AREA -->
+  <div class="scroll" id="scroll-area">
+
+    <!-- ══ TAB: COMPLIANCE OVERVIEW ══════════════════════════════ -->
+    <div class="tab-content on" id="tab-compliance">
+
+      <!-- KPI STRIP -->
+      <div class="kpi-strip">
+        <div class="kpi" style="--kc:var(--coral)">
+          <div class="kpi-label">Active High Risk</div>
+          <div class="kpi-val"><em>7</em></div>
+          <div class="kpi-sub"><span class="coral">↑ 2</span> from yesterday</div>
+          <span class="kpi-badge kb-dn">↑ CRITICAL</span>
+        </div>
+        <div class="kpi" style="--kc:var(--amber)">
+          <div class="kpi-label">Alerts Today</div>
+          <div class="kpi-val"><em>24</em></div>
+          <div class="kpi-sub"><span class="amber">9</span> unreviewed</div>
+          <span class="kpi-badge kb-wn">↑ 12%</span>
+        </div>
+        <div class="kpi" style="--kc:var(--brand-hi)">
+          <div class="kpi-label">SARs Filed</div>
+          <div class="kpi-val"><em>12</em></div>
+          <div class="kpi-sub">This month · FINTRAC</div>
+          <span class="kpi-badge kb-br">✓ OK</span>
+        </div>
+        <div class="kpi" style="--kc:var(--teal)">
+          <div class="kpi-label">Cases Resolved</div>
+          <div class="kpi-val"><em>94</em><span style="font-size:1rem;color:var(--t2)">%</span></div>
+          <div class="kpi-sub"><span class="teal">↑ 6%</span> vs last month</div>
+          <span class="kpi-badge kb-up">↑ UP</span>
+        </div>
+        <div class="kpi" style="--kc:var(--sky)">
+          <div class="kpi-label">Txn Volume</div>
+          <div class="kpi-val">CA$<em>2.4</em>M</div>
+          <div class="kpi-sub">Last 24 hours</div>
+          <span class="kpi-badge kb-up">↑ 12%</span>
+        </div>
+      </div>
+
+      <!-- ROW: RISK MAP + TIMELINE + AI ASSISTANT -->
+      <div class="row">
+
+        <!-- Risk Heatmap -->
+        <div class="card" style="flex:1.4">
+          <div class="card-header">
+            <div class="card-title">
+              <div class="card-title-dot" style="background:var(--brand-hi)"></div>
+              Alert Volume Heatmap — 12 Months
+            </div>
+            <div class="mini-badge b-br">BY RISK LEVEL</div>
+          </div>
+          <div class="card-body">
+            <div class="heatmap" id="heatmap"></div>
+            <div style="display:flex;align-items:center;gap:.5rem;margin-top:.65rem;font-size:.62rem;color:var(--t3)">
+              <span>Low</span>
+              <div style="display:flex;gap:3px">
+                <div style="width:10px;height:10px;border-radius:2px" class="hm-0"></div>
+                <div style="width:10px;height:10px;border-radius:2px" class="hm-1"></div>
+                <div style="width:10px;height:10px;border-radius:2px" class="hm-2"></div>
+                <div style="width:10px;height:10px;border-radius:2px" class="hm-3"></div>
+                <div style="width:10px;height:10px;border-radius:2px" class="hm-4"></div>
+                <div style="width:10px;height:10px;border-radius:2px" class="hm-5"></div>
+              </div>
+              <span>High</span>
+              <span style="margin-left:auto">Powered by graph intelligence · PCMLTFA compliant</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Risk Score Breakdown -->
+        <div class="card" style="width:200px;flex-shrink:0">
+          <div class="card-header">
+            <div class="card-title"><div class="card-title-dot" style="background:var(--coral)"></div>Platform Risk</div>
+          </div>
+          <div class="card-body">
+            <div class="risk-ring-wrap" style="flex-direction:column;align-items:center;gap:.75rem">
+              <div class="risk-ring">
+                <svg width="90" height="90" viewBox="0 0 90 90">
+                  <circle cx="45" cy="45" r="35" stroke="var(--glass3)" stroke-width="8" fill="none"/>
+                  <circle cx="45" cy="45" r="35" stroke="var(--coral)" stroke-width="8" fill="none" stroke-dasharray="219.9" stroke-dashoffset="55" stroke-linecap="round"/>
+                </svg>
+                <div class="risk-ring-inner">
+                  <div class="risk-ring-val" style="color:var(--coral)">75</div>
+                  <div class="risk-ring-label">RISK</div>
+                </div>
+              </div>
+              <div class="risk-breakdown" style="width:100%">
+                <div class="rb-item">
+                  <span class="rb-label txt-xs txt-muted">AML</span>
+                  <div class="rb-bar"><div class="rb-fill" style="width:82%;background:var(--coral)"></div></div>
+                  <span class="rb-val txt-xs coral">82</span>
+                </div>
+                <div class="rb-item">
+                  <span class="rb-label txt-xs txt-muted">Fraud</span>
+                  <div class="rb-bar"><div class="rb-fill" style="width:65%;background:var(--amber)"></div></div>
+                  <span class="rb-val txt-xs amber">65</span>
+                </div>
+                <div class="rb-item">
+                  <span class="rb-label txt-xs txt-muted">KYC</span>
+                  <div class="rb-bar"><div class="rb-fill" style="width:48%;background:var(--brand-hi)"></div></div>
+                  <span class="rb-val txt-xs brand">48</span>
+                </div>
+                <div class="rb-item">
+                  <span class="rb-label txt-xs txt-muted">Sanction</span>
+                  <div class="rb-bar"><div class="rb-fill" style="width:32%;background:var(--teal)"></div></div>
+                  <span class="rb-val txt-xs teal">32</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Investigation Timeline -->
+        <div class="card" style="flex:1">
+          <div class="card-header">
+            <div class="card-title"><div class="card-title-dot" style="background:var(--amber)"></div>Investigation Timeline</div>
+          </div>
+          <div class="card-body">
+            <div class="timeline">
+              <div class="tl-item">
+                <div class="tl-dot" style="background:rgba(248,113,113,.15);color:var(--coral);border:.5px solid rgba(248,113,113,.3)">⚠</div>
+                <div class="tl-content">
+                  <div class="tl-title">SAR #2026-012 Escalated</div>
+                  <div class="tl-meta">Shell network detected · $2.3M exposure</div>
+                </div>
+                <div class="tl-time">09:41</div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-dot" style="background:var(--brand-g);color:var(--brand-hi);border:.5px solid var(--brand-b)">✎</div>
+                <div class="tl-content">
+                  <div class="tl-title">Alert #A-4471 Under Review</div>
+                  <div class="tl-meta">Assigned to Chen · structuring pattern</div>
+                </div>
+                <div class="tl-time">08:55</div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-dot" style="background:var(--teal-g);color:var(--teal);border:.5px solid var(--teal-b)">✓</div>
+                <div class="tl-content">
+                  <div class="tl-title">SAR #2026-011 Filed — FINTRAC</div>
+                  <div class="tl-meta">AI-drafted · officer reviewed · submitted</div>
+                </div>
+                <div class="tl-time">07:30</div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-dot" style="background:var(--amber-g);color:var(--amber);border:.5px solid var(--amber-b)">⦿</div>
+                <div class="tl-content">
+                  <div class="tl-title">PEP Alert Triaged — Low Risk</div>
+                  <div class="tl-meta">AI auto-resolved · audit log #7723</div>
+                </div>
+                <div class="tl-time">06:15</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ROW: AI ASSISTANT + QUICK STATS -->
+      <div class="row">
+        <div class="card" style="flex:1.6">
+          <div class="card-header">
+            <div class="card-title"><div class="card-title-dot" style="background:var(--brand-hi)"></div>NexusAI Compliance Assistant</div>
+            <div class="mini-badge b-br">GPT-POWERED · HITL</div>
+          </div>
+          <div class="card-body" style="display:flex;flex-direction:column;gap:.5rem">
+            <div class="ai-chat" id="ai-chat">
+              <div class="ai-msg">
+                <div class="ai-avatar">N</div>
+                <div class="ai-bubble bot">Good morning, Officer Chen. I've detected <strong style="color:var(--coral)">7 high-risk alerts</strong> that need review, including a potential structuring pattern on Account #CA-4471 with a risk score of 97/100. Shall I generate a SAR draft?</div>
+              </div>
+              <div class="ai-msg user">
+                <div class="ai-avatar user-av" style="font-size:.6rem;color:var(--t2)">MC</div>
+                <div class="ai-bubble user-b">Yes, draft the SAR for CA-4471 and flag the shell company network.</div>
+              </div>
+              <div class="ai-msg">
+                <div class="ai-avatar">N</div>
+                <div class="ai-bubble bot">Done. SAR #2026-013 drafted with full transaction history, network graph summary (6 connected entities), and FINTRAC-required fields pre-filled. <strong style="color:var(--teal)">Ready for your review →</strong></div>
+              </div>
+            </div>
+            <div class="ai-input-row">
+              <input type="text" class="ai-input" placeholder="Ask about alerts, SARs, regulations, entity risk…" id="ai-input">
+              <button class="ai-send" onclick="sendChat()">Send →</button>
+            </div>
+          </div>
+        </div>
+        <div class="col" style="width:220px;flex-shrink:0">
+          <div class="card" style="flex:1">
+            <div class="card-header"><div class="card-title"><div class="card-title-dot" style="background:var(--teal)"></div>Regulatory Status</div></div>
+            <div class="card-body" style="display:flex;flex-direction:column;gap:.55rem">
+              <div class="flex-between">
+                <span class="txt-xs txt-muted">FINTRAC</span>
+                <span class="mini-badge b-tl">✓ SYNCED</span>
+              </div>
+              <div class="flex-between">
+                <span class="txt-xs txt-muted">OSFI</span>
+                <span class="mini-badge b-tl">✓ FILED</span>
+              </div>
+              <div class="flex-between">
+                <span class="txt-xs txt-muted">CDBA Phase 1</span>
+                <span class="mini-badge b-br">✓ COMPLY</span>
+              </div>
+              <div class="flex-between">
+                <span class="txt-xs txt-muted">PCMLTFA</span>
+                <span class="mini-badge b-tl">✓ ACTIVE</span>
+              </div>
+              <div class="divider"></div>
+              <div class="flex-between">
+                <span class="txt-xs txt-muted">Next OSFI Report</span>
+                <span class="txt-xs brand txt-mono">June 1</span>
+              </div>
+              <div class="flex-between">
+                <span class="txt-xs txt-muted">FINTRAC SAR Due</span>
+                <span class="txt-xs amber txt-mono">May 15</span>
+              </div>
+            </div>
+          </div>
+          <div class="card" style="flex:1">
+            <div class="card-header"><div class="card-title"><div class="card-title-dot" style="background:var(--gold)"></div>Today's Actions</div></div>
+            <div class="card-body" style="display:flex;flex-direction:column;gap:.45rem">
+              <div class="flex-between"><span class="txt-xs txt-muted">Alerts Reviewed</span><span class="txt-xs bold">15/24</span></div>
+              <div class="flex-between"><span class="txt-xs txt-muted">SARs Drafted</span><span class="txt-xs bold">2</span></div>
+              <div class="flex-between"><span class="txt-xs txt-muted">Cases Closed</span><span class="txt-xs teal bold">4</span></div>
+              <div class="flex-between"><span class="txt-xs txt-muted">Auto-Resolved (AI)</span><span class="txt-xs brand bold">11</span></div>
+              <div class="divider"></div>
+              <div class="flex-between"><span class="txt-xs txt-muted">Avg. Resolution</span><span class="txt-xs brand txt-mono">18 min</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /tab-compliance -->
+
+    <!-- ══ TAB: AML ALERTS ═══════════════════════════════════════ -->
+    <div class="tab-content" id="tab-alerts">
+      <div class="row" style="align-items:center">
+        <div>
+          <div class="flex-center gap8">
+            <span class="txt-sm bold">Alert Queue</span>
+            <span class="mini-badge b-cr">7 HIGH</span>
+            <span class="mini-badge b-am">5 MEDIUM</span>
+            <span class="mini-badge b-br">12 LOW</span>
+          </div>
+        </div>
+        <div style="margin-left:auto;display:flex;gap:.5rem">
+          <select style="font-size:.75rem;padding:.3rem .5rem"><option>All Types</option><option>Structuring</option><option>PEP</option><option>Sanctions</option><option>Velocity</option></select>
+          <select style="font-size:.75rem;padding:.3rem .5rem"><option>All Risk</option><option>Critical (90+)</option><option>High (70-90)</option><option>Medium (40-70)</option></select>
+          <button class="at-act p" style="padding:.32rem .85rem;font-size:.75rem">+ New Alert</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body" style="padding:0">
+          <table class="alert-table">
+            <thead>
+              <tr>
+                <th>Alert ID</th>
+                <th>Type</th>
+                <th>Entity / Account</th>
+                <th>Amount</th>
+                <th>Country</th>
+                <th>Risk Score</th>
+                <th>XAI Reason</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="txt-mono txt-xs brand">#A-4471</td>
+                <td><span class="mini-badge b-cr">STRUCTURING</span></td>
+                <td><div class="at-ind"><div class="ind-dot d-cr"></div><div><div class="txt-xs bold">Acct #CA-4471</div><div class="txt-xs txt-faint">Royal Trust Branch</div></div></div></td>
+                <td class="txt-mono txt-xs">$49,800 ×3</td>
+                <td><span class="flag">🇨🇦</span><span class="txt-xs">CA</span></td>
+                <td><span class="score-pill sp-cr">97</span></td>
+                <td class="txt-xs txt-muted" style="max-width:160px">Transactions split just below $50K threshold over 48h</td>
+                <td><span class="status-tag st-inv">INVESTIGATING</span></td>
+                <td><div class="at-actions"><button class="at-act p">Review</button><button class="at-act">SAR</button></div></td>
+              </tr>
+              <tr>
+                <td class="txt-mono txt-xs brand">#A-4469</td>
+                <td><span class="mini-badge b-cr">NETWORK</span></td>
+                <td><div class="at-ind"><div class="ind-dot d-cr"></div><div><div class="txt-xs bold">6-Node Shell Ring</div><div class="txt-xs txt-faint">Graph anomaly detected</div></div></div></td>
+                <td class="txt-mono txt-xs">$2.3M total</td>
+                <td><span class="flag">🇨🇦</span><span class="txt-xs">CA</span></td>
+                <td><span class="score-pill sp-cr">92</span></td>
+                <td class="txt-xs txt-muted" style="max-width:160px">Circular ownership across 6 shell entities in Toronto</td>
+                <td><span class="status-tag st-new">NEW</span></td>
+                <td><div class="at-actions"><button class="at-act p">Review</button><button class="at-act">Graph</button></div></td>
+              </tr>
+              <tr>
+                <td class="txt-mono txt-xs brand">#A-4466</td>
+                <td><span class="mini-badge b-am">PEP MATCH</span></td>
+                <td><div class="at-ind"><div class="ind-dot d-am"></div><div><div class="txt-xs bold">Acct #CA-3901</div><div class="txt-xs txt-faint">Politically Exposed Person</div></div></div></td>
+                <td class="txt-mono txt-xs">$180,000</td>
+                <td><span class="flag">🇳🇬</span><span class="txt-xs">NG</span></td>
+                <td><span class="score-pill sp-am">74</span></td>
+                <td class="txt-xs txt-muted" style="max-width:160px">Wire source matches OFAC PEP list · unverified origin</td>
+                <td><span class="status-tag st-rev">REVIEW</span></td>
+                <td><div class="at-actions"><button class="at-act p">Review</button><button class="at-act">Screen</button></div></td>
+              </tr>
+              <tr>
+                <td class="txt-mono txt-xs brand">#A-4462</td>
+                <td><span class="mini-badge b-am">VELOCITY</span></td>
+                <td><div class="at-ind"><div class="ind-dot d-am"></div><div><div class="txt-xs bold">Acct #CA-7732</div><div class="txt-xs txt-faint">Cross-border crypto</div></div></div></td>
+                <td class="txt-mono txt-xs">$95,400</td>
+                <td><span class="flag">🇨🇦</span>→<span class="flag">🇺🇸</span>→<span style="font-size:.7rem">₿</span></td>
+                <td><span class="score-pill sp-am">61</span></td>
+                <td class="txt-xs txt-muted" style="max-width:160px">12 txns in 48h · CAD→USD→BTC pathway</td>
+                <td><span class="status-tag st-rev">REVIEW</span></td>
+                <td><div class="at-actions"><button class="at-act p">Review</button></div></td>
+              </tr>
+              <tr>
+                <td class="txt-mono txt-xs brand">#A-4458</td>
+                <td><span class="mini-badge b-br">LAYERING</span></td>
+                <td><div class="at-ind"><div class="ind-dot d-vt"></div><div><div class="txt-xs bold">Corp Entity #E-2241</div><div class="txt-xs txt-faint">Multi-hop wire chain</div></div></div></td>
+                <td class="txt-mono txt-xs">$340,000</td>
+                <td><span class="flag">🇨🇦</span>→<span class="flag">🇦🇪</span></td>
+                <td><span class="score-pill sp-vt">55</span></td>
+                <td class="txt-xs txt-muted" style="max-width:160px">4-hop layering through correspondent banks</td>
+                <td><span class="status-tag st-inv">INVESTIGATING</span></td>
+                <td><div class="at-actions"><button class="at-act p">Review</button><button class="at-act">SAR</button></div></td>
+              </tr>
+              <tr>
+                <td class="txt-mono txt-xs brand">#A-4451</td>
+                <td><span class="mini-badge b-tl">SAR FILED</span></td>
+                <td><div class="at-ind"><div class="ind-dot d-tl"></div><div><div class="txt-xs bold">Acct #CA-1122</div><div class="txt-xs txt-faint">Resolved — archived</div></div></div></td>
+                <td class="txt-mono txt-xs">$22,000</td>
+                <td><span class="flag">🇨🇦</span></td>
+                <td><span class="score-pill sp-tl">✓</span></td>
+                <td class="txt-xs txt-muted" style="max-width:160px">SAR #2026-011 filed · FINTRAC accepted</td>
+                <td><span class="status-tag st-cls">CLOSED</span></td>
+                <td><div class="at-actions"><button class="at-act">View SAR</button></div></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ TAB: NETWORK GRAPH ════════════════════════════════════ -->
+    <div class="tab-content" id="tab-network">
+      <div class="row">
+        <div class="card" style="flex:1.8">
+          <div class="card-header">
+            <div class="card-title"><div class="card-title-dot" style="background:var(--coral)"></div>Entity Relationship Graph · Alert #A-4469</div>
+            <div style="display:flex;gap:.5rem;align-items:center">
+              <div class="mini-badge b-cr">6 NODES · SHELL RING</div>
+              <button class="at-act">Expand</button>
+              <button class="at-act">Export</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="graph-canvas">
+              <svg viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg">
+                <!-- edges -->
+                <line x1="300" y1="80" x2="180" y2="150" stroke="rgba(248,113,113,.35)" stroke-width="1.5" stroke-dasharray="4,3"/>
+                <line x1="300" y1="80" x2="420" y2="150" stroke="rgba(248,113,113,.35)" stroke-width="1.5" stroke-dasharray="4,3"/>
+                <line x1="180" y1="150" x2="120" y2="185" stroke="rgba(251,191,36,.25)" stroke-width="1" stroke-dasharray="3,3"/>
+                <line x1="180" y1="150" x2="240" y2="190" stroke="rgba(251,191,36,.25)" stroke-width="1" stroke-dasharray="3,3"/>
+                <line x1="420" y1="150" x2="360" y2="190" stroke="rgba(251,191,36,.25)" stroke-width="1" stroke-dasharray="3,3"/>
+                <line x1="420" y1="150" x2="480" y2="185" stroke="rgba(248,113,113,.35)" stroke-width="1.5" stroke-dasharray="4,3"/>
+                <line x1="120" y1="185" x2="480" y2="185" stroke="rgba(139,92,246,.25)" stroke-width="1" stroke-dasharray="2,4"/>
+                <!-- central node (bank) -->
+                <circle cx="300" cy="80" r="22" fill="rgba(139,92,246,.15)" stroke="#8B5CF6" stroke-width="1.5"/>
+                <text x="300" y="75" text-anchor="middle" fill="#A78BFA" font-size="9" font-family="Geist Mono">BANK</text>
+                <text x="300" y="86" text-anchor="middle" fill="#7B6FAA" font-size="7" font-family="Geist">Royal Trust</text>
+                <!-- shell nodes -->
+                <circle cx="180" cy="150" r="18" fill="rgba(248,113,113,.15)" stroke="#F87171" stroke-width="1.5"/>
+                <text x="180" y="147" text-anchor="middle" fill="#F87171" font-size="8" font-family="Geist Mono">SHELL</text>
+                <text x="180" y="157" text-anchor="middle" fill="#7B6FAA" font-size="6.5" font-family="Geist">Corp A</text>
+                <circle cx="420" cy="150" r="18" fill="rgba(248,113,113,.15)" stroke="#F87171" stroke-width="1.5"/>
+                <text x="420" y="147" text-anchor="middle" fill="#F87171" font-size="8" font-family="Geist Mono">SHELL</text>
+                <text x="420" y="157" text-anchor="middle" fill="#7B6FAA" font-size="6.5" font-family="Geist">Corp B</text>
+                <!-- leaf nodes -->
+                <circle cx="120" cy="185" r="14" fill="rgba(251,191,36,.12)" stroke="#FBBF24" stroke-width="1"/>
+                <text x="120" y="188" text-anchor="middle" fill="#FBBF24" font-size="7" font-family="Geist Mono">BVI-01</text>
+                <circle cx="240" cy="190" r="14" fill="rgba(251,191,36,.12)" stroke="#FBBF24" stroke-width="1"/>
+                <text x="240" y="193" text-anchor="middle" fill="#FBBF24" font-size="7" font-family="Geist Mono">HK-02</text>
+                <circle cx="360" cy="190" r="14" fill="rgba(251,191,36,.12)" stroke="#FBBF24" stroke-width="1"/>
+                <text x="360" y="193" text-anchor="middle" fill="#FBBF24" font-size="7" font-family="Geist Mono">UAE-03</text>
+                <circle cx="480" cy="185" r="14" fill="rgba(248,113,113,.12)" stroke="#F87171" stroke-width="1.2"/>
+                <text x="480" y="188" text-anchor="middle" fill="#F87171" font-size="7" font-family="Geist Mono">CA-4471</text>
+                <!-- amount labels -->
+                <text x="225" y="108" fill="rgba(139,92,246,.6)" font-size="7" font-family="Geist Mono">$1.2M</text>
+                <text x="355" y="108" fill="rgba(139,92,246,.6)" font-size="7" font-family="Geist Mono">$1.1M</text>
+                <text x="140" y="175" fill="rgba(251,191,36,.5)" font-size="6.5" font-family="Geist Mono">$420K</text>
+                <text x="440" y="172" fill="rgba(248,113,113,.6)" font-size="6.5" font-family="Geist Mono">$680K</text>
+                <!-- circular flow arrow indicator -->
+                <path d="M150 195 Q300 210 450 195" stroke="rgba(139,92,246,.3)" stroke-width="1" fill="none" stroke-dasharray="3,3" marker-end="url(#arr)"/>
+                <defs>
+                  <marker id="arr" markerWidth="5" markerHeight="5" refX="3" refY="2.5" orient="auto">
+                    <path d="M0,0 L5,2.5 L0,5 Z" fill="rgba(139,92,246,.5)"/>
+                  </marker>
+                </defs>
+              </svg>
+            </div>
+            <div class="graph-legend" style="margin-top:.65rem">
+              <div class="gl"><div class="gl-dot" style="background:var(--brand-hi)"></div>Bank Account</div>
+              <div class="gl"><div class="gl-dot" style="background:var(--coral)"></div>Shell Company</div>
+              <div class="gl"><div class="gl-dot" style="background:var(--amber)"></div>Offshore Entity</div>
+              <div class="gl"><div class="gl-dot" style="background:var(--brand-hi);opacity:.4"></div>Circular Flow</div>
+              <span style="margin-left:auto;font-size:.65rem;color:var(--t3)">Powered by Quantexa-style graph analytics · 6 entities · $2.3M at risk</span>
+            </div>
+          </div>
+        </div>
+        <div class="card" style="width:240px;flex-shrink:0">
+          <div class="card-header"><div class="card-title"><div class="card-title-dot" style="background:var(--amber)"></div>Entity Details</div></div>
+          <div class="card-body" style="display:flex;flex-direction:column;gap:.55rem">
+            <div style="background:var(--bg3);border-radius:8px;padding:.65rem;border:.5px solid var(--border)">
+              <div class="txt-xs txt-faint txt-mono" style="margin-bottom:.3rem">SELECTED NODE</div>
+              <div class="txt-sm bold" style="color:var(--coral)">Shell Corp A</div>
+              <div class="txt-xs txt-muted">Registered: British Virgin Islands</div>
+              <div class="txt-xs txt-muted">Incorporated: 2023-01-15</div>
+              <div class="txt-xs txt-muted">Beneficial owner: Unknown</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:.35rem">
+              <div class="flex-between"><span class="txt-xs txt-muted">Total Txns</span><span class="txt-xs txt-mono">47</span></div>
+              <div class="flex-between"><span class="txt-xs txt-muted">Total Value</span><span class="txt-xs txt-mono coral">$1.2M</span></div>
+              <div class="flex-between"><span class="txt-xs txt-muted">Connected Nodes</span><span class="txt-xs txt-mono">3</span></div>
+              <div class="flex-between"><span class="txt-xs txt-muted">Risk Score</span><span class="txt-xs txt-mono coral bold">92/100</span></div>
+              <div class="flex-between"><span class="txt-xs txt-muted">Watchlist Match</span><span class="mini-badge b-cr">OFAC</span></div>
+            </div>
+            <div class="divider"></div>
+            <div class="txt-xs txt-faint txt-mono" style="margin-bottom:.2rem">XAI REASONING</div>
+            <div style="background:var(--brand-g2);border:.5px solid var(--brand-b);border-radius:7px;padding:.6rem;font-size:.7rem;color:var(--t2);line-height:1.5">
+              Circular fund flow across 6 entities with no clear business purpose. Beneficial ownership obscured through 3 jurisdictions. Matches layering typology #T-047.
+            </div>
+            <button class="sar-btn primary" style="font-size:.75rem;padding:.42rem">Generate SAR →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ TAB: PERPETUAL KYC ════════════════════════════════════ -->
+    <div class="tab-content" id="tab-kyc">
+      <div class="row" style="align-items:center">
+        <span class="txt-sm bold">Perpetual KYC Monitor</span>
+        <span class="txt-xs txt-muted" style="margin-left:.5rem">Continuous trigger-based refresh · No periodic reviews</span>
+        <div style="margin-left:auto;display:flex;gap:.5rem">
+          <select style="font-size:.75rem;padding:.3rem .5rem"><option>All Risk Tiers</option><option>High (70+)</option><option>Medium (40-70)</option><option>Low</option></select>
+          <button class="at-act p" style="padding:.32rem .85rem;font-size:.75rem">Bulk Refresh</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body" style="padding:0">
+          <table class="kyc-table">
+            <thead>
+              <tr>
+                <th>Customer ID</th>
+                <th>Name / Entity</th>
+                <th>Risk Tier</th>
+                <th>Risk Score</th>
+                <th>Last Trigger</th>
+                <th>Trigger Type</th>
+                <th>Review Due</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="txt-mono txt-xs brand">#CUS-8821</td>
+                <td><div class="txt-xs bold">Ahmed Al-Rashid</div><div class="txt-xs txt-faint">High Net Worth Individual</div></td>
+                <td><span class="mini-badge b-cr">HIGH</span></td>
+                <td>
+                  <div class="risk-meter">
+                    <div class="rm-bar"><div class="rm-fill" style="width:88%;background:var(--coral)"></div></div>
+                    <span class="rm-val coral">88</span>
+                  </div>
+                </td>
+                <td class="txt-xs txt-mono">2h ago</td>
+                <td><span class="mini-badge b-cr">PEP CHANGE</span></td>
+                <td class="txt-xs coral txt-mono">OVERDUE</td>
+                <td><span class="status-tag st-new">TRIGGERED</span></td>
+                <td><button class="at-act p" style="font-size:.65rem;padding:.2rem .55rem">Review</button></td>
+              </tr>
+              <tr>
+                <td class="txt-mono txt-xs brand">#CUS-4402</td>
+                <td><div class="txt-xs bold">Meridian Holdings Inc</div><div class="txt-xs txt-faint">Corporate — Import/Export</div></td>
+                <td><span class="mini-badge b-am">ELEVATED</span></td>
+                <td>
+                  <div class="risk-meter">
+                    <div class="rm-bar"><div class="rm-fill" style="width:65%;background:var(--amber)"></div></div>
+                    <span class="rm-val amber">65</span>
+                  </div>
+                </td>
+                <td class="txt-xs txt-mono">Yesterday</td>
+                <td><span class="mini-badge b-am">TXN SPIKE</span></td>
+                <td class="txt-xs amber txt-mono">May 12</td>
+                <td><span class="status-tag st-rev">PENDING</span></td>
+                <td><button class="at-act" style="font-size:.65rem;padding:.2rem .55rem">Review</button></td>
+              </tr>
+              <tr>
+                <td class="txt-mono txt-xs brand">#CUS-3317</td>
+                <td><div class="txt-xs bold">Sarah Mitchell</div><div class="txt-xs txt-faint">Retail — SME Owner</div></td>
+                <td><span class="mini-badge b-br">MEDIUM</span></td>
+                <td>
+                  <div class="risk-meter">
+                    <div class="rm-bar"><div class="rm-fill" style="width:42%;background:var(--brand-hi)"></div></div>
+                    <span class="rm-val brand">42</span>
+                  </div>
+                </td>
+                <td class="txt-xs txt-mono">3 days ago</td>
+                <td><span class="mini-badge b-sk">ADDR CHANGE</span></td>
+                <td class="txt-xs txt-muted txt-mono">Jun 1</td>
+                <td><span class="status-tag st-inv">IN REVIEW</span></td>
+                <td><button class="at-act" style="font-size:.65rem;padding:.2rem .55rem">View</button></td>
+              </tr>
+              <tr>
+                <td class="txt-mono txt-xs brand">#CUS-1104</td>
+                <td><div class="txt-xs bold">Tanaka Financial Ltd</div><div class="txt-xs txt-faint">Corporate — FX Dealer</div></td>
+                <td><span class="mini-badge b-tl">LOW</span></td>
+                <td>
+                  <div class="risk-meter">
+                    <div class="rm-bar"><div class="rm-fill" style="width:22%;background:var(--teal)"></div></div>
+                    <span class="rm-val teal">22</span>
+                  </div>
+                </td>
+                <td class="txt-xs txt-mono">1 week ago</td>
+                <td><span class="mini-badge b-tl">ROUTINE</span></td>
+                <td class="txt-xs txt-muted txt-mono">Sep 1</td>
+                <td><span class="status-tag st-cls">CLEAR</span></td>
+                <td><button class="at-act" style="font-size:.65rem;padding:.2rem .55rem">View</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ TAB: SANCTIONS SCREENING ══════════════════════════════ -->
+    <div class="tab-content" id="tab-sanctions">
+      <div class="row" style="align-items:center">
+        <span class="txt-sm bold">Sanctions &amp; Watchlist Screening</span>
+        <span class="txt-xs txt-muted" style="margin-left:.5rem">Real-time · OFAC, UN, OSFI, INTERPOL lists</span>
+        <div style="margin-left:auto;display:flex;gap:.5rem">
+          <button class="at-act p" style="padding:.32rem .85rem;font-size:.75rem">Bulk Screen</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="card" style="flex:1">
+          <div class="card-header"><div class="card-title"><div class="card-title-dot" style="background:var(--coral)"></div>Active Matches</div><span class="mini-badge b-cr">3 HITS</span></div>
+          <div class="card-body">
+            <div class="screening-list">
+              <div class="sl-item">
+                <div class="sl-status" style="background:rgba(248,113,113,.12);border:.5px solid rgba(248,113,113,.28)">⚠</div>
+                <div class="sl-info">
+                  <div class="sl-name">Zayed Trading Corp</div>
+                  <div class="sl-detail">Acct #CA-3901 · Wire $180K from Lagos</div>
+                </div>
+                <div class="sl-score">
+                  <div class="sl-pct coral">96%</div>
+                  <div class="sl-list txt-xs txt-faint">OFAC SDN</div>
+                </div>
+                <button class="sl-action">Investigate</button>
+              </div>
+              <div class="sl-item">
+                <div class="sl-status" style="background:rgba(251,191,36,.12);border:.5px solid rgba(251,191,36,.28)">⊘</div>
+                <div class="sl-info">
+                  <div class="sl-name">Ivan Petrov</div>
+                  <div class="sl-detail">Acct #CA-7201 · PEP · Russian national</div>
+                </div>
+                <div class="sl-score">
+                  <div class="sl-pct amber">78%</div>
+                  <div class="sl-list txt-xs txt-faint">EU Sanctions</div>
+                </div>
+                <button class="sl-action">Review</button>
+              </div>
+              <div class="sl-item">
+                <div class="sl-status" style="background:var(--brand-g);border:.5px solid var(--brand-b)">~</div>
+                <div class="sl-info">
+                  <div class="sl-name">Mohammed Al-Rashed</div>
+                  <div class="sl-detail">New onboarding · name similarity 65%</div>
+                </div>
+                <div class="sl-score">
+                  <div class="sl-pct brand">65%</div>
+                  <div class="sl-list txt-xs txt-faint">INTERPOL</div>
+                </div>
+                <button class="sl-action">Clarify</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card" style="width:260px;flex-shrink:0">
+          <div class="card-header"><div class="card-title"><div class="card-title-dot" style="background:var(--teal)"></div>Watchlists Active</div></div>
+          <div class="card-body" style="display:flex;flex-direction:column;gap:.5rem">
+            <div class="flex-between"><span class="txt-xs txt-muted">OFAC SDN List</span><span class="mini-badge b-tl">✓ LIVE</span></div>
+            <div class="flex-between"><span class="txt-xs txt-muted">UN Security Council</span><span class="mini-badge b-tl">✓ LIVE</span></div>
+            <div class="flex-between"><span class="txt-xs txt-muted">EU Consolidated List</span><span class="mini-badge b-tl">✓ LIVE</span></div>
+            <div class="flex-between"><span class="txt-xs txt-muted">INTERPOL Red Notice</span><span class="mini-badge b-tl">✓ LIVE</span></div>
+            <div class="flex-between"><span class="txt-xs txt-muted">OSFI Designated List</span><span class="mini-badge b-tl">✓ LIVE</span></div>
+            <div class="flex-between"><span class="txt-xs txt-muted">Adverse Media AI</span><span class="mini-badge b-br">AI SCAN</span></div>
+            <div class="divider"></div>
+            <div class="flex-between"><span class="txt-xs txt-muted">Last Sync</span><span class="txt-xs txt-mono brand">2 min ago</span></div>
+            <div class="flex-between"><span class="txt-xs txt-muted">Total Entities</span><span class="txt-xs txt-mono">1,842,441</span></div>
+            <div class="flex-between"><span class="txt-xs txt-muted">False Positive Rate</span><span class="txt-xs txt-mono teal">↓ 0.3%</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ TAB: SAR GENERATOR ════════════════════════════════════ -->
+    <div class="tab-content" id="tab-sar">
+      <div class="row">
+        <div class="card" style="flex:1.4">
+          <div class="card-header">
+            <div class="card-title"><div class="card-title-dot" style="background:var(--brand-hi)"></div>AI-Drafted SAR Generator · FINTRAC F2052-1</div>
+            <div class="mini-badge b-br">AI ASSISTED · HUMAN REVIEWED</div>
+          </div>
+          <div class="card-body">
+            <div style="background:var(--brand-g2);border:.5px solid var(--brand-b);border-radius:8px;padding:.7rem;margin-bottom:.85rem">
+              <div class="txt-xs txt-mono brand" style="margin-bottom:.3rem">// AI SUMMARY — Alert #A-4471</div>
+              <div class="txt-xs txt-muted" style="line-height:1.55">Account #CA-4471 at Royal Trust conducted 3 cash deposits totaling $149,400 across 48 hours — just below the $50,000 FINTRAC reporting threshold per transaction. Pattern consistent with structuring typology T-012. Recommend immediate SAR filing.</div>
+            </div>
+            <div class="sar-form">
+              <div class="sf-row">
+                <div><label class="sf-label">Filing Institution</label><input type="text" class="sf-field" value="Royal Trust Bank — Toronto Branch"></div>
+                <div><label class="sf-label">SAR Reference #</label><input type="text" class="sf-field" value="SAR-2026-013"></div>
+              </div>
+              <div class="sf-row">
+                <div><label class="sf-label">Subject Name</label><input type="text" class="sf-field" value="Account #CA-4471 (Anonymous)"></div>
+                <div><label class="sf-label">Suspicion Type</label><select class="sf-field" style="width:100%"><option>Structuring / Smurfing</option><option>Money Laundering</option><option>Terrorist Financing</option><option>Fraud</option></select></div>
+              </div>
+              <div class="sf-row">
+                <div><label class="sf-label">Transaction Period</label><input type="text" class="sf-field" value="May 7–9, 2026"></div>
+                <div><label class="sf-label">Total Amount</label><input type="text" class="sf-field" value="CA$149,400"></div>
+              </div>
+              <div><label class="sf-label">Narrative (AI-Drafted — Review Required)</label>
+                <textarea class="sf-textarea">The reporting entity observed three separate cash deposits of $49,800 each conducted within a 48-hour window on Account #CA-4471 at the Royal Trust Toronto branch. The transactions appear structured to avoid the $50,000 FINTRAC reporting threshold. No legitimate business reason has been identified. Suspicious Activity Report filed pursuant to PCMLTFA s.7(1).</textarea>
+              </div>
+              <div class="sar-actions">
+                <button class="sar-btn">Save Draft</button>
+                <button class="sar-btn">Preview</button>
+                <button class="sar-btn primary">Submit to FINTRAC →</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card" style="width:230px;flex-shrink:0">
+          <div class="card-header"><div class="card-title"><div class="card-title-dot" style="background:var(--teal)"></div>SAR History</div></div>
+          <div class="card-body" style="display:flex;flex-direction:column;gap:.5rem">
+            <div style="background:var(--bg3);border-radius:7px;padding:.6rem;border:.5px solid var(--border)">
+              <div class="flex-between" style="margin-bottom:.2rem"><span class="txt-xs bold">SAR-2026-012</span><span class="mini-badge b-br">FILED</span></div>
+              <div class="txt-xs txt-faint">Shell network · $2.3M · Filed May 8</div>
+            </div>
+            <div style="background:var(--bg3);border-radius:7px;padding:.6rem;border:.5px solid var(--border)">
+              <div class="flex-between" style="margin-bottom:.2rem"><span class="txt-xs bold">SAR-2026-011</span><span class="mini-badge b-tl">ACCEPTED</span></div>
+              <div class="txt-xs txt-faint">Layering · $95K · FINTRAC confirmed</div>
+            </div>
+            <div style="background:var(--bg3);border-radius:7px;padding:.6rem;border:.5px solid var(--border)">
+              <div class="flex-between" style="margin-bottom:.2rem"><span class="txt-xs bold">SAR-2026-010</span><span class="mini-badge b-tl">ACCEPTED</span></div>
+              <div class="txt-xs txt-faint">PEP match · $180K · May 3</div>
+            </div>
+            <div class="divider"></div>
+            <div class="flex-between"><span class="txt-xs txt-muted">Total Filed (2026)</span><span class="txt-xs txt-mono bold">12</span></div>
+            <div class="flex-between"><span class="txt-xs txt-muted">Accepted Rate</span><span class="txt-xs teal txt-mono">100%</span></div>
+            <div class="flex-between"><span class="txt-xs txt-muted">Avg. Draft Time</span><span class="txt-xs brand txt-mono">4 min</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ TAB: FINANCIAL ADVISORY ═══════════════════════════════ -->
+    <div class="tab-content" id="tab-advisory">
+      <div class="kpi-strip" style="grid-template-columns:repeat(4,1fr)">
+        <div class="kpi" style="--kc:var(--brand-hi)"><div class="kpi-label">Net Worth (Client)</div><div class="kpi-val">CA$<em>247</em>K</div><div class="kpi-sub"><span class="brand">↑ 8.2%</span> YTD</div></div>
+        <div class="kpi" style="--kc:var(--teal)"><div class="kpi-label">Savings Rate</div><div class="kpi-val"><em>23.4</em>%</div><div class="kpi-sub"><span class="teal">↑ vs 18% goal</span></div></div>
+        <div class="kpi" style="--kc:var(--gold)"><div class="kpi-label">Portfolio Return</div><div class="kpi-val"><em>+11.2</em>%</div><div class="kpi-sub">12-month return</div></div>
+        <div class="kpi" style="--kc:var(--sky)"><div class="kpi-label">Risk Profile</div><div class="kpi-val" style="font-size:1.1rem;padding-top:.2rem"><em>MODERATE</em></div><div class="kpi-sub">Last assessed Apr 2026</div></div>
+      </div>
+      <div class="row">
+        <div class="card" style="flex:1">
+          <div class="card-header"><div class="card-title"><div class="card-title-dot" style="background:var(--brand-hi)"></div>Spending Breakdown — May 2026</div></div>
+          <div class="card-body">
+            <div class="donut-wrap">
+              <div class="donut">
+                <svg width="100" height="100" viewBox="0 0 100 100">
+                  <circle cx="50" cy="50" r="36" fill="none" stroke="var(--bg3)" stroke-width="14"/>
+                  <!-- Housing 42% -->
+                  <circle cx="50" cy="50" r="36" fill="none" stroke="#8B5CF6" stroke-width="14" stroke-dasharray="226.2" stroke-dashoffset="131" stroke-linecap="butt"/>
+                  <!-- Food 18% -->
+                  <circle cx="50" cy="50" r="36" fill="none" stroke="#60A5FA" stroke-width="14" stroke-dasharray="226.2" stroke-dashoffset="131" stroke-linecap="butt" style="transform:rotate(151deg);transform-origin:50% 50%"/>
+                </svg>
+                <div class="donut-inner">
+                  <div class="donut-val">$5K</div>
+                  <div class="donut-sub">SPENT</div>
+                </div>
+              </div>
+              <div class="donut-legend">
+                <div class="dl"><div class="dl-dot" style="background:var(--brand-hi)"></div>Housing<div class="dl-val">42%</div></div>
+                <div class="dl"><div class="dl-dot" style="background:var(--sky)"></div>Food<div class="dl-val">18%</div></div>
+                <div class="dl"><div class="dl-dot" style="background:var(--teal)"></div>Transport<div class="dl-val">14%</div></div>
+                <div class="dl"><div class="dl-dot" style="background:var(--gold)"></div>Savings<div class="dl-val">23%</div></div>
+                <div class="dl"><div class="dl-dot" style="background:var(--t3)"></div>Other<div class="dl-val">3%</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card" style="flex:1">
+          <div class="card-header"><div class="card-title"><div class="card-title-dot" style="background:var(--gold)"></div>Financial Goals</div></div>
+          <div class="card-body">
+            <div class="goals">
+              <div class="goal-item">
+                <div class="goal-header"><div class="goal-name"><span class="goal-icon">🏠</span>Home Down Payment</div><div class="goal-pct">68%</div></div>
+                <div class="goal-bar"><div class="goal-fill" style="width:68%;background:var(--brand-hi)"></div></div>
+                <div class="goal-meta"><span>CA$68K / $100K</span><span>Target: Dec 2026</span></div>
+              </div>
+              <div class="goal-item">
+                <div class="goal-header"><div class="goal-name"><span class="goal-icon">🛡️</span>Emergency Fund</div><div class="goal-pct">90%</div></div>
+                <div class="goal-bar"><div class="goal-fill" style="width:90%;background:var(--teal)"></div></div>
+                <div class="goal-meta"><span>CA$18K / $20K</span><span>Target: Jun 2026</span></div>
+              </div>
+              <div class="goal-item">
+                <div class="goal-header"><div class="goal-name"><span class="goal-icon">📈</span>TFSA Maximization</div><div class="goal-pct">45%</div></div>
+                <div class="goal-bar"><div class="goal-fill" style="width:45%;background:var(--gold)"></div></div>
+                <div class="goal-meta"><span>CA$31K / $95K limit</span><span>Target: Dec 2026</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card" style="width:220px;flex-shrink:0">
+          <div class="card-header"><div class="card-title"><div class="card-title-dot" style="background:var(--teal)"></div>AI Insight</div></div>
+          <div class="card-body" style="display:flex;flex-direction:column;gap:.55rem">
+            <div style="background:var(--brand-g2);border:.5px solid var(--brand-b);border-radius:8px;padding:.7rem">
+              <div class="txt-xs txt-mono brand" style="margin-bottom:.3rem">// RECOMMENDATION</div>
+              <div class="txt-xs txt-muted" style="line-height:1.55">Your EQ Bank rate is 1.2% above your chequing savings. Moving $15K could earn $180 more per year.</div>
+            </div>
+            <div style="background:var(--teal-g);border:.5px solid var(--teal-b);border-radius:8px;padding:.7rem">
+              <div class="txt-xs txt-mono teal" style="margin-bottom:.3rem">// ALERT</div>
+              <div class="txt-xs txt-muted" style="line-height:1.55">Food spending ↑ 14% this month. At this rate you'll exceed your $800 food budget by $112.</div>
+            </div>
+            <div style="background:var(--gold-g);border:.5px solid var(--gold-b);border-radius:8px;padding:.7rem">
+              <div class="txt-xs txt-mono gold" style="margin-bottom:.3rem">// OPPORTUNITY</div>
+              <div class="txt-xs txt-muted" style="line-height:1.55">TFSA contribution room of $64K remaining. Max out to save up to $4,800 in tax annually.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ TAB: OPEN BANKING ═════════════════════════════════════ -->
+    <div class="tab-content" id="tab-openbanking">
+      <div class="row">
+        <div class="card" style="flex:1">
+          <div class="card-header"><div class="card-title"><div class="card-title-dot" style="background:var(--sky)"></div>Aggregated Accounts · CDBA Phase 1</div><span class="mini-badge b-sk">4 CONNECTED</span></div>
+          <div class="card-body">
+            <div class="ob-accounts">
+              <div class="ob-acc">
+                <div class="ob-acc-icon" style="background:rgba(239,68,68,.12);border:.5px solid rgba(239,68,68,.25)">🏦</div>
+                <div class="ob-acc-info"><div class="ob-acc-name">RBC Royal Bank</div><div class="ob-acc-type">Chequing · Read-only · CDBA</div></div>
+                <div class="ob-acc-bal"><div class="ob-acc-amount">CA$12,441</div><div class="ob-acc-change" style="color:var(--teal)">↑ $220 this week</div></div>
+              </div>
+              <div class="ob-acc">
+                <div class="ob-acc-icon" style="background:rgba(245,200,66,.1);border:.5px solid rgba(245,200,66,.25)">💰</div>
+                <div class="ob-acc-info"><div class="ob-acc-name">Wealthsimple</div><div class="ob-acc-type">TFSA + RRSP · Read-only</div></div>
+                <div class="ob-acc-bal"><div class="ob-acc-amount">CA$87,230</div><div class="ob-acc-change" style="color:var(--teal)">↑ $3,100 MTD</div></div>
+              </div>
+              <div class="ob-acc">
+                <div class="ob-acc-icon" style="background:rgba(96,165,250,.1);border:.5px solid rgba(96,165,250,.25)">🏛️</div>
+                <div class="ob-acc-info"><div class="ob-acc-name">EQ Bank</div><div class="ob-acc-type">HISA 4.5% · Read-only</div></div>
+                <div class="ob-acc-bal"><div class="ob-acc-amount">CA$48,209</div><div class="ob-acc-change" style="color:var(--teal)">+4.5% APY</div></div>
+              </div>
+              <div class="ob-acc">
+                <div class="ob-acc-icon" style="background:rgba(139,92,246,.1);border:.5px solid rgba(139,92,246,.25)">💳</div>
+                <div class="ob-acc-info"><div class="ob-acc-name">Simplii Financial</div><div class="ob-acc-type">Credit · Revoked by user</div></div>
+                <div class="ob-acc-bal"><div class="ob-acc-amount" style="color:var(--t3)">Disconnected</div><div class="ob-acc-change" style="color:var(--t3)">May 1, 2026</div></div>
+              </div>
+            </div>
+            <div style="margin-top:.85rem;padding:.75rem;background:var(--bg3);border-radius:8px;display:flex;justify-content:space-between;align-items:center">
+              <span class="txt-xs txt-muted">Total Net Worth (Aggregated)</span>
+              <span style="font-family:'Instrument Serif',serif;font-size:1.4rem;color:var(--brand-hi)">CA$147,880</span>
+            </div>
+          </div>
+        </div>
+        <div class="card" style="width:250px;flex-shrink:0">
+          <div class="card-header"><div class="card-title"><div class="card-title-dot" style="background:var(--brand-hi)"></div>Consent Manager</div></div>
+          <div class="card-body">
+            <div class="consent-row">
+              <div class="cr-icon" style="background:rgba(239,68,68,.1);border:.5px solid rgba(239,68,68,.2)">🏦</div>
+              <div class="cr-info"><div class="cr-name">RBC — Balances</div><div class="cr-detail">Granted Jan 12 · Read-only</div></div>
+              <div class="tog on" onclick="this.classList.toggle('on');this.classList.toggle('off')"><div class="tok"></div></div>
+            </div>
+            <div class="consent-row">
+              <div class="cr-icon" style="background:rgba(245,200,66,.08);border:.5px solid rgba(245,200,66,.2)">💰</div>
+              <div class="cr-info"><div class="cr-name">Wealthsimple — Txns</div><div class="cr-detail">Granted Mar 3 · Read-only</div></div>
+              <div class="tog on" onclick="this.classList.toggle('on');this.classList.toggle('off')"><div class="tok"></div></div>
+            </div>
+            <div class="consent-row">
+              <div class="cr-icon" style="background:rgba(96,165,250,.08);border:.5px solid rgba(96,165,250,.2)">🏛️</div>
+              <div class="cr-info"><div class="cr-name">EQ Bank — Savings</div><div class="cr-detail">Granted May 9 · Read-only</div></div>
+              <div class="tog on" onclick="this.classList.toggle('on');this.classList.toggle('off')"><div class="tok"></div></div>
+            </div>
+            <div class="consent-row">
+              <div class="cr-icon" style="background:rgba(139,92,246,.08);border:.5px solid rgba(139,92,246,.2)">💳</div>
+              <div class="cr-info"><div class="cr-name">Simplii — Credit</div><div class="cr-detail">Revoked May 1</div></div>
+              <div class="tog off" onclick="this.classList.toggle('on');this.classList.toggle('off')"><div class="tok"></div></div>
+            </div>
+            <div class="divider" style="margin:.65rem 0"></div>
+            <div class="flex-between">
+              <span class="txt-xs txt-muted">CDBA Phase 2 (2027)</span>
+              <span class="mini-badge b-br">READY</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ TAB: AUDIT TRAIL ══════════════════════════════════════ -->
+    <div class="tab-content" id="tab-audit">
+      <div class="row" style="align-items:center">
+        <span class="txt-sm bold">Immutable Audit Log</span>
+        <span class="txt-xs txt-muted" style="margin-left:.5rem">Cryptographically hashed · PCMLTFA compliant · Tamper-evident</span>
+        <div style="margin-left:auto;display:flex;gap:.5rem">
+          <select style="font-size:.75rem;padding:.3rem .5rem"><option>All Actions</option><option>SAR Events</option><option>Alert Events</option><option>Login Events</option></select>
+          <button class="at-act p" style="padding:.32rem .85rem;font-size:.75rem">Export Log</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body" style="padding:0">
+          <div class="audit-list">
+            <div class="audit-row">
+              <div class="audit-icon" style="background:var(--brand-g);color:var(--brand-hi)">✎</div>
+              <div class="audit-action"><strong>SAR-2026-013 drafted</strong> by AI · pending officer review</div>
+              <div class="audit-user">Chen, Marie</div>
+              <div class="audit-time">14:32:01</div>
+            </div>
+            <div class="audit-row">
+              <div class="audit-icon" style="background:var(--coral-g);color:var(--coral)">⚠</div>
+              <div class="audit-action"><strong>Alert #A-4471 escalated</strong> to high-risk investigation queue</div>
+              <div class="audit-user">AI Agent</div>
+              <div class="audit-time">14:29:18</div>
+            </div>
+            <div class="audit-row">
+              <div class="audit-icon" style="background:var(--teal-g);color:var(--teal)">✓</div>
+              <div class="audit-action"><strong>SAR-2026-012 submitted</strong> to FINTRAC · Reference #F2026-88221</div>
+              <div class="audit-user">Chen, Marie</div>
+              <div class="audit-time">13:47:22</div>
+            </div>
+            <div class="audit-row">
+              <div class="audit-icon" style="background:var(--amber-g);color:var(--amber)">⦿</div>
+              <div class="audit-action"><strong>KYC refresh triggered</strong> on Customer #CUS-8821 · PEP status change detected</div>
+              <div class="audit-user">AI Agent</div>
+              <div class="audit-time">13:15:04</div>
+            </div>
+            <div class="audit-row">
+              <div class="audit-icon" style="background:var(--sky-g);color:var(--sky)">⇄</div>
+              <div class="audit-action"><strong>OSFI report synced</strong> · Q1 2026 risk data submitted automatically</div>
+              <div class="audit-user">System</div>
+              <div class="audit-time">12:00:00</div>
+            </div>
+            <div class="audit-row">
+              <div class="audit-icon" style="background:var(--brand-g);color:var(--brand-hi)">⊘</div>
+              <div class="audit-action"><strong>Consent revoked</strong> · Simplii Financial by user · logged per CDBA §12(4)</div>
+              <div class="audit-user">User: Sarah M</div>
+              <div class="audit-time">09:15:44</div>
+            </div>
+            <div class="audit-row">
+              <div class="audit-icon" style="background:var(--glass3);color:var(--t2)">→</div>
+              <div class="audit-action"><strong>Login</strong> · Officer Chen · IP 192.168.1.4 · MFA verified</div>
+              <div class="audit-user">Chen, Marie</div>
+              <div class="audit-time">08:01:55</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ TAB: SYSTEM HEALTH ════════════════════════════════════ -->
+    <div class="tab-content" id="tab-admin">
+      <div class="kpi-strip">
+        <div class="kpi" style="--kc:var(--teal)"><div class="kpi-label">API Uptime</div><div class="kpi-val"><em>99.98</em>%</div><div class="kpi-sub">30-day average</div><span class="kpi-badge kb-up">✓ OK</span></div>
+        <div class="kpi" style="--kc:var(--brand-hi)"><div class="kpi-label">Avg Response</div><div class="kpi-val"><em>42</em>ms</div><div class="kpi-sub">P95 latency</div><span class="kpi-badge kb-up">↓ FAST</span></div>
+        <div class="kpi" style="--kc:var(--sky)"><div class="kpi-label">Active Users</div><div class="kpi-val"><em>847</em></div><div class="kpi-sub">Across all roles</div><span class="kpi-badge kb-up">↑ 12%</span></div>
+        <div class="kpi" style="--kc:var(--gold)"><div class="kpi-label">Alert Resolution</div><div class="kpi-val"><em>94.2</em>%</div><div class="kpi-sub">Platform-wide</div><span class="kpi-badge kb-up">↑ 6%</span></div>
+        <div class="kpi" style="--kc:var(--amber)"><div class="kpi-label">DB Health</div><div class="kpi-val"><em>100</em>%</div><div class="kpi-sub">No errors</div><span class="kpi-badge kb-up">✓ OK</span></div>
+      </div>
+      <div class="row">
+        <div class="card" style="flex:1">
+          <div class="card-header"><div class="card-title"><div class="card-title-dot" style="background:var(--teal)"></div>Service Health Monitor</div></div>
+          <div class="card-body">
+            <div class="health-grid">
+              <div class="health-card"><div class="hc-icon">⚡</div><div class="hc-val teal">99.9%</div><div class="hc-label">AML Engine</div><div class="health-bar"><div class="hb-fill" style="width:99.9%;background:var(--teal)"></div></div></div>
+              <div class="health-card"><div class="hc-icon">🔒</div><div class="hc-val teal">100%</div><div class="hc-label">Auth Service</div><div class="health-bar"><div class="hb-fill" style="width:100%;background:var(--teal)"></div></div></div>
+              <div class="health-card"><div class="hc-icon">🔗</div><div class="hc-val teal">100%</div><div class="hc-label">Open Banking API</div><div class="health-bar"><div class="hb-fill" style="width:100%;background:var(--teal)"></div></div></div>
+              <div class="health-card"><div class="hc-icon">🤖</div><div class="hc-val brand">99.7%</div><div class="hc-label">AI/LLM Layer</div><div class="health-bar"><div class="hb-fill" style="width:99.7%;background:var(--brand-hi)"></div></div></div>
+              <div class="health-card"><div class="hc-icon">📦</div><div class="hc-val teal">100%</div><div class="hc-label">Database</div><div class="health-bar"><div class="hb-fill" style="width:100%;background:var(--teal)"></div></div></div>
+              <div class="health-card"><div class="hc-icon">📡</div><div class="hc-val amber">98.1%</div><div class="hc-label">FINTRAC Sync</div><div class="health-bar"><div class="hb-fill" style="width:98.1%;background:var(--amber)"></div></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="card" style="width:260px;flex-shrink:0">
+          <div class="card-header"><div class="card-title"><div class="card-title-dot" style="background:var(--brand-hi)"></div>Recent Notifications</div></div>
+          <div class="card-body">
+            <div class="notif-list">
+              <div class="notif">
+                <div class="notif-ind" style="background:var(--coral)"></div>
+                <div class="notif-content">
+                  <div class="notif-title">High-risk alert escalated</div>
+                  <div class="notif-desc">Alert #A-4471 requires immediate review</div>
+                  <div class="notif-time">14:32 today</div>
+                </div>
+              </div>
+              <div class="notif">
+                <div class="notif-ind" style="background:var(--teal)"></div>
+                <div class="notif-content">
+                  <div class="notif-title">SAR accepted by FINTRAC</div>
+                  <div class="notif-desc">SAR-2026-012 confirmation received</div>
+                  <div class="notif-time">13:48 today</div>
+                </div>
+              </div>
+              <div class="notif">
+                <div class="notif-ind" style="background:var(--amber)"></div>
+                <div class="notif-content">
+                  <div class="notif-title">KYC refresh triggered</div>
+                  <div class="notif-desc">3 customers require review this week</div>
+                  <div class="notif-time">09:00 today</div>
+                </div>
+              </div>
+              <div class="notif">
+                <div class="notif-ind" style="background:var(--brand-hi)"></div>
+                <div class="notif-content">
+                  <div class="notif-title">CDBA Phase 2 Update</div>
+                  <div class="notif-desc">New write-access standards published — read</div>
+                  <div class="notif-time">Yesterday</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /scroll -->
+</div><!-- /main -->
+
+<script>
+/* ── Tab navigation ─────────────────────────────────────── */
+const pageNames={
+  compliance:'Compliance Overview','alerts':'AML Alert Queue',
+  network:'Entity Network Graph','kyc':'Perpetual KYC Monitor',
+  sanctions:'Sanctions Screening','sar':'SAR Generator',
+  advisory:'Financial Advisory','openbanking':'Open Banking',
+  audit:'Audit Trail','admin':'System Health'
+};
+const crumbs={
+  compliance:'Compliance Dashboard','alerts':'AML Alerts',
+  network:'Network Graph','kyc':'KYC Monitor',
+  sanctions:'Sanctions','sar':'SAR Generator',
+  advisory:'Advisory','openbanking':'Open Banking',
+  audit:'Audit Trail','admin':'System Health'
+};
+
+function setTab(id){
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('on'));
+  document.querySelectorAll('.sb-link').forEach(l=>l.classList.remove('on'));
+  const el=document.getElementById('tab-'+id);
+  if(el)el.classList.add('on');
+  document.querySelectorAll('.sb-link').forEach(l=>{
+    if(l.getAttribute('onclick')&&l.getAttribute('onclick').includes("'"+id+"'")){l.classList.add('on')}
+  });
+  document.getElementById('page-title').textContent=pageNames[id]||id;
+  document.getElementById('page-crumb').textContent=crumbs[id]||id;
+  document.getElementById('scroll-area').scrollTop=0;
+}
+
+/* ── Heatmap generator ──────────────────────────────────── */
+(function(){
+  const c=['hm-0','hm-1','hm-2','hm-3','hm-4','hm-5'];
+  const hm=document.getElementById('heatmap');
+  const weights=[30,25,18,12,10,5];
+  for(let i=0;i<144;i++){
+    const d=document.createElement('div');
+    const r=Math.random()*100;
+    let acc=0,ci=0;
+    for(let j=0;j<weights.length;j++){acc+=weights[j];if(r<acc){ci=j;break}}
+    d.className='hm-cell '+c[ci];
+    d.title='Week '+(Math.floor(i/7)+1)+' · '+['Low','Moderate','Medium','High','Very High','Critical'][ci]+' activity';
+    hm.appendChild(d);
+  }
+})();
+
+/* ── AI Chat ────────────────────────────────────────────── */
+function sendChat(){
+  const inp=document.getElementById('ai-input');
+  const msg=inp.value.trim();
+  if(!msg)return;
+  const chat=document.getElementById('ai-chat');
+  // user bubble
+  const u=document.createElement('div');
+  u.className='ai-msg user';
+  u.innerHTML=`<div class="ai-avatar user-av" style="font-size:.6rem;color:var(--t2)">MC</div><div class="ai-bubble user-b">${msg}</div>`;
+  chat.appendChild(u);
+  inp.value='';
+  // bot reply
+  setTimeout(()=>{
+    const replies=[
+      'I\'m analyzing that query against the current alert database and regulatory corpus. Based on PCMLTFA guidelines, here\'s my assessment…',
+      'Cross-referencing with FINTRAC typologies T-012 and T-047. The pattern suggests a potential structuring scenario. Shall I draft a SAR?',
+      'I\'ve identified 3 related alerts that may be connected to this entity. Would you like me to generate a consolidated investigation report?',
+      'Based on the Forrester Wave AML benchmark, this risk score of 97/100 falls in the top 2% of critical alerts. Immediate action is recommended.',
+      'Checking the current OSFI watchlist and OFAC SDN database… No direct match found, but I\'ve flagged a 78% name similarity for review.',
+    ];
+    const b=document.createElement('div');
+    b.className='ai-msg';
+    b.innerHTML=`<div class="ai-avatar">N</div><div class="ai-bubble bot">${replies[Math.floor(Math.random()*replies.length)]}</div>`;
+    chat.appendChild(b);
+    chat.scrollTop=chat.scrollHeight;
+  },800);
+  chat.scrollTop=chat.scrollHeight;
+}
+document.getElementById('ai-input').addEventListener('keydown',e=>{if(e.key==='Enter')sendChat()});
+
+/* ── Period toggle ───────────────────────────────────────── */
+document.querySelectorAll('.tb-period button').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    btn.closest('.tb-period').querySelectorAll('button').forEach(b=>b.classList.remove('on'));
+    btn.classList.add('on');
+  });
+});
+</script>
+</body>
+</html>
