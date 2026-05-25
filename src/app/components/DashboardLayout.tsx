@@ -39,15 +39,19 @@ export default function DashboardLayout({
 
   const navLinks: NavLink[] = [
     { id: "overview", label: "Overview", icon: LayoutGrid, path: "/dashboard" },
-    { id: "kyc", label: "KYC Onboarding", icon: Users, badge: { text: "3", color: "amber" }, path: "/kyc" },
+    { id: "alerts", label: "AML Alerts", icon: AlertTriangle, badge: { text: "7", color: "red" }, path: "/dashboard" },
     { id: "network", label: "Network Graph", icon: Network, path: "/network" },
-    { id: "cases", label: "Case Management", icon: FileText, path: "/cases" },
-    { id: "supervisor", label: "Supervisor Queue", icon: Shield, badge: { text: "2", color: "purple" }, path: "/supervisor" },
-    { id: "rules", label: "Rules Engine", icon: SettingsIcon, path: "/rules" },
+    { id: "kyc", label: "Perpetual KYC", icon: Users, badge: { text: "3", color: "amber" }, path: "/kyc" },
+    { id: "sanctions", label: "Sanctions Screening", icon: Shield, path: "/dashboard" },
+    { id: "sar", label: "SAR Generator", icon: FileText, badge: { text: "2", color: "purple" }, path: "/dashboard" },
+    { id: "advisory", label: "Financial Advisory", icon: TrendingUp, path: "/dashboard" },
+    { id: "openbanking", label: "Open Banking", icon: Laptop, badge: { text: "NEW", color: "green" }, path: "/dashboard" },
+    { id: "audit", label: "Audit Trail", icon: Activity, path: "/dashboard" },
+    { id: "admin", label: "System Health", icon: SettingsIcon, path: "/dashboard" },
   ];
 
-  const coreLinks = navLinks.slice(0, 4);
-  const moduleLinks = navLinks.slice(4);
+  const coreLinks = navLinks.slice(0, 6);
+  const moduleLinks = navLinks.slice(6);
 
   const getBadgeColor = (color: string) => {
     switch (color) {
