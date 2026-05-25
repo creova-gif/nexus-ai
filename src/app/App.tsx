@@ -2,6 +2,11 @@ import { Toaster } from "./components/ui/sonner";
 import { Route, Switch } from "wouter";
 import LandingPage from "./pages/LandingPage";
 import ComplianceDashboard from "./pages/ComplianceDashboard";
+import KycOnboarding from "./pages/KycOnboarding";
+import CaseManagement from "./pages/CaseManagement";
+import SupervisorQueue from "./pages/SupervisorQueue";
+import RulesEngine from "./pages/RulesEngine";
+import EntityGraph from "./pages/EntityGraph";
 
 export default function App() {
   return (
@@ -10,6 +15,11 @@ export default function App() {
         <Route path="/" component={LandingPage} />
         <Route path="/dashboard" component={ComplianceDashboard} />
         <Route path="/compliance" component={ComplianceDashboard} />
+        <Route path="/kyc" component={KycOnboarding} />
+        <Route path="/cases" component={CaseManagement} />
+        <Route path="/supervisor" component={SupervisorQueue} />
+        <Route path="/rules" component={RulesEngine} />
+        <Route path="/network" component={EntityGraph} />
         <Route>
           {() => (
             <div className="min-h-screen flex items-center justify-center bg-[var(--navy-bg)]">

@@ -33,25 +33,21 @@ export default function DashboardLayout({
   pageTitle = "Dashboard",
   breadcrumb = "Overview",
 }: DashboardLayoutProps) {
-  const [, navigate] = useLocation();
+  const [location, navigate] = useLocation();
   const [searchQuery, setSearchQuery] = useState("");
   const [periodFilter, setPeriodFilter] = useState("Today");
 
   const navLinks: NavLink[] = [
-    { id: "overview", label: "Overview", icon: LayoutGrid },
-    { id: "alerts", label: "AML Alerts", icon: AlertTriangle, badge: { text: "7", color: "red" } },
-    { id: "network", label: "Network Graph", icon: Network },
-    { id: "kyc", label: "Perpetual KYC", icon: Users, badge: { text: "3", color: "amber" } },
-    { id: "sanctions", label: "Sanctions Screening", icon: Shield },
-    { id: "sar", label: "SAR Generator", icon: FileText, badge: { text: "2", color: "purple" } },
-    { id: "advisory", label: "Financial Advisory", icon: TrendingUp },
-    { id: "openbanking", label: "Open Banking", icon: Laptop, badge: { text: "NEW", color: "green" } },
-    { id: "audit", label: "Audit Trail", icon: Activity },
-    { id: "admin", label: "System Health", icon: SettingsIcon },
+    { id: "overview", label: "Overview", icon: LayoutGrid, path: "/dashboard" },
+    { id: "kyc", label: "KYC Onboarding", icon: Users, badge: { text: "3", color: "amber" }, path: "/kyc" },
+    { id: "network", label: "Network Graph", icon: Network, path: "/network" },
+    { id: "cases", label: "Case Management", icon: FileText, path: "/cases" },
+    { id: "supervisor", label: "Supervisor Queue", icon: Shield, badge: { text: "2", color: "purple" }, path: "/supervisor" },
+    { id: "rules", label: "Rules Engine", icon: SettingsIcon, path: "/rules" },
   ];
 
-  const coreLinks = navLinks.slice(0, 6);
-  const moduleLinks = navLinks.slice(6);
+  const coreLinks = navLinks.slice(0, 4);
+  const moduleLinks = navLinks.slice(4);
 
   const getBadgeColor = (color: string) => {
     switch (color) {
@@ -95,7 +91,7 @@ export default function DashboardLayout({
           </div>
           {coreLinks.map((link) => {
             const Icon = link.icon;
-            const isActive = link.id === "overview";
+            const isActive = location === link.path || (link.id === "overview" && location === "/");
             return (
               <div
                 key={link.id}
@@ -128,13 +124,21 @@ export default function DashboardLayout({
           </div>
           {moduleLinks.map((link) => {
             const Icon = link.icon;
+            const isActive = location === link.path;
             return (
               <div
                 key={link.id}
-                className="flex items-center gap-2.5 px-3.5 py-2 mx-1.5 rounded-lg text-sm cursor-pointer transition-all text-[var(--text-purple-2)] hover:bg-[var(--glass2)] hover:text-[var(--text-purple)]"
+                className={`flex items-center gap-2.5 px-3.5 py-2 mx-1.5 rounded-lg text-sm cursor-pointer transition-all relative ${
+                  isActive
+                    ? "bg-[var(--brand-glow)] text-[var(--brand-hi)]"
+                    : "text-[var(--text-purple-2)] hover:bg-[var(--glass2)] hover:text-[var(--text-purple)]"
+                }`}
                 onClick={() => link.path && navigate(link.path)}
               >
-                <Icon className="w-3.5 h-3.5 flex-shrink-0 opacity-65" />
+                {isActive && (
+                  <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-[65%] bg-[var(--brand-hi)] rounded-r" />
+                )}
+                <Icon className={`w-3.5 h-3.5 flex-shrink-0 ${isActive ? "opacity-100" : "opacity-65"}`} />
                 <span className="flex-1">{link.label}</span>
                 {link.badge && (
                   <span className={`px-2 py-0.5 rounded-full text-[0.6rem] font-bold font-['Geist_Mono'] ${getBadgeColor(link.badge.color)}`}>

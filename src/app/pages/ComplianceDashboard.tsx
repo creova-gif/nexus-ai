@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useAppStore } from "../store";
 import DashboardLayout from "../components/DashboardLayout";
 import { Card } from "../components/ui/card";
 import { Button } from "../components/ui/button";
@@ -57,56 +58,22 @@ export default function ComplianceDashboard() {
     },
   ];
 
-  const alerts = [
-    {
-      id: 1,
-      type: "Structuring — Acct #CA-4471",
-      detail: "$49,800 × 3 txns · Royal Trust · 2h ago",
-      score: 97,
-      riskLevel: "critical",
-      status: "NEW",
-    },
-    {
-      id: 2,
-      type: "Network Anomaly — 6-Node Ring",
-      detail: "Shell co. cluster detected · Toronto",
-      score: 92,
-      riskLevel: "critical",
-      status: "REVIEWING",
-    },
-    {
-      id: 3,
-      type: "PEP Match — Unverified Source",
-      detail: "Cross-border wire · origin unclear",
-      score: 74,
-      riskLevel: "high",
-      status: "INVESTIGATING",
-    },
-    {
-      id: 4,
-      type: "Rapid Movement — Corporate Account",
-      detail: "Funds in/out same day · $180K total",
-      score: 68,
-      riskLevel: "medium",
-      status: "INVESTIGATING",
-    },
-    {
-      id: 5,
-      type: "Sanctions Match — Partial Name",
-      detail: "87% match · OFAC screening · pending review",
-      score: 91,
-      riskLevel: "critical",
-      status: "NEW",
-    },
-    {
-      id: 6,
-      type: "Unusual Pattern — Business Account",
-      detail: "Weekend activity spike · normally dormant",
-      score: 62,
-      riskLevel: "medium",
-      status: "REVIEWING",
-    },
-  ];
+  const { 
+    alerts, 
+    chatMessages, 
+    sarSubject, 
+    sarType, 
+    sarSummary, 
+    addChatMessage, 
+    updateAlertStatus, 
+    setSarSubject, 
+    setSarType, 
+    generateSarDraft 
+  } = useAppStore();
+  const [chatInput, setChatInput] = useState("");
+
+  // kpis hardcoded for UI visual fidelity
+  // removed hardcoded alerts
 
   const getScoreColor = (score: number) => {
     if (score >= 90) return { bg: "rgba(248,113,113,.12)", text: "var(--coral)" };
@@ -137,12 +104,7 @@ export default function ComplianceDashboard() {
     { icon: CheckCircle, title: "SAR draft generated (AI)", meta: "FINTRAC format · awaiting officer review", time: "12m ago", color: "var(--teal)" },
   ];
 
-  const chatMessages = [
-    { type: "bot", text: "Alert #AML-2026-0471 shows a structuring pattern. The account has made 3 transactions of $49,800 each over 48 hours — just under the $50K reporting threshold." },
-    { type: "user", text: "What's the account history?" },
-    { type: "bot", text: "Account #CA-4471 opened 6 months ago. First 4 months dormant. Sudden activity spike in last 60 days — total inflow CA$380K." },
-    { type: "user", text: "Draft a SAR" },
-  ];
+  // removed hardcoded chatMessages
 
   const regulatoryStatus = [
     { name: "FINTRAC", status: "COMPLIANT", color: "var(--teal)" },
@@ -391,9 +353,22 @@ export default function ComplianceDashboard() {
               <input
                 type="text"
                 placeholder="Ask about this case..."
+                value={chatInput}
+                onChange={(e) => setChatInput(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && chatInput.trim()) {
+                    addChatMessage(chatInput.trim());
+                    setChatInput("");
+                  }
+                }}
                 className="flex-1 px-3 py-2 text-xs bg-[var(--glass)] border-[0.5px] border-[var(--border)] rounded-md text-[var(--text-purple)] placeholder:text-[var(--text-purple-3)] outline-none focus:border-[var(--border-purple)]"
               />
-              <Button size="sm" className="px-3 py-2 h-auto gradient-purple text-white">
+              <Button size="sm" className="px-3 py-2 h-auto gradient-purple text-white" onClick={() => {
+                  if (chatInput.trim()) {
+                    addChatMessage(chatInput.trim());
+                    setChatInput("");
+                  }
+                }}>
                 <Send className="w-3.5 h-3.5" />
               </Button>
             </div>
@@ -516,12 +491,14 @@ export default function ComplianceDashboard() {
                         <Button
                           size="sm"
                           variant="outline"
+                          onClick={() => updateAlertStatus(alert.id, 'REVIEWING')}
                           className="px-2.5 py-1 h-auto text-[0.65rem] font-semibold rounded-md glass border-[var(--border)] hover:border-[var(--border2)] text-[var(--text-purple-2)] hover:text-[var(--text-purple)]"
                         >
                           Review
                         </Button>
                         <Button
                           size="sm"
+                          onClick={() => updateAlertStatus(alert.id, 'INVESTIGATING')}
                           className="px-2.5 py-1 h-auto text-[0.65rem] font-semibold rounded-md gradient-purple text-white border-none hover:opacity-90"
                         >
                           Investigate
@@ -650,23 +627,23 @@ export default function ComplianceDashboard() {
             <div className="space-y-4">
               <div>
                 <label className="block text-xs font-semibold text-[var(--text-purple-2)] mb-2">Subject Entity</label>
-                <input type="text" placeholder="Account #CA-4471" className="w-full px-3 py-2 text-sm bg-[var(--glass)] border-[0.5px] border-[var(--border)] rounded-md text-[var(--text-purple)] outline-none focus:border-[var(--border-purple)]" />
+                <input type="text" value={sarSubject} onChange={e => setSarSubject(e.target.value)} placeholder="Account #CA-4471" className="w-full px-3 py-2 text-sm bg-[var(--glass)] border-[0.5px] border-[var(--border)] rounded-md text-[var(--text-purple)] outline-none focus:border-[var(--border-purple)]" />
               </div>
               <div>
                 <label className="block text-xs font-semibold text-[var(--text-purple-2)] mb-2">Suspicious Activity Type</label>
-                <select className="w-full px-3 py-2 text-sm bg-[var(--glass)] border-[0.5px] border-[var(--border)] rounded-md text-[var(--text-purple)] outline-none focus:border-[var(--border-purple)]">
-                  <option>Structuring / Smurfing</option>
-                  <option>Unusual Transaction Pattern</option>
-                  <option>Network Anomaly</option>
-                  <option>PEP / Sanctions Match</option>
+                <select value={sarType} onChange={e => setSarType(e.target.value)} className="w-full px-3 py-2 text-sm bg-[var(--glass)] border-[0.5px] border-[var(--border)] rounded-md text-[var(--text-purple)] outline-none focus:border-[var(--border-purple)]">
+                  <option value="Structuring / Smurfing">Structuring / Smurfing</option>
+                  <option value="Unusual Transaction Pattern">Unusual Transaction Pattern</option>
+                  <option value="Network Anomaly">Network Anomaly</option>
+                  <option value="PEP / Sanctions Match">PEP / Sanctions Match</option>
                 </select>
               </div>
               <div>
                 <label className="block text-xs font-semibold text-[var(--text-purple-2)] mb-2">AI-Generated Summary</label>
-                <textarea rows={4} className="w-full px-3 py-2 text-sm bg-[var(--glass)] border-[0.5px] border-[var(--border)] rounded-md text-[var(--text-purple)] outline-none focus:border-[var(--border-purple)]" placeholder="The AI will generate a FINTRAC-ready SAR summary based on the alert details..." />
+                <textarea readOnly value={sarSummary} rows={4} className="w-full px-3 py-2 text-sm bg-[var(--glass)] border-[0.5px] border-[var(--border)] rounded-md text-[var(--text-purple)] outline-none focus:border-[var(--border-purple)]" placeholder="The AI will generate a FINTRAC-ready SAR summary based on the alert details..." />
               </div>
               <div className="flex gap-3">
-                <Button className="flex-1 gradient-purple text-white">Generate SAR Draft</Button>
+                <Button onClick={generateSarDraft} className="flex-1 gradient-purple text-white">Generate SAR Draft</Button>
                 <Button variant="outline" className="flex-1 glass border-[var(--border)] text-[var(--text-purple-2)]">Review & Submit</Button>
               </div>
             </div>
