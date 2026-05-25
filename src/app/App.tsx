@@ -2,11 +2,18 @@ import { Toaster } from "./components/ui/sonner";
 import { Route, Switch } from "wouter";
 import LandingPage from "./pages/LandingPage";
 import ComplianceDashboard from "./pages/ComplianceDashboard";
+import AMLAlerts from "./pages/AMLAlerts";
+import EntityGraph from "./pages/EntityGraph";
 import KycOnboarding from "./pages/KycOnboarding";
+import SanctionsScreening from "./pages/SanctionsScreening";
+import SARGenerator from "./pages/SARGenerator";
+import FinancialAdvisory from "./pages/FinancialAdvisory";
+import OpenBanking from "./pages/OpenBanking";
+import AuditTrail from "./pages/AuditTrail";
+import SystemHealth from "./pages/SystemHealth";
 import CaseManagement from "./pages/CaseManagement";
 import SupervisorQueue from "./pages/SupervisorQueue";
 import RulesEngine from "./pages/RulesEngine";
-import EntityGraph from "./pages/EntityGraph";
 
 export default function App() {
   return (
@@ -15,17 +22,24 @@ export default function App() {
         <Route path="/" component={LandingPage} />
         <Route path="/dashboard" component={ComplianceDashboard} />
         <Route path="/compliance" component={ComplianceDashboard} />
+        <Route path="/alerts" component={AMLAlerts} />
+        <Route path="/network" component={EntityGraph} />
         <Route path="/kyc" component={KycOnboarding} />
+        <Route path="/sanctions" component={SanctionsScreening} />
+        <Route path="/sar" component={SARGenerator} />
+        <Route path="/advisory" component={FinancialAdvisory} />
+        <Route path="/openbanking" component={OpenBanking} />
+        <Route path="/audit" component={AuditTrail} />
+        <Route path="/admin" component={SystemHealth} />
         <Route path="/cases" component={CaseManagement} />
         <Route path="/supervisor" component={SupervisorQueue} />
         <Route path="/rules" component={RulesEngine} />
-        <Route path="/network" component={EntityGraph} />
         <Route>
           {() => (
-            <div className="min-h-screen flex items-center justify-center bg-[var(--navy-bg)]">
+            <div className="min-h-screen flex items-center justify-center" style={{ background: "var(--bg)" }}>
               <div className="text-center">
-                <h1 className="text-4xl font-bold mb-4 text-white" style={{ fontFamily: "'DM Serif Display', serif" }}>404</h1>
-                <p style={{ color: "var(--navy-text2)" }}>Page not found</p>
+                <h1 className="text-4xl font-bold mb-4 text-white font-['Instrument_Serif']">404</h1>
+                <p className="text-[var(--text-purple-2)]">Page not found</p>
               </div>
             </div>
           )}

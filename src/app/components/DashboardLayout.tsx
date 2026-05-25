@@ -39,15 +39,15 @@ export default function DashboardLayout({
 
   const navLinks: NavLink[] = [
     { id: "overview", label: "Overview", icon: LayoutGrid, path: "/dashboard" },
-    { id: "alerts", label: "AML Alerts", icon: AlertTriangle, badge: { text: "7", color: "red" }, path: "/dashboard" },
+    { id: "alerts", label: "AML Alerts", icon: AlertTriangle, badge: { text: "7", color: "red" }, path: "/alerts" },
     { id: "network", label: "Network Graph", icon: Network, path: "/network" },
     { id: "kyc", label: "Perpetual KYC", icon: Users, badge: { text: "3", color: "amber" }, path: "/kyc" },
-    { id: "sanctions", label: "Sanctions Screening", icon: Shield, path: "/dashboard" },
-    { id: "sar", label: "SAR Generator", icon: FileText, badge: { text: "2", color: "purple" }, path: "/dashboard" },
-    { id: "advisory", label: "Financial Advisory", icon: TrendingUp, path: "/dashboard" },
-    { id: "openbanking", label: "Open Banking", icon: Laptop, badge: { text: "NEW", color: "green" }, path: "/dashboard" },
-    { id: "audit", label: "Audit Trail", icon: Activity, path: "/dashboard" },
-    { id: "admin", label: "System Health", icon: SettingsIcon, path: "/dashboard" },
+    { id: "sanctions", label: "Sanctions Screening", icon: Shield, path: "/sanctions" },
+    { id: "sar", label: "SAR Generator", icon: FileText, badge: { text: "2", color: "purple" }, path: "/sar" },
+    { id: "advisory", label: "Financial Advisory", icon: TrendingUp, path: "/advisory" },
+    { id: "openbanking", label: "Open Banking", icon: Laptop, badge: { text: "NEW", color: "green" }, path: "/openbanking" },
+    { id: "audit", label: "Audit Trail", icon: Activity, path: "/audit" },
+    { id: "admin", label: "System Health", icon: SettingsIcon, path: "/admin" },
   ];
 
   const coreLinks = navLinks.slice(0, 6);
