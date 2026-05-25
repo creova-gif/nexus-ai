@@ -40,18 +40,31 @@ export interface SarDraft {
   author: string;
 }
 
+export interface AdverseMediaItem {
+  id: string;
+  entity: string;
+  headline: string;
+  source: string;
+  date: string;
+  severity: 'critical' | 'high' | 'medium';
+  status: 'unreviewed' | 'reviewed' | 'escalated';
+}
+
 interface AppState {
   alerts: Alert[];
   chatMessages: ChatMessage[];
   sarSubject: string;
   sarType: string;
   sarSummary: string;
+  adverseMedia: AdverseMediaItem[];
+
   addChatMessage: (msg: string) => void;
   updateAlertStatus: (id: number, status: string) => void;
   setSarSubject: (val: string) => void;
   setSarType: (val: string) => void;
   generateSarDraft: () => void;
-  
+  resolveAdverseMedia: (id: string, status: 'reviewed' | 'escalated') => void;
+
   kycProfiles: KycProfile[];
   cases: Case[];
   sarDrafts: SarDraft[];
@@ -69,15 +82,24 @@ export const useAppStore = create<AppState>((set, get) => ({
     { id: 5, type: "Sanctions Match — Partial Name", detail: "87% match · OFAC screening · pending review", score: 91, riskLevel: "critical", status: "NEW" },
     { id: 6, type: "Unusual Pattern — Business Account", detail: "Weekend activity spike · normally dormant", score: 62, riskLevel: "medium", status: "REVIEWING" },
   ],
+
   chatMessages: [
     { type: "bot", text: "Alert #AML-2026-0471 shows a structuring pattern. The account has made 3 transactions of $49,800 each over 48 hours — just under the $50K reporting threshold." },
     { type: "user", text: "What's the account history?" },
     { type: "bot", text: "Account #CA-4471 opened 6 months ago. First 4 months dormant. Sudden activity spike in last 60 days — total inflow CA$380K." },
     { type: "user", text: "Draft a SAR" },
   ],
+
   sarSubject: "",
   sarType: "Structuring / Smurfing",
   sarSummary: "",
+
+  adverseMedia: [
+    { id: "AM-001", entity: "Global Trade Corp", headline: "Global Trade Corp executives face money laundering probe in EU", source: "Financial Times", date: "2026-05-22", severity: "critical", status: "unreviewed" },
+    { id: "AM-002", entity: "Viktor Sokolov", headline: "Russian oligarch Sokolov linked to sanctions-evasion network", source: "Reuters", date: "2026-05-21", severity: "critical", status: "unreviewed" },
+    { id: "AM-003", entity: "Blue Horizon Finance", headline: "Blue Horizon Finance under scrutiny for offshore shell structures", source: "Globe and Mail", date: "2026-05-20", severity: "high", status: "unreviewed" },
+    { id: "AM-004", entity: "Meridian Holdings Ltd", headline: "Meridian Holdings discloses undisclosed beneficial owner in annual filing", source: "Bloomberg", date: "2026-05-19", severity: "medium", status: "reviewed" },
+  ],
 
   kycProfiles: [
     { id: "KYC-001", name: "Global Trade Corp", type: "business", status: "pending", riskScore: 85, documents: [{ type: "Certificate of Incorporation", status: "verified" }, { type: "UBO Declaration", status: "pending" }] },
@@ -92,10 +114,9 @@ export const useAppStore = create<AppState>((set, get) => ({
     { id: "SAR-104", subject: "Account #CA-4471", type: "Structuring / Smurfing", summary: "Based on the activity associated with Account #CA-4471, we have identified patterns consistent with Structuring / Smurfing. The transaction history exhibits significant anomalies deviating from typical client profiles. This report has been drafted for FINTRAC compliance review.", status: "pending", author: "Marie Chen" },
     { id: "SAR-105", subject: "Global Trade Corp", type: "PEP / Sanctions Match", summary: "Cross-border wire flags potential match with OFAC sanctioned entities. 87% name similarity detected.", status: "pending", author: "Marie Chen" },
   ],
-  
+
   addChatMessage: (msg: string) => {
     set((state) => ({ chatMessages: [...state.chatMessages, { type: 'user', text: msg }] }));
-    // Simulate AI response
     setTimeout(() => {
       set((state) => ({
         chatMessages: [...state.chatMessages, { type: 'bot', text: `I have analyzed your request regarding "${msg}". Our records indicate this requires further investigation by a senior compliance officer.` }]
@@ -111,7 +132,7 @@ export const useAppStore = create<AppState>((set, get) => ({
 
   setSarSubject: (val: string) => set({ sarSubject: val }),
   setSarType: (val: string) => set({ sarType: val }),
-  
+
   generateSarDraft: () => {
     const { sarSubject, sarType } = get();
     const newSar: SarDraft = {
@@ -125,6 +146,12 @@ export const useAppStore = create<AppState>((set, get) => ({
     set((state) => ({
       sarSummary: newSar.summary,
       sarDrafts: [newSar, ...state.sarDrafts]
+    }));
+  },
+
+  resolveAdverseMedia: (id: string, status: 'reviewed' | 'escalated') => {
+    set((state) => ({
+      adverseMedia: state.adverseMedia.map(a => a.id === id ? { ...a, status } : a)
     }));
   },
 

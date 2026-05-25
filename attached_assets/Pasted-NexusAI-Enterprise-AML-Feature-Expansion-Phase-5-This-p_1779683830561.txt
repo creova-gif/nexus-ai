@@ -1,0 +1,55 @@
+NexusAI: Enterprise AML Feature Expansion (Phase 5)
+This plan outlines the next iteration of NexusAI, targeting the specific requirements of tier-1 financial institutions and banks. Based on our brute audit of the platform, we have identified key missing features that are standard in modern AML/Fraud software.
+
+User Review Required
+IMPORTANT
+
+Please review the proposed features below. Are there any specific modules you want to prioritize first? Should we focus on the Customer Risk Profile (XAI) or the Regulatory Reporting Hub?
+
+Proposed Changes
+We propose building four new core workflows to bridge the gap between our current platform and enterprise industry standards.
+
+1. Customer Risk Profile & Explainable AI (XAI)
+Currently, risk scores are static numbers. Regulators demand transparency ("Explainable AI").
+
+[NEW] 
+RiskProfile.tsx
+Create a comprehensive dynamic dashboard for individual customers/entities.
+Implement an XAI component that breaks down the math behind a risk score (e.g., Base Score: 20 + Geographic Risk: 15 + PEP Match: 40 = 75).
+Include historical risk trend charts.
+2. Adverse Media & Ongoing Screening
+AML isn't just about transactions; it's about external data.
+
+[NEW] 
+WatchlistScreening.tsx
+Build a real-time feed interface for scanning adverse media (news articles).
+Interface for resolving false positives from PEP (Politically Exposed Persons) and Sanctions list matches.
+3. Ultimate Beneficial Owner (UBO) Discovery
+Banks need to know exactly who owns the businesses they bank.
+
+[NEW] 
+UboDiscovery.tsx
+A specialized workflow for corporate unwrapping.
+Visual breakdown of holding companies to identify natural persons with >25% ownership.
+4. Regulatory Reporting Hub
+SARs are currently approved but not sent anywhere.
+
+[NEW] 
+RegulatoryReporting.tsx
+An integration dashboard to monitor the status of e-filed SARs to FinCEN / FINTRAC.
+XML/JSON export previews for batch reporting.
+Infrastructure Updates
+[MODIFY] 
+DashboardLayout.tsx
+Add new sidebar navigation links for the expanded modules under an "Enterprise Compliance" section.
+[MODIFY] 
+App.tsx
+Register new routes for /risk-profile, /screening, /ubo, and /reporting.
+[MODIFY] 
+store.ts
+Expand the Zustand global state to handle adverse media alerts and UBO registry mock data.
+Verification Plan
+Routing: Ensure all new pages are reachable and highlight correctly in the sidebar.
+State Management: Ensure XAI breakdowns correctly sum up to the total risk score in the global store.
+Responsive Design: Validate that the complex UBO and Risk charts render correctly on mobile dimensions.
+Build Check: Re-run npm run build and npx cap sync to verify native compilation compatibility.

@@ -14,6 +14,10 @@ import SystemHealth from "./pages/SystemHealth";
 import CaseManagement from "./pages/CaseManagement";
 import SupervisorQueue from "./pages/SupervisorQueue";
 import RulesEngine from "./pages/RulesEngine";
+import RiskProfile from "./pages/RiskProfile";
+import WatchlistScreening from "./pages/WatchlistScreening";
+import UboDiscovery from "./pages/UboDiscovery";
+import RegulatoryReporting from "./pages/RegulatoryReporting";
 
 export default function App() {
   return (
@@ -34,6 +38,10 @@ export default function App() {
         <Route path="/cases" component={CaseManagement} />
         <Route path="/supervisor" component={SupervisorQueue} />
         <Route path="/rules" component={RulesEngine} />
+        <Route path="/risk-profile" component={RiskProfile} />
+        <Route path="/screening" component={WatchlistScreening} />
+        <Route path="/ubo" component={UboDiscovery} />
+        <Route path="/reporting" component={RegulatoryReporting} />
         <Route>
           {() => (
             <div className="min-h-screen flex items-center justify-center" style={{ background: "var(--bg)" }}>
