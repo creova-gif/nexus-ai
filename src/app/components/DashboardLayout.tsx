@@ -4,7 +4,8 @@ import {
   LayoutGrid, AlertTriangle, Network, Users, Shield, FileText,
   TrendingUp, Laptop, Activity, Settings as SettingsIcon,
   Bell, User, MoreHorizontal, Search, LogOut,
-  UserSquare2, Newspaper, Building2, Send
+  UserSquare2, Newspaper, Building2, Send,
+  Bot, Bitcoin, Share2, ScanFace
 } from "lucide-react";
 
 interface DashboardLayoutProps {
@@ -56,6 +57,13 @@ export default function DashboardLayout({
     { id: "screening", label: "Adverse Media", icon: Newspaper, path: "/screening" },
     { id: "ubo", label: "UBO Discovery", icon: Building2, path: "/ubo" },
     { id: "reporting", label: "Regulatory Hub", icon: Send, path: "/reporting" },
+  ];
+
+  const nextGenLinks: NavLink[] = [
+    { id: "agent", label: "Agentic Investigator", icon: Bot, path: "/agent", badge: { text: "AI", color: "purple" } },
+    { id: "crypto-graph", label: "Crypto Forensics", icon: Bitcoin, path: "/crypto-graph" },
+    { id: "federated", label: "Federated Learning", icon: Share2, path: "/federated" },
+    { id: "deepfake", label: "Deepfake Detection", icon: ScanFace, path: "/deepfake", badge: { text: "NEW", color: "green" } },
   ];
 
   const coreLinks = navLinks.slice(0, 6);
@@ -168,6 +176,39 @@ export default function DashboardLayout({
             ENTERPRISE
           </div>
           {enterpriseLinks.map((link) => {
+            const Icon = link.icon;
+            const isActive = location === link.path;
+            return (
+              <div
+                key={link.id}
+                className={`flex items-center gap-2.5 px-3.5 py-2 mx-1.5 rounded-lg text-sm cursor-pointer transition-all relative ${
+                  isActive
+                    ? "bg-[var(--brand-glow)] text-[var(--brand-hi)]"
+                    : "text-[var(--text-purple-2)] hover:bg-[var(--glass2)] hover:text-[var(--text-purple)]"
+                }`}
+                onClick={() => link.path && navigate(link.path)}
+              >
+                {isActive && (
+                  <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-[65%] bg-[var(--brand-hi)] rounded-r" />
+                )}
+                <Icon className={`w-3.5 h-3.5 flex-shrink-0 ${isActive ? "opacity-100" : "opacity-65"}`} />
+                <span className="flex-1">{link.label}</span>
+                {link.badge && (
+                  <span className={`px-2 py-0.5 rounded-full text-[0.6rem] font-bold font-['Geist_Mono'] ${getBadgeColor(link.badge.color)}`}>
+                    {link.badge.text}
+                  </span>
+                )}
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Navigation - Next Gen */}
+        <div className="mt-1">
+          <div className="font-['Geist_Mono'] text-[0.58rem] font-bold tracking-widest uppercase px-3.5 py-2 mt-1" style={{ color: "var(--teal)", opacity: 0.8 }}>
+            NEXT GEN
+          </div>
+          {nextGenLinks.map((link) => {
             const Icon = link.icon;
             const isActive = location === link.path;
             return (

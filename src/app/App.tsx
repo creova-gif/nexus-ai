@@ -18,6 +18,10 @@ import RiskProfile from "./pages/RiskProfile";
 import WatchlistScreening from "./pages/WatchlistScreening";
 import UboDiscovery from "./pages/UboDiscovery";
 import RegulatoryReporting from "./pages/RegulatoryReporting";
+import AgentInvestigator from "./pages/AgentInvestigator";
+import CryptoForensics from "./pages/CryptoForensics";
+import FederatedLearning from "./pages/FederatedLearning";
+import DeepfakeDetection from "./pages/DeepfakeDetection";
 
 export default function App() {
   return (
@@ -42,6 +46,10 @@ export default function App() {
         <Route path="/screening" component={WatchlistScreening} />
         <Route path="/ubo" component={UboDiscovery} />
         <Route path="/reporting" component={RegulatoryReporting} />
+        <Route path="/agent" component={AgentInvestigator} />
+        <Route path="/crypto-graph" component={CryptoForensics} />
+        <Route path="/federated" component={FederatedLearning} />
+        <Route path="/deepfake" component={DeepfakeDetection} />
         <Route>
           {() => (
             <div className="min-h-screen flex items-center justify-center" style={{ background: "var(--bg)" }}>

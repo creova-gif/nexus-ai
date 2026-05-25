@@ -1,0 +1,70 @@
+NexusAI: Enterprise AML Feature Expansion (Phase 5)
+This plan outlines the next iteration of NexusAI, targeting the specific requirements of tier-1 financial institutions and banks. Based on our brute audit of the platform, we have identified key missing features that are standard in modern AML/Fraud software.
+
+User Review Required
+IMPORTANT
+
+Please review the proposed features below. Are there any specific modules you want to prioritize first? Should we focus on the Customer Risk Profile (XAI) or the Regulatory Reporting Hub?
+
+Proposed Changes
+We propose building four new core workflows to bridge the gap between our current platform and enterprise industry standards.
+
+1. Customer Risk Profile & Explainable AI (XAI)
+Currently, risk scores are static numbers. Regulators demand transparency ("Explainable AI").
+
+[NEW] 
+RiskProfile.tsx
+Create a comprehensive dynamic dashboard for individual customers/entities.
+Implement an XAI component that breaks down the math behind a risk score (e.g., Base Score: 20 + Geographic Risk: 15 + PEP Match: 40 = 75).
+Include historical risk trend charts.
+2. Adverse Media & Ongoing Screening
+AML isn't just about transactions; it's about external data.
+
+[NEW] 
+WatchlistScreening.tsx
+Build a real-time feed interface for scanning adverse media (news articles).
+Interface for resolving false positives from PEP (Politically Exposed Persons) and Sanctions list matches.
+3. Ultimate Beneficial Owner (UBO) Discovery
+Banks need to know exactly who owns the businesses they bank.
+
+[NEW] 
+UboDiscovery.tsx
+A specialized workflow for corporate unwrapping.
+Visual breakdown of holding companies to identify natural persons with >25% ownership.
+4. Regulatory Reporting Hub
+SARs are currently approved but not sent anywhere.
+
+[NEW] 
+RegulatoryReporting.tsx
+An integration dashboard to monitor the status of e-filed SARs to FinCEN / FINTRAC.
+XML/JSON export previews for batch reporting.
+Infrastructure Updates
+[MODIFY] 
+DashboardLayout.tsx
+Add new sidebar navigation links for the expanded modules under an "Enterprise Compliance" section.
+[MODIFY] 
+App.tsx
+Register new routes for /risk-profile, /screening, /ubo, and /reporting.
+[MODIFY] 
+store.ts
+Expand the Zustand global state to handle adverse media alerts and UBO registry mock data.
+5. Next-Generation Competitive Edge (The "Top Tier" Exclusives)
+To truly outpace legacy incumbents (Verafin, Actimize) and compete with cutting-edge startups (Silent Eight, Quantexa), we recommend integrating these highly advanced capabilities:
+
+A. Autonomous "Agentic" Investigators
+What it is: Moving beyond a "Copilot" chat assistant to an Autonomous Agent. When an alert fires, the agent autonomously gathers KYC data, queries external watchlists, maps the entity graph, and drafts a comprehensive, cited investigation brief before a human even opens the case.
+Why it wins: Drastically reduces the time-to-decision (TTD) from hours to minutes, directly impacting a bank's bottom line by lowering operational headcount costs.
+B. Fiat-to-Crypto Forensics Graph
+What it is: Extending the existing EntityGraph.tsx to natively ingest and visualize blockchain wallet addresses alongside traditional fiat accounts (IBANs/Routing numbers).
+Why it wins: Most traditional AML systems have a massive blindspot when fiat "off-ramps" into crypto exchanges. Providing a unified graph gives a holistic view of the money trail.
+C. Privacy-Preserving Federated Learning Network
+What it is: An architectural capability allowing multiple client banks using NexusAI to train a shared AML machine learning model without sharing any underlying PII (Personally Identifiable Information), using cryptographic techniques like Homomorphic Encryption.
+Why it wins: It solves the "silo problem" where banks can't legally share customer data, allowing the platform's AI to detect organized crime syndicates attacking multiple banks simultaneously.
+D. Deepfake & Synthetic Identity Detection (Behavioral Biometrics)
+What it is: Enhancing the KycOnboarding.tsx flow to analyze behavioral telemetry (keystroke dynamics, device posture, passive liveness detection) to catch AI-generated synthetic identities and deepfaked documents.
+Why it wins: Traditional OCR and selfie-checks are being defeated by GenAI deepfakes. Adding behavioral forensics secures the absolute top of the funnel.
+Verification Plan
+Routing: Ensure all new pages are reachable and highlight correctly in the sidebar.
+State Management: Ensure XAI breakdowns correctly sum up to the total risk score in the global store.
+Responsive Design: Validate that the complex UBO and Risk charts render correctly on mobile dimensions.
+Build Check: Re-run npm run build and npx cap sync to verify native compilation compatibility.
