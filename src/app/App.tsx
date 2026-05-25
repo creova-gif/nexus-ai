@@ -22,6 +22,9 @@ import AgentInvestigator from "./pages/AgentInvestigator";
 import CryptoForensics from "./pages/CryptoForensics";
 import FederatedLearning from "./pages/FederatedLearning";
 import DeepfakeDetection from "./pages/DeepfakeDetection";
+import CommHub from "./pages/CommHub";
+import WorkflowBuilder from "./pages/WorkflowBuilder";
+import MakerChecker from "./pages/MakerChecker";
 
 export default function App() {
   return (
@@ -50,6 +53,9 @@ export default function App() {
         <Route path="/crypto-graph" component={CryptoForensics} />
         <Route path="/federated" component={FederatedLearning} />
         <Route path="/deepfake" component={DeepfakeDetection} />
+        <Route path="/comms" component={CommHub} />
+        <Route path="/workflow-builder" component={WorkflowBuilder} />
+        <Route path="/qa-checker" component={MakerChecker} />
         <Route>
           {() => (
             <div className="min-h-screen flex items-center justify-center" style={{ background: "var(--bg)" }}>
