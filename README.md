@@ -147,12 +147,23 @@ Based on the PRD and roadmap:
 
 This is a Figma Make application. The Vite dev server runs automatically.
 
+### Local Development
+
+```bash
+git clone https://github.com/creova-gif/nexus-ai.git
+cd nexus-ai
+npm install
+npm run dev
+```
+
 ### Available Scripts
-- Build: `pnpm build` (Note: not needed in Figma Make environment)
+- `npm run dev` — start local dev server (Vite)
+- `npm run build` — production build
+- `npm run test` — run tests (Vitest)
 
 ### Adding Dependencies
 ```bash
-pnpm add <package-name>
+npm install <package-name>
 ```
 
 ## Documentation
