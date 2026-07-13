@@ -4,6 +4,8 @@
 
 A comprehensive AI-powered banking platform designed for Canadian financial institutions, built with React, TypeScript, Tailwind CSS, and shadcn/ui components.
 
+![NexusAI landing page](docs/screenshots/dashboard.png)
+
 ## Brand Identity
 
 **Vision**: To be the leading AI platform that empowers financial institutions to navigate complexity, foster trust, and deliver unparalleled value to their customers.
