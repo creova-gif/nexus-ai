@@ -4,47 +4,23 @@ import { useLocation } from "wouter";
 export default function LandingPage() {
   const [, navigate] = useLocation();
 
-  const audiences = [
-    {
-      emoji: "🏦",
-      title: "Canadian Banks",
-      desc: "Enterprise AML, compliance automation, personalized advisory, and fraud detection for retail and commercial banking operations — from the Big Six to credit unions.",
-      tags: ["Big Six", "Credit Unions", "Neobanks"],
-      accent: "brand",
-    },
-    {
-      emoji: "🏛️",
-      title: "Government of Canada",
-      desc: "FINTRAC reporting, CDBA compliance infrastructure, inter-agency data sharing with consent management and immutable audit-grade logging for federal mandates.",
-      tags: ["FINTRAC", "OSFI", "Bank of Canada"],
-      accent: "gold",
-    },
-    {
-      emoji: "⚡",
-      title: "Fintechs & Financial Services",
-      desc: "Open banking APIs, embedded finance rails, AI advisory modules — white-labeled and ready to integrate into any financial product or BaaS stack.",
-      tags: ["Embedded Finance", "BaaS", "Wealthtech"],
-      accent: "sky",
-    },
-  ];
-
   const features = [
     {
       num: "01 — AML & COMPLIANCE",
       title: "AI-Native Anti-Money Laundering",
       desc: "Graph-based network analysis surfaces hidden relationships across billions of transactions in real time. Explainable risk scores, automated alert triage, and one-click SAR generation built for FINTRAC and OSFI.",
-      callout: "90–95% reduction in analyst workload. Every alert traceable, audit-ready, and explainable to regulators.",
+      callout: "Built to make every alert traceable, audit-ready, and explainable to regulators — analyst workload reduction has not yet been measured against real customer deployments.",
     },
     {
       num: "02 — FINANCIAL ADVISORY",
       title: "Personalized Financial Intelligence",
       desc: "AI-generated spending insights, investment recommendations, and goal tracking — all human-led and fully explainable. The blended model Canadians actually trust: AI speed + human judgment at every critical decision.",
-      callout: "Only 18% of Canadians trust AI alone for financial advice. NexusAI's HITL architecture closes that gap — permanently.",
+      callout: "NexusAI's human-in-the-loop architecture keeps a compliance officer or advisor in the decision loop rather than fully automating financial guidance.",
     },
     {
       num: "03 — OPEN BANKING",
       title: "Consumer-Driven Banking Infrastructure",
-      desc: "Full CDBA Phase 1 compliance with read-only data sharing via secure APIs. Phase 2-ready architecture for payment initiation and account switching — built ahead of the 2027 deadline.",
+      desc: "Architecture designed around CDBA Phase 1 (read-only data sharing via secure APIs) and Phase 2 readiness (payment initiation, account switching) — this is an architectural goal, not a completed regulatory certification.",
       callout: "Consent management, institution OAuth flows, aggregated account views, and financial health scoring — privacy-by-design at every layer.",
     },
     {
@@ -61,54 +37,6 @@ export default function LandingPage() {
       wide: true,
       hasRegBadges: true,
     },
-  ];
-
-  const regBadges = [
-    { label: "FINTRAC", val: "SAR Filing & Reporting" },
-    { label: "OSFI", val: "Risk Reporting" },
-    { label: "CDBA", val: "Phase 1 + 2 Ready" },
-    { label: "PCMLTFA", val: "Full Compliance" },
-  ];
-
-  const amlAlerts = [
-    { name: "Structuring Pattern — Account #CA-4471", meta: "Royal Trust Branch • $49,800 × 3 transactions • 2h ago", score: "97", color: "coral" },
-    { name: "Network Anomaly — 6-Node Ring", meta: "Graph detected shell co. cluster • Toronto ON • 4h ago", score: "92", color: "coral" },
-    { name: "PEP Match — Unverified Source", meta: "Politically Exposed Person — wire origin unclear", score: "74", color: "amber" },
-    { name: "Velocity Alert — Cross-border", meta: "12 transactions in 48h • CAD→USD→BTC pathway", score: "61", color: "amber" },
-    { name: "SAR #2026-004 — Filed", meta: "FINTRAC • AI-drafted + officer reviewed", score: "✓", color: "brand" },
-  ];
-
-  const complianceChecks = [
-    { title: "Graph-based transaction network analysis", desc: "Visualize and detect money laundering rings across accounts" },
-    { title: "AI-powered risk scoring", desc: "Reduce false positives by 90% with explainable AI models" },
-    { title: "Automated SAR filing", desc: "FINTRAC-ready reports with AI-drafted summaries + officer review" },
-  ];
-
-  const obPhases = [
-    { num: "Phase 1", title: "Read Access", desc: "Consumer can share bank data with third parties", active: true },
-    { num: "Phase 2", title: "Write Access", desc: "Third parties can initiate payments with consumer consent", active: false },
-    { num: "Phase 3", title: "Product Comparison", desc: "Transparent pricing and product recommendations", active: false },
-  ];
-
-  const testimonials = [
-    { name: "Sarah Chen", role: "Chief Compliance Officer", org: "RBC", initials: "SC", quote: "NexusAI reduced our AML false positive rate by 92%. The graph-based network analysis caught a shell company ring our legacy system missed for months.", accent: "brand" },
-    { name: "Michael Rousseau", role: "VP of Regulatory Affairs", org: "TD Canada Trust", initials: "MR", quote: "After the 2024 penalties, we needed explainable AI that regulators could audit. NexusAI's SAR generator produces FINTRAC-ready reports with full decision trails.", accent: "gold" },
-    { name: "Dr. Priya Sharma", role: "Director, Digital Banking", org: "Scotiabank", initials: "PS", quote: "The CDBA Phase 1 compliance was seamless. NexusAI's consent management and aggregated account views positioned us ahead of the 2027 deadline.", accent: "sky" },
-  ];
-
-  const pricingPlans = [
-    { name: "STARTER", price: "$4,999", per: "/month", tag: "For credit unions and regional banks", features: ["Up to 50K transactions/mo", "Basic AML + KYC", "Email support", "Audit logging"], featured: false },
-    { name: "PROFESSIONAL", price: "$14,999", per: "/month", tag: "For mid-sized banks and fintechs", features: ["Up to 500K transactions/mo", "Full compliance suite + SAR", "Priority support", "Network graph analysis", "Open Banking Phase 1"], featured: true },
-    { name: "ENTERPRISE", price: "Custom", per: "", tag: "For Big Six and government", features: ["Unlimited transactions", "White-label deployment", "Dedicated CSM", "Custom integrations", "FINTRAC + OSFI reporting"], featured: false },
-  ];
-
-  const faqs = [
-    { q: "Is NexusAI FINTRAC and OSFI compliant?", a: "Yes. NexusAI is built with Canadian regulatory frameworks at its core. All SAR filings are FINTRAC-ready, and our audit logging meets OSFI requirements for explainability and traceability." },
-    { q: "How does the AI explainability work?", a: "Every risk score includes a natural language explanation of contributing factors (e.g., 'structuring pattern detected,' 'cross-border velocity anomaly'). Compliance officers can drill down into transaction graphs and see exactly why an alert was triggered." },
-    { q: "What's the difference between Phase 1 and Phase 2 Open Banking?", a: "Phase 1 (2026) allows read-only access to customer banking data with consent. Phase 2 (2027) adds payment initiation and account switching. NexusAI supports Phase 1 today and is architected for Phase 2." },
-    { q: "Can NexusAI integrate with our existing core banking system?", a: "Yes. NexusAI connects via REST APIs to systems like Temenos, FIS, and Oracle FLEXCUBE. We also support batch file imports (CSV, JSON) and direct database connectors for legacy systems." },
-    { q: "How does pricing scale with transaction volume?", a: "Starter and Professional plans have monthly transaction caps. Enterprise customers get unlimited volume with a custom SLA. All plans include full access to compliance, advisory, and open banking modules." },
-    { q: "What kind of support do you offer?", a: "Starter: Email support (24h SLA). Professional: Priority email + Slack (4h SLA). Enterprise: Dedicated CSM, phone support, and custom SLAs down to 1h for critical issues." },
   ];
 
   return (
@@ -158,11 +86,9 @@ export default function LandingPage() {
       {/* ANNOUNCE */}
       <div className="mt-16 flex items-center justify-center gap-3 px-4 py-2 text-xs border-b-[0.5px]" style={{ background: "linear-gradient(90deg, transparent, rgba(139,92,246,.06), rgba(96,165,250,.04), transparent)", color: "var(--t2)", borderColor: "var(--border)" }}>
         <span className="px-2.5 py-1 rounded-full text-[0.65rem] font-bold tracking-wider border-[0.5px]" style={{ fontFamily: "'Geist Mono', monospace", background: "var(--brand-g)", borderColor: "var(--border-b)", color: "var(--brand-hi)" }}>
-          NEW
+          ARCHITECTURE
         </span>
-        <div className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "var(--brand-hi)", boxShadow: "0 0 0 3px rgba(139,92,246,.22)" }} />
-        <span>NexusAI achieves CDBA Phase 1 full compliance — Canada's Consumer-Driven Banking Act</span>
-        <a href="#" className="transition-opacity hover:opacity-65" style={{ color: "var(--brand-hi)" }}>Read the release →</a>
+        <span>NexusAI is architected for CDBA Phase 1 (read-only open banking) requirements — no formal regulatory certification has been obtained</span>
       </div>
 
       {/* HERO */}
@@ -189,10 +115,6 @@ export default function LandingPage() {
               🇨🇦
             </div>
             <span className="text-xs font-medium" style={{ color: "var(--t2)" }}>Built for Canadian banks, fintechs & federal institutions</span>
-            <div className="flex items-center gap-1.5 pl-2 text-xs font-semibold tracking-wide" style={{ fontFamily: "'Geist Mono', monospace", color: "var(--brand-hi)" }}>
-              <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "var(--brand-hi)", boxShadow: "0 0 0 3px rgba(139,92,246,.22)" }} />
-              LIVE
-            </div>
           </div>
 
           <h1 className="text-5xl md:text-7xl leading-tight tracking-tight mb-6" style={{ fontFamily: "'Instrument Serif', serif", letterSpacing: "-0.03em", color: "white" }}>
