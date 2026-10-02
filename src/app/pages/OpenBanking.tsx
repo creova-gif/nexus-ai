@@ -5,17 +5,17 @@ import { Button } from "../components/ui/button";
 import { Laptop, CheckCircle, Clock, XCircle, Shield, Link, RefreshCw } from "lucide-react";
 
 const consents = [
-  { id: "CON-001", client: "James Whitfield", institution: "RBC Royal Bank", scope: "Account Balance, Transaction History", granted: "2026-04-01", expires: "2027-04-01", status: "active" },
-  { id: "CON-002", client: "Priya Sharma", institution: "TD Canada Trust", scope: "Account Balance", granted: "2026-03-15", expires: "2027-03-15", status: "active" },
-  { id: "CON-003", client: "David Okonkwo", institution: "Scotiabank", scope: "Account Balance, Transaction History, Credit Score", granted: "2026-02-10", expires: "2026-08-10", status: "expiring" },
-  { id: "CON-004", client: "Sophie Tremblay", institution: "BMO", scope: "Transaction History", granted: "2025-12-01", expires: "2026-06-01", status: "revoked" },
+  { id: "CON-001", client: "Example Client A", institution: "Example Bank A", scope: "Account Balance, Transaction History", granted: "2026-04-01", expires: "2027-04-01", status: "active" },
+  { id: "CON-002", client: "Example Client B", institution: "Example Bank B", scope: "Account Balance", granted: "2026-03-15", expires: "2027-03-15", status: "active" },
+  { id: "CON-003", client: "Example Client C", institution: "Example Bank C", scope: "Account Balance, Transaction History, Credit Score", granted: "2026-02-10", expires: "2026-08-10", status: "expiring" },
+  { id: "CON-004", client: "Example Client D", institution: "Example Bank D", scope: "Transaction History", granted: "2025-12-01", expires: "2026-06-01", status: "revoked" },
 ];
 
 const connectedApps = [
-  { name: "Wealthsimple", type: "Investment Platform", accounts: 1, lastSync: "5m ago", status: "connected" },
-  { name: "Mint Canada", type: "Budgeting App", accounts: 3, lastSync: "1h ago", status: "connected" },
-  { name: "Borrowell", type: "Credit Monitoring", accounts: 1, lastSync: "2h ago", status: "connected" },
-  { name: "Koho", type: "Neobank", accounts: 1, lastSync: "3d ago", status: "stale" },
+  { name: "Example Investment App", type: "Investment Platform", accounts: 1, lastSync: "5m ago", status: "connected" },
+  { name: "Example Budgeting App", type: "Budgeting App", accounts: 3, lastSync: "1h ago", status: "connected" },
+  { name: "Example Credit App", type: "Credit Monitoring", accounts: 1, lastSync: "2h ago", status: "connected" },
+  { name: "Example Neobank", type: "Neobank", accounts: 1, lastSync: "3d ago", status: "stale" },
 ];
 
 const phases = [
@@ -37,7 +37,7 @@ export default function OpenBanking() {
   };
 
   return (
-    <DashboardLayout pageTitle="Open Banking" breadcrumb="CDBA Compliance">
+    <DashboardLayout pageTitle="Open Banking" breadcrumb="Illustrative consents">
       <div className="flex flex-col gap-4">
 
         {/* CDBA Phase Banner */}
@@ -48,7 +48,7 @@ export default function OpenBanking() {
               <div className="flex items-center justify-between mb-2">
                 <span className="text-[0.6rem] font-bold tracking-widest uppercase text-[var(--text-purple-3)] font-['Geist_Mono']">{p.num}</span>
                 <span className={`px-1.5 py-0.5 rounded-full text-[0.57rem] font-bold border-[0.5px] font-['Geist_Mono'] ${p.status === "active" ? "bg-[rgba(52,211,153,.10)] text-[var(--teal)] border-[rgba(52,211,153,.28)]" : "bg-[var(--glass)] text-[var(--text-purple-3)] border-[var(--border)]"}`}>
-                  {p.status === "active" ? "LIVE" : p.status === "upcoming" ? p.year : "PLANNED"}
+                  {p.status === "active" ? "SKETCH" : p.status === "upcoming" ? p.year : "PLANNED"}
                 </span>
               </div>
               <div className="text-base font-bold text-white font-['Instrument_Serif']">{p.title}</div>
@@ -146,7 +146,7 @@ export default function OpenBanking() {
               <div className="text-center">
                 <Link className="w-6 h-6 text-[var(--text-purple-3)] mx-auto mb-2" />
                 <p className="text-sm text-[var(--text-purple-2)]">Connect New App</p>
-                <p className="text-[0.65rem] text-[var(--text-purple-3)] mt-1">CDBA Phase 1 compliant</p>
+                <p className="text-[0.65rem] text-[var(--text-purple-3)] mt-1">Illustrative connection</p>
               </div>
             </Card>
           </div>
@@ -155,12 +155,12 @@ export default function OpenBanking() {
         {activeTab === "compliance" && (
           <div className="grid grid-cols-3 gap-4">
             {[
-              { label: "CDBA Phase 1", desc: "Read-only data sharing compliant", status: "COMPLIANT", color: "var(--teal)" },
-              { label: "PIPEDA", desc: "Privacy and data protection", status: "COMPLIANT", color: "var(--teal)" },
-              { label: "OAuth 2.0", desc: "Secure authorization framework", status: "ACTIVE", color: "var(--brand-hi)" },
-              { label: "CDBA Phase 2", desc: "Payment initiation (2027)", status: "UPCOMING", color: "var(--amber)" },
-              { label: "Open ID Connect", desc: "Identity verification layer", status: "ACTIVE", color: "var(--brand-hi)" },
-              { label: "Consent Audit Log", desc: "Immutable consent trail", status: "ACTIVE", color: "var(--teal)" },
+              { label: "Read-only sharing", desc: "Design goal, not a certification", status: "NOT CERTIFIED", color: "var(--amber)" },
+              { label: "Privacy law", desc: "Design goal, not a certification", status: "NOT CERTIFIED", color: "var(--amber)" },
+              { label: "OAuth 2.0", desc: "Sample authorization screen", status: "ILLUSTRATIVE", color: "var(--brand-hi)" },
+              { label: "Payment initiation", desc: "Later idea, not built as a live rail", status: "SKETCH", color: "var(--amber)" },
+              { label: "Open ID Connect", desc: "Sample identity step", status: "ILLUSTRATIVE", color: "var(--brand-hi)" },
+              { label: "Consent Audit Log", desc: "Sample consent trail", status: "ILLUSTRATIVE", color: "var(--teal)" },
             ].map((item, i) => (
               <Card key={i} className="glass-2 border-[0.5px] border-[var(--border)] p-5 relative overflow-hidden">
                 <div className="absolute top-0 left-0 right-0 h-[1.5px]" style={{ background: `linear-gradient(90deg, transparent, ${item.color}, transparent)` }} />

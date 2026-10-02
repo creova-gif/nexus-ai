@@ -31,7 +31,7 @@ export default function SARGenerator() {
   };
 
   return (
-    <DashboardLayout pageTitle="SAR Generator" breadcrumb="FINTRAC Reporting">
+    <DashboardLayout pageTitle="SAR Generator" breadcrumb="Sample drafts, not filings">
       <div className="flex flex-col gap-4">
 
         {/* Tab Bar */}
@@ -104,7 +104,7 @@ export default function SARGenerator() {
                       { label: "Subject Entity", value: selected.subject },
                       { label: "Activity Type", value: selected.type, color: "var(--brand-hi)" },
                       { label: "Status", value: selected.status.toUpperCase(), color: selected.status === "approved" ? "var(--teal)" : selected.status === "rejected" ? "var(--coral)" : "var(--amber)" },
-                      { label: "Report Format", value: "FINTRAC STR-2026", color: "var(--text-purple)" },
+                      { label: "Report Format", value: "Sample draft", color: "var(--text-purple)" },
                     ].map((f, i) => (
                       <div key={i} className="bg-[var(--glass)] border-[0.5px] border-[var(--border)] rounded-lg p-4">
                         <div className="text-[0.6rem] font-bold uppercase tracking-wider text-[var(--text-purple-3)] font-['Geist_Mono'] mb-1">{f.label}</div>
@@ -121,7 +121,7 @@ export default function SARGenerator() {
                   </div>
                   <div className="mt-4 flex items-center gap-2 text-[0.65rem] text-[var(--text-purple-3)]">
                     <Clock className="w-3 h-3" />
-                    <span>Draft created for FINTRAC compliance · Officer review required before submission</span>
+                    <span>Sample draft only · not a filing and not a certification</span>
                   </div>
                 </div>
               </Card>
@@ -137,7 +137,7 @@ export default function SARGenerator() {
           <Card className="glass-2 border-[0.5px] border-[var(--border)] max-w-2xl">
             <div className="px-6 py-4 border-b-[0.5px] border-[var(--border)] bg-[var(--glass)]">
               <h2 className="text-lg font-bold text-white font-['Instrument_Serif']">Generate New SAR Draft</h2>
-              <p className="text-xs text-[var(--text-purple-2)] mt-1">AI will generate a FINTRAC-ready narrative based on your inputs</p>
+              <p className="text-xs text-[var(--text-purple-2)] mt-1">A sample narrative can be drafted from these inputs. It is not filed.</p>
             </div>
             <div className="p-6 space-y-5">
               <div>

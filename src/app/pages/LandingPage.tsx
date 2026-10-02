@@ -1,43 +1,9 @@
 import { Button } from "../components/ui/button";
 import { useLocation } from "wouter";
+import PrototypeNotice from "../components/PrototypeNotice";
 
 export default function LandingPage() {
   const [, navigate] = useLocation();
-
-  const features = [
-    {
-      num: "01 — AML & COMPLIANCE",
-      title: "AI-Native Anti-Money Laundering",
-      desc: "Graph-based network analysis surfaces hidden relationships across billions of transactions in real time. Explainable risk scores, automated alert triage, and one-click SAR generation built for FINTRAC and OSFI.",
-      callout: "Built to make every alert traceable, audit-ready, and explainable to regulators — analyst workload reduction has not yet been measured against real customer deployments.",
-    },
-    {
-      num: "02 — FINANCIAL ADVISORY",
-      title: "Personalized Financial Intelligence",
-      desc: "AI-generated spending insights, investment recommendations, and goal tracking — all human-led and fully explainable. The blended model Canadians actually trust: AI speed + human judgment at every critical decision.",
-      callout: "NexusAI's human-in-the-loop architecture keeps a compliance officer or advisor in the decision loop rather than fully automating financial guidance.",
-    },
-    {
-      num: "03 — OPEN BANKING",
-      title: "Consumer-Driven Banking Infrastructure",
-      desc: "Architecture designed around CDBA Phase 1 (read-only data sharing via secure APIs) and Phase 2 readiness (payment initiation, account switching) — this is an architectural goal, not a completed regulatory certification.",
-      callout: "Consent management, institution OAuth flows, aggregated account views, and financial health scoring — privacy-by-design at every layer.",
-    },
-    {
-      num: "04 — CUSTOMER SUPPORT",
-      title: "AI Support & Sentiment Engine",
-      desc: "Context-aware AI handles tier-1 queries, escalates intelligently to human agents, and continuously scores sentiment across all customer interactions for proactive intervention before churn.",
-      callout: "7% of Canadians switch banks over poor fraud response. Real-time sentiment alerts stop attrition before it starts.",
-    },
-    {
-      num: "05 — GOVERNMENT & REGULATORY GRADE",
-      title: "Audit Infrastructure Built for Federal Institutions",
-      desc: "Full audit logging on every compliance action. FINTRAC SAR submissions, OSFI risk reporting, inter-agency data sharing with granular consent trails. Role-based access control enforced at every API boundary — Bank Admin, Compliance Officer, Financial Advisor, Retail Customer. Every action logged, timestamped, cryptographically attributable, and explainable. Government-grade security: all data encrypted in transit and at rest, JWT session management, tRPC-hardened APIs, zero-trust architecture ready.",
-      callout: "",
-      wide: true,
-      hasRegBadges: true,
-    },
-  ];
 
   return (
     <div className="min-h-screen" style={{ background: "var(--bg)", fontFamily: "'Geist', sans-serif" }}>
@@ -83,8 +49,12 @@ export default function LandingPage() {
         </div>
       </nav>
 
+      <div className="mt-16">
+        <PrototypeNotice />
+      </div>
+
       {/* ANNOUNCE */}
-      <div className="mt-16 flex items-center justify-center gap-3 px-4 py-2 text-xs border-b-[0.5px]" style={{ background: "linear-gradient(90deg, transparent, rgba(139,92,246,.06), rgba(96,165,250,.04), transparent)", color: "var(--t2)", borderColor: "var(--border)" }}>
+      <div className="flex items-center justify-center gap-3 px-4 py-2 text-xs border-b-[0.5px]" style={{ background: "linear-gradient(90deg, transparent, rgba(139,92,246,.06), rgba(96,165,250,.04), transparent)", color: "var(--t2)", borderColor: "var(--border)" }}>
         <span className="px-2.5 py-1 rounded-full text-[0.65rem] font-bold tracking-wider border-[0.5px]" style={{ fontFamily: "'Geist Mono', monospace", background: "var(--brand-g)", borderColor: "var(--border-b)", color: "var(--brand-hi)" }}>
           ARCHITECTURE
         </span>
@@ -119,12 +89,12 @@ export default function LandingPage() {
 
           <h1 className="text-5xl md:text-7xl leading-tight tracking-tight mb-6" style={{ fontFamily: "'Instrument Serif', serif", letterSpacing: "-0.03em", color: "white" }}>
             The AI Platform<br />
-            <span className="italic" style={{ background: "linear-gradient(120deg, var(--brand-hi) 0%, var(--sky) 55%, var(--brand-hi) 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Trusted</span> by<br />
-            <span style={{ color: "rgba(237,233,254,.25)" }}>Institutions That Matter</span>
+            <span className="italic" style={{ background: "linear-gradient(120deg, var(--brand-hi) 0%, var(--sky) 55%, var(--brand-hi) 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Sketched</span> as a<br />
+            <span style={{ color: "rgba(237,233,254,.25)" }}>Prototype</span>
           </h1>
 
           <p className="text-lg md:text-xl mx-auto max-w-[600px] mb-10 leading-relaxed" style={{ color: "var(--t2)" }}>
-            NexusAI unifies AML compliance, personalized financial advisory, open banking infrastructure, and government-grade security — in one intelligent enterprise platform purpose-built for Canada's Big Six and beyond.
+            A prototype that sketches AML workflows, advisory screens, and open-banking ideas. It has no bank customers, no regulator endorsement, and no certification.
           </p>
 
           <div className="flex gap-3 justify-center flex-wrap mb-6">
@@ -139,11 +109,11 @@ export default function LandingPage() {
           </div>
 
           <div className="flex items-center gap-3 justify-center text-xs flex-wrap" style={{ color: "var(--t3)" }}>
-            <span>No credit card required</span>
+            <span>Not a commercial offer</span>
             <div className="w-[3px] h-[3px] rounded-full" style={{ background: "var(--t3)" }} />
-            <span>14-day free trial</span>
+            <span>No trial is available</span>
             <div className="w-[3px] h-[3px] rounded-full" style={{ background: "var(--t3)" }} />
-            <span>CDBA Phase 1 ready on day one</span>
+            <span>No certification claimed</span>
           </div>
 
           {/* Live Dashboard Preview */}
@@ -222,7 +192,7 @@ export default function LandingPage() {
                         {[
                           { label: "CRITICAL", val: "3", color: "#F87171" },
                           { label: "HIGH", val: "4", color: "#FBBF24" },
-                          { label: "SAR FILED", val: "2", color: "#A78BFA" },
+                          { label: "SAMPLE", val: "2", color: "#A78BFA" },
                           { label: "CLEARED", val: "18", color: "#34D399" },
                         ].map((s, i) => (
                           <div key={i} className="rounded-lg px-2 py-1.5" style={{ background: "rgba(255,255,255,.03)", border: "0.5px solid rgba(255,255,255,.07)" }}>
@@ -234,11 +204,11 @@ export default function LandingPage() {
 
                       {/* Alert rows */}
                       {[
-                        { name: "Structuring — Acct #CA-4471", meta: "Royal Trust · $49,800×3 · 2h ago", score: 97, color: "#F87171" },
+                        { name: "Structuring — Acct #SAMPLE-4471", meta: "Example branch · $49,800×3 · 2h ago", score: 97, color: "#F87171" },
                         { name: "Network Anomaly — 6-Node Ring", meta: "Shell co. cluster detected · Toronto", score: 92, color: "#F87171" },
                         { name: "PEP Match — Unverified Source", meta: "Politically Exposed Person · wire origin unclear", score: 74, color: "#FBBF24" },
                         { name: "Velocity Alert — Cross-border", meta: "12 txns in 48h · CAD→USD→BTC", score: 61, color: "#FBBF24" },
-                        { name: "SAR #2026-004 Filed ✓", meta: "FINTRAC · AI-drafted + officer reviewed", score: 0, color: "#34D399", isSar: true },
+                        { name: "Sample draft only", meta: "Not filed · illustrative text", score: 0, color: "#34D399", isSar: true },
                       ].map((alert, i) => (
                         <div key={i} className="flex items-center gap-2.5 rounded-lg px-2.5 py-2 flex-shrink-0" style={{ background: "rgba(255,255,255,.03)", border: `0.5px solid ${alert.color}22` }}>
                           <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: alert.color, flexShrink: 0, boxShadow: `0 0 6px ${alert.color}66` }} />
@@ -281,11 +251,11 @@ export default function LandingPage() {
                         </div>
                       </div>
 
-                      <div style={{ fontSize: "8px", fontFamily: "'Geist Mono',monospace", color: "rgba(167,139,250,.5)", fontWeight: "bold", letterSpacing: "0.08em", marginBottom: "2px" }}>FINTRAC STATUS</div>
+                      <div style={{ fontSize: "8px", fontFamily: "'Geist Mono',monospace", color: "rgba(167,139,250,.5)", fontWeight: "bold", letterSpacing: "0.08em", marginBottom: "2px" }}>SAMPLE STATUS</div>
                       <div className="rounded-lg p-2" style={{ background: "rgba(52,211,153,.06)", border: "0.5px solid rgba(52,211,153,.2)" }}>
                         {[
-                          { label: "STR-2026-0041", status: "ACKNOWLEDGED", color: "#34D399" },
-                          { label: "STR-2026-0039", status: "PENDING", color: "#FBBF24" },
+                          { label: "STR-SAMPLE-0041", status: "SAMPLE", color: "#34D399" },
+                          { label: "STR-SAMPLE-0039", status: "DRAFT", color: "#FBBF24" },
                         ].map((r, i) => (
                           <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: i === 0 ? "5px" : "0" }}>
                             <span style={{ fontSize: "7px", color: "rgba(167,139,250,.55)", fontFamily: "'Geist Mono',monospace" }}>{r.label}</span>
@@ -303,10 +273,10 @@ export default function LandingPage() {
           {/* Stats */}
           <div className="flex gap-14 justify-center flex-wrap pt-10 mt-10 border-t-[0.5px]" style={{ borderColor: "var(--border)" }}>
             {[
-              { num: "$3.09", suffix: "B", label: "AML penalties preventable" },
-              { num: "89.5", suffix: "%", label: "Canadian banking market" },
-              { num: "94", suffix: "%", label: "Canadians want AI + oversight" },
-              { num: "Phase 1+2", suffix: "", label: "CDBA ready" },
+              { num: "Demo", suffix: "", label: "Illustrative interface" },
+              { num: "None", suffix: "", label: "Bank partnerships" },
+              { num: "None", suffix: "", label: "Certifications held" },
+              { num: "Goal", suffix: "", label: "Architecture only" },
             ].map((stat, idx) => (
               <div key={idx} className="text-center">
                 <div className="text-3xl leading-none" style={{ fontFamily: "'Instrument Serif', serif", color: "white" }}>
@@ -327,14 +297,14 @@ export default function LandingPage() {
           {[...Array(2)].map((_, setIdx) => (
             <div key={setIdx} className="flex">
               {[
-                { label: "RBC", val: "↑ Compliance ✓" },
-                { label: "TD BANK", val: "AML Score 98/100" },
-                { label: "BMO", val: "↑ SAR Filed" },
-                { label: "FINTRAC", val: "Report Submitted" },
-                { label: "SCOTIABANK", val: "↑ Risk Clear" },
-                { label: "CIBC", val: "Consent Active" },
-                { label: "OSFI", val: "↑ Audit Ready" },
-                { label: "CDBA Phase 1", val: "✓ Compliant" },
+                { label: "SAMPLE A", val: "Illustrative metric" },
+                { label: "SAMPLE B", val: "Illustrative metric" },
+                { label: "SAMPLE C", val: "Illustrative metric" },
+                { label: "SAMPLE D", val: "Illustrative metric" },
+                { label: "NOT A CUSTOMER", val: "Hypothetical only" },
+                { label: "NOT CERTIFIED", val: "No attestation" },
+                { label: "NO PARTNERSHIP", val: "None claimed" },
+                { label: "PROTOTYPE", val: "Illustrative data" },
               ].map((item, idx) => (
                 <div key={idx} className="flex items-center gap-2 px-8 border-r-[0.5px] whitespace-nowrap text-xs" style={{ fontFamily: "'Geist Mono', monospace", color: "var(--t3)", borderColor: "var(--border)" }}>
                   <span className="font-medium" style={{ color: "var(--t2)" }}>{item.label}</span>
@@ -348,29 +318,15 @@ export default function LandingPage() {
 
       {/* TRUST BAR */}
       <div className="py-10 px-6 border-b-[0.5px]" style={{ borderColor: "var(--border)" }}>
-        <p className="text-center text-xs mb-7 uppercase tracking-widest font-bold" style={{ color: "var(--t3)", fontFamily: "'Geist Mono',monospace" }}>Trusted by Canada's most regulated institutions</p>
-        <div className="flex flex-wrap justify-center gap-3">
-          {["Royal Bank of Canada", "TD Canada Trust", "Bank of Montreal", "Scotiabank", "CIBC", "National Bank", "FINTRAC", "OSFI", "Bank of Canada", "Desjardins", "ATB Financial", "Meridian Credit Union"].map((name) => (
-            <div key={name} className="px-4 py-2 rounded-full border-[0.5px] text-xs" style={{ background: "var(--glass)", borderColor: "var(--border2)", color: "var(--t2)", fontFamily: "'Geist',sans-serif" }}>{name}</div>
-          ))}
-        </div>
+        <p className="text-center text-xs mb-4 uppercase tracking-widest font-bold" style={{ color: "var(--t3)", fontFamily: "'Geist Mono',monospace" }}>No institution is a customer, partner, or endorser</p>
+        <p className="text-center text-sm max-w-2xl mx-auto" style={{ color: "var(--t2)" }}>Bank names, regulator names, and logos are not shown here. Nothing on this page is a partnership, a filing, or a certification.</p>
       </div>
 
       {/* CERTIFICATIONS */}
       <div className="py-10 px-6 border-b-[0.5px]" style={{ background: "var(--bg1)", borderColor: "var(--border)" }}>
-        <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4">
-          {[
-            { badge: "SOC 2 TYPE II", label: "Security & Availability", desc: "Annual third-party audit. Zero critical findings since 2023.", color: "var(--brand-hi)" },
-            { badge: "ISO 27001", label: "Information Security", desc: "Certified information security management system.", color: "var(--sky)" },
-            { badge: "PCMLTFA", label: "Full Compliance", desc: "Proceeds of Crime (Money Laundering) Act — every obligation met.", color: "var(--gold)" },
-            { badge: "CDBA PHASE 1+2", label: "Open Banking Ready", desc: "Consumer-Driven Banking Act ready ahead of 2027 deadline.", color: "var(--teal, #34D399)" },
-          ].map((cert) => (
-            <div key={cert.badge} className="p-4 rounded-2xl border-[0.5px]" style={{ background: "var(--glass)", borderColor: "rgba(255,255,255,.08)" }}>
-              <div className="text-[0.6rem] font-bold tracking-wider mb-2 px-2 py-1 rounded-full inline-block" style={{ fontFamily: "'Geist Mono',monospace", color: cert.color, background: `${cert.color}14`, border: `0.5px solid ${cert.color}30` }}>{cert.badge}</div>
-              <div className="text-sm font-semibold mb-1" style={{ color: "white" }}>{cert.label}</div>
-              <div className="text-xs" style={{ color: "var(--t2)" }}>{cert.desc}</div>
-            </div>
-          ))}
+        <div className="max-w-3xl mx-auto p-6 rounded-2xl border-[0.5px] text-center" style={{ background: "var(--glass)", borderColor: "rgba(251,191,36,.28)" }}>
+          <div className="text-[0.65rem] font-bold tracking-wider mb-2" style={{ fontFamily: "'Geist Mono',monospace", color: "#FBBF24" }}>NOT CERTIFIED</div>
+          <p className="text-sm" style={{ color: "var(--t2)", lineHeight: 1.7 }}>This prototype does not hold a security audit certification, an information-security certification, or a Canadian regulatory attestation. Treat every screen below as a design sketch.</p>
         </div>
       </div>
 
@@ -384,12 +340,12 @@ export default function LandingPage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {[
-              { num: "01", title: "Autonomous Alert Triage", desc: "AI agents investigate alerts end-to-end — KYC retrieval, watchlist cross-reference, entity graph mapping, and a cited investigation brief — before a human opens the case.", stat: "94% faster time-to-decision", color: "var(--brand-hi)" },
-              { num: "02", title: "Explainable Risk Scoring", desc: "Every risk score is broken down into auditable components: Base + Geographic + PEP + Transaction Velocity + Network Anomaly. Regulators see exactly why the score is what it is.", stat: "100% explainable to OSFI", color: "var(--sky)" },
-              { num: "03", title: "Unified Compliance Hub", desc: "SAR generation, FINTRAC e-filing, OSFI reporting, UBO discovery, sanctions screening, and adverse media monitoring — all in one workflow with a shared audit trail.", stat: "7 tools replaced by 1", color: "var(--gold)" },
-              { num: "04", title: "No-Code Workflow Builder", desc: "Supervisors build visual routing rules — drag Trigger → Condition → Action — without writing a line of code. E.g. 'Alert > $50K AND Crypto wallet → Route to Senior Investigations'.", stat: "0 engineers required", color: "var(--coral, #F87171)" },
-              { num: "05", title: "Federated AI Model", desc: "5 Canadian banks train a shared AML model without sharing a single byte of PII. Homomorphic encryption ensures mathematical privacy guarantees while pooling threat intelligence.", stat: "92.7% detection accuracy", color: "var(--brand-hi)" },
-              { num: "06", title: "Maker-Checker Quality Gate", desc: "Every 10th closed case is auto-sampled for independent QA review. Decisions can be overturned and escalated. Investigator accuracy scores are tracked and reported.", stat: "91.2% QA pass rate", color: "var(--teal, #34D399)" },
+              { num: "01", title: "Autonomous Alert Triage", desc: "A sketch of agents gathering KYC, watchlist, and graph context into a brief before a person opens the case. No customer has measured this.", stat: "Illustrative workflow", color: "var(--brand-hi)" },
+              { num: "02", title: "Explainable Risk Scoring", desc: "A sketch that breaks a score into components such as geography, PEP status, velocity, and network context. This is not an examination finding.", stat: "Design sketch only", color: "var(--sky)" },
+              { num: "03", title: "Unified Compliance Hub", desc: "One screen that sketches report drafts, screening, and an audit trail. It does not file reports and it is not attested.", stat: "Sample screens", color: "var(--gold)" },
+              { num: "04", title: "No-Code Workflow Builder", desc: "A sketch of visual routing rules — Trigger, Condition, Action — such as a high-value alert routed to a senior reviewer.", stat: "Concept only", color: "var(--coral, #F87171)" },
+              { num: "05", title: "Federated AI Model", desc: "A design idea for shared model training that would avoid moving raw records. No institution is participating.", stat: "No participants", color: "var(--brand-hi)" },
+              { num: "06", title: "Maker-Checker Quality Gate", desc: "A sketch of sampling closed cases for a second review. Accuracy figures on this page are not measurements.", stat: "Not measured", color: "var(--teal, #34D399)" },
             ].map((f) => (
               <div key={f.num} className="p-6 rounded-2xl border-[0.5px] relative overflow-hidden" style={{ background: "var(--glass)", borderColor: "rgba(255,255,255,.07)" }}>
                 <div className="absolute top-0 left-0 right-0 h-[1px]" style={{ background: `linear-gradient(90deg, transparent, ${f.color}, transparent)` }} />
@@ -410,13 +366,13 @@ export default function LandingPage() {
             <div>
               <div className="inline-block px-3 py-1 rounded-full text-xs font-bold tracking-wider mb-4 border-[0.5px]" style={{ fontFamily: "'Geist Mono',monospace", color: "var(--coral, #F87171)", background: "rgba(248,113,113,.08)", borderColor: "rgba(248,113,113,.25)" }}>AML & COMPLIANCE</div>
               <h2 className="text-4xl mb-4" style={{ fontFamily: "'Instrument Serif',serif", color: "white" }}>Stop money laundering before it <span className="italic">leaves the country.</span></h2>
-              <p className="text-base mb-8" style={{ color: "var(--t2)", lineHeight: 1.7 }}>Graph-based network analysis surfaces hidden relationships across billions of transactions in real time. Explainable risk scores, automated alert triage, and one-click SAR generation — all built for FINTRAC and OSFI from the ground up.</p>
+              <p className="text-base mb-8" style={{ color: "var(--t2)", lineHeight: 1.7 }}>A sketch of network views, explainable scores, and draft narratives an officer could review. It does not monitor live payments and it does not file with any regulator.</p>
               <div className="space-y-4">
                 {[
                   { label: "Graph-based transaction network analysis", desc: "Detect money laundering rings across 3-degree entity networks" },
                   { label: "Fiat-to-Crypto forensics", desc: "Trace funds from bank accounts through crypto wallets and exchanges" },
                   { label: "Autonomous agent investigation", desc: "AI gathers evidence and drafts investigation briefs in under 60 seconds" },
-                  { label: "One-click SAR generation", desc: "FINTRAC-ready reports with AI-drafted narratives and officer review" },
+                  { label: "Draft narrative sketch", desc: "Sample text an officer could edit. Nothing is filed." },
                 ].map((item) => (
                   <div key={item.label} className="flex gap-3">
                     <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style={{ background: "rgba(248,113,113,.12)", border: "0.5px solid rgba(248,113,113,.3)" }}>
@@ -432,17 +388,17 @@ export default function LandingPage() {
             </div>
             <div className="space-y-3">
               {[
-                { label: "False positive reduction", from: 72, to: 6, color: "#F87171" },
-                { label: "Alert triage time", from: 240, to: 12, suffix: "min", color: "#FBBF24" },
-                { label: "SAR accuracy (FINTRAC)", from: 61, to: 98, color: "#A78BFA" },
-                { label: "Detection coverage", from: 44, to: 94, color: "#34D399" },
+                { label: "Sample false-positive sketch", from: 72, to: 6, color: "#F87171" },
+                { label: "Sample triage sketch", from: 240, to: 12, suffix: "min", color: "#FBBF24" },
+                { label: "Sample draft completeness", from: 61, to: 98, color: "#A78BFA" },
+                { label: "Sample coverage sketch", from: 44, to: 94, color: "#34D399" },
               ].map((stat) => (
                 <div key={stat.label} className="p-4 rounded-2xl border-[0.5px]" style={{ background: "var(--glass2)", borderColor: "rgba(255,255,255,.08)" }}>
                   <div className="flex justify-between items-start mb-3">
                     <span className="text-sm font-semibold" style={{ color: "white" }}>{stat.label}</span>
                     <div className="text-right">
-                      <div className="text-xs line-through" style={{ color: "var(--t3)" }}>Legacy: {stat.from}{stat.suffix || "%"}</div>
-                      <div className="text-base font-bold" style={{ color: stat.color, fontFamily: "'Instrument Serif',serif" }}>NexusAI: {stat.to}{stat.suffix || "%"}</div>
+                      <div className="text-xs line-through" style={{ color: "var(--t3)" }}>Placeholder: {stat.from}{stat.suffix || "%"}</div>
+                      <div className="text-base font-bold" style={{ color: stat.color, fontFamily: "'Instrument Serif',serif" }}>Sketch: {stat.to}{stat.suffix || "%"}</div>
                     </div>
                   </div>
                   <div className="h-2 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,.06)" }}>
@@ -451,8 +407,8 @@ export default function LandingPage() {
                 </div>
               ))}
               <div className="p-4 rounded-2xl border-[0.5px] text-center" style={{ background: "rgba(248,113,113,.05)", borderColor: "rgba(248,113,113,.2)" }}>
-                <div className="text-3xl font-bold mb-1" style={{ fontFamily: "'Instrument Serif',serif", color: "#F87171" }}>$3.09B</div>
-                <div className="text-xs" style={{ color: "var(--t2)" }}>in AML penalties preventable annually for Canadian banks</div>
+                <div className="text-xl font-bold mb-1" style={{ fontFamily: "'Instrument Serif',serif", color: "#FBBF24" }}>Not a result</div>
+                <div className="text-xs" style={{ color: "var(--t2)" }}>Placeholder bars above are not measured outcomes and do not describe any bank.</div>
               </div>
             </div>
           </div>
@@ -464,13 +420,13 @@ export default function LandingPage() {
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
             <div className="inline-block px-3 py-1 rounded-full text-xs font-bold tracking-wider mb-4 border-[0.5px]" style={{ fontFamily: "'Geist Mono',monospace", color: "var(--sky)", background: "rgba(96,165,250,.08)", borderColor: "rgba(96,165,250,.25)" }}>OPEN BANKING</div>
-            <h2 className="text-4xl mb-4" style={{ fontFamily: "'Instrument Serif',serif", color: "white" }}>CDBA-ready today.<br /><span className="italic" style={{ color: "var(--sky)" }}>Phase 2-ready for 2027.</span></h2>
-            <p className="text-base max-w-xl mx-auto" style={{ color: "var(--t2)" }}>Canada's Consumer-Driven Banking Act mandates open banking by 2026. NexusAI delivers full Phase 1 compliance on day one, with Phase 2 payment initiation architecture already in place.</p>
+            <h2 className="text-4xl mb-4" style={{ fontFamily: "'Instrument Serif',serif", color: "white" }}>Open-banking sketch.<br /><span className="italic" style={{ color: "var(--sky)" }}>Not a certification.</span></h2>
+            <p className="text-base max-w-xl mx-auto" style={{ color: "var(--t2)" }}>These cards describe a design goal for consented read access and a later payment idea. No bank is connected, and no open-banking certification has been obtained.</p>
           </div>
           <div className="grid md:grid-cols-3 gap-6 mb-10">
             {[
-              { phase: "Phase 1 — Live", title: "Read Access", desc: "Consumers share banking data with third parties via secure, consented APIs. Account aggregation, financial health scoring, and cross-institution data views.", status: "LIVE", color: "var(--sky)" },
-              { phase: "Phase 2 — Ready", title: "Write Access & Payments", desc: "Third parties initiate payments and account switches with consumer consent. Architecture is production-ready ahead of the 2027 regulatory mandate.", status: "READY", color: "var(--brand-hi)" },
+              { phase: "Phase 1 — Sketch", title: "Read Access", desc: "A sketch of consumers sharing account data through a consented API. No institution is connected.", status: "SKETCH", color: "var(--sky)" },
+              { phase: "Phase 2 — Idea", title: "Write Access & Payments", desc: "An idea for payment initiation with consent. It is not built as a live payment rail and it is not certified.", status: "IDEA", color: "var(--brand-hi)" },
               { phase: "Phase 3 — Roadmap", title: "Product Comparison", desc: "Transparent pricing, AI-powered product recommendations, and rate comparison across institutions — giving consumers unprecedented financial choice.", status: "PLANNED", color: "var(--t2)" },
             ].map((p) => (
               <div key={p.phase} className="p-6 rounded-2xl border-[0.5px] relative" style={{ background: "var(--glass)", borderColor: "rgba(255,255,255,.08)" }}>
@@ -486,7 +442,7 @@ export default function LandingPage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
               { label: "Consent Management", desc: "Granular per-institution, per-scope consent with revocation" },
-              { label: "OAuth 2.0 Flows", desc: "Standard authorization flows compatible with all Canadian banks" },
+              { label: "OAuth 2.0 Flows", desc: "A sample authorization screen. No bank connection exists." },
               { label: "Aggregated Views", desc: "Cross-institution account summaries and financial health scores" },
               { label: "Privacy by Design", desc: "Zero raw PII stored — all data tokenized and scoped" },
             ].map((f) => (
@@ -519,14 +475,14 @@ export default function LandingPage() {
                 </div>
               ))}
               <div className="p-5 rounded-2xl border-[0.5px]" style={{ background: "rgba(245,200,66,.05)", borderColor: "rgba(245,200,66,.2)" }}>
-                <div className="text-3xl font-bold mb-1" style={{ fontFamily: "'Instrument Serif',serif", color: "var(--gold)" }}>82%</div>
-                <div className="text-sm" style={{ color: "var(--t2)" }}>of Canadians say they'd trust AI financial advice <em>more</em> if a human advisor reviewed every recommendation. NexusAI's HITL architecture closes the gap permanently.</div>
+                <div className="text-xl font-bold mb-1" style={{ fontFamily: "'Instrument Serif',serif", color: "var(--gold)" }}>No survey cited</div>
+                <div className="text-sm" style={{ color: "var(--t2)" }}>This prototype keeps a person in the loop on the sketch screens. It does not cite a survey and it does not claim a trust result.</div>
               </div>
             </div>
             <div className="order-1 md:order-2">
               <div className="inline-block px-3 py-1 rounded-full text-xs font-bold tracking-wider mb-4 border-[0.5px]" style={{ fontFamily: "'Geist Mono',monospace", color: "var(--gold)", background: "rgba(245,200,66,.08)", borderColor: "rgba(245,200,66,.25)" }}>FINANCIAL ADVISORY</div>
               <h2 className="text-4xl mb-4" style={{ fontFamily: "'Instrument Serif',serif", color: "white" }}>AI speed.<br /><span className="italic" style={{ color: "var(--gold)" }}>Human judgment.</span><br />At every decision.</h2>
-              <p className="text-base mb-6" style={{ color: "var(--t2)", lineHeight: 1.7 }}>Only 18% of Canadians trust AI alone for financial advice. NexusAI's Human-in-the-Loop architecture pairs AI-generated insights with human advisor sign-off at every critical decision — delivering the speed of AI with the trust of a person.</p>
+              <p className="text-base mb-6" style={{ color: "var(--t2)", lineHeight: 1.7 }}>The advisory screens pair a generated suggestion with a human sign-off step. That is a product sketch, not a measured trust result and not advice from a registered advisor.</p>
               <div className="flex gap-4 flex-wrap">
                 {["HITL Architecture", "Advisor Dashboard", "Sentiment Scoring", "Goal Modelling"].map((tag) => (
                   <div key={tag} className="px-3 py-1.5 rounded-full text-xs border-[0.5px]" style={{ color: "var(--gold)", background: "rgba(245,200,66,.08)", borderColor: "rgba(245,200,66,.22)" }}>{tag}</div>
@@ -542,18 +498,18 @@ export default function LandingPage() {
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
             <div className="inline-block px-3 py-1 rounded-full text-xs font-bold tracking-wider mb-4 border-[0.5px]" style={{ fontFamily: "'Geist Mono',monospace", color: "var(--brand-hi)", background: "var(--brand-g)", borderColor: "var(--border-b)" }}>GOVERNMENT GRADE</div>
-            <h2 className="text-4xl mb-4" style={{ fontFamily: "'Instrument Serif',serif", color: "white" }}>Built for federal oversight.<br /><span className="italic" style={{ color: "var(--brand-hi)" }}>Trusted by regulators.</span></h2>
-            <p className="text-base max-w-xl mx-auto" style={{ color: "var(--t2)" }}>Every compliance action is logged, timestamped, and cryptographically attributable. Government-grade security with zero-trust architecture, JWT session management, and tRPC-hardened APIs.</p>
+            <h2 className="text-4xl mb-4" style={{ fontFamily: "'Instrument Serif',serif", color: "white" }}>Oversight sketch.<br /><span className="italic" style={{ color: "var(--brand-hi)" }}>Not endorsed.</span></h2>
+            <p className="text-base max-w-xl mx-auto" style={{ color: "var(--t2)" }}>The prototype logs sample actions in the interface. No regulator has reviewed, endorsed, or certified it.</p>
           </div>
           <div className="grid md:grid-cols-2 gap-6 mb-8">
             <div className="p-6 rounded-2xl border-[0.5px]" style={{ background: "rgba(139,92,246,.05)", borderColor: "rgba(139,92,246,.2)" }}>
               <h3 className="text-lg font-semibold mb-4" style={{ color: "white" }}>Regulatory Coverage</h3>
               <div className="space-y-3">
                 {[
-                  { reg: "FINTRAC", desc: "Full SAR filing, STR submission, threshold transaction reporting with acknowledgement tracking" },
-                  { reg: "OSFI", desc: "Risk reporting, capital adequacy metrics, and operational resilience documentation" },
-                  { reg: "PCMLTFA", desc: "Proceeds of Crime and Terrorist Financing Act — every obligation from s.5 through s.83" },
-                  { reg: "PIPEDA / Bill C-27", desc: "Privacy-by-design data handling with consent trails and breach notification workflows" },
+                  { reg: "Reports", desc: "Design target: draft suspicious-transaction narratives. Nothing is submitted." },
+                  { reg: "Oversight", desc: "Design target: explainable scores a reviewer could read. Not an examination result." },
+                  { reg: "Recordkeeping", desc: "Design target: keep a sample audit trail. Not an attestation that every statutory duty is met." },
+                  { reg: "Privacy", desc: "Design target: consent trails in the prototype. Not a privacy-law certification." },
                 ].map((item) => (
                   <div key={item.reg} className="flex gap-3">
                     <div className="text-xs font-bold px-2 py-1 rounded-md flex-shrink-0 h-fit" style={{ fontFamily: "'Geist Mono',monospace", color: "var(--brand-hi)", background: "rgba(139,92,246,.12)", border: "0.5px solid rgba(139,92,246,.28)" }}>{item.reg}</div>
@@ -571,7 +527,7 @@ export default function LandingPage() {
                   { label: "JWT Session Mgmt", desc: "Short-lived tokens, automatic rotation" },
                   { label: "Role-Based Access", desc: "4 tiers: CRO, Compliance, Advisor, Client" },
                   { label: "Immutable Audit Log", desc: "Cryptographically signed, tamper-evident" },
-                  { label: "99.97% Uptime SLA", desc: "Multi-region redundancy, 24/7 monitoring" },
+                  { label: "No uptime SLA", desc: "This prototype does not offer a measured availability commitment." },
                 ].map((item) => (
                   <div key={item.label} className="p-3 rounded-xl border-[0.5px]" style={{ background: "var(--glass)", borderColor: "rgba(255,255,255,.07)" }}>
                     <div className="text-xs font-semibold mb-1" style={{ color: "white" }}>{item.label}</div>
@@ -582,7 +538,7 @@ export default function LandingPage() {
             </div>
           </div>
           <div className="flex flex-wrap justify-center gap-4">
-            {["FINTRAC SAR Filing", "OSFI Risk Reports", "CDBA Phase 1+2", "PCMLTFA s.7", "PIPEDA Compliant", "SOC 2 Type II", "ISO 27001", "Zero Trust Architecture"].map((badge) => (
+            {["Prototype only", "No security audit certification", "No information-security certification", "No privacy-law certification", "No regulator attestation", "Illustrative data"].map((badge) => (
               <div key={badge} className="flex items-center gap-2 px-4 py-2 rounded-full border-[0.5px] text-xs" style={{ color: "var(--brand-hi)", background: "rgba(139,92,246,.07)", borderColor: "rgba(139,92,246,.22)" }}>
                 <svg width="8" height="8" viewBox="0 0 8 8"><path d="M1.5 4L3.5 6L6.5 2" stroke="#A78BFA" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none"/></svg>
                 {badge}
@@ -596,28 +552,11 @@ export default function LandingPage() {
       <div className="py-24 px-6 border-b-[0.5px]" style={{ background: "var(--bg1)", borderColor: "var(--border)" }}>
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-14">
-            <h2 className="text-4xl mb-3" style={{ fontFamily: "'Instrument Serif',serif", color: "white" }}>What compliance leaders say</h2>
-            <p className="text-sm" style={{ color: "var(--t2)" }}>From Chief Compliance Officers to VP Regulatory Affairs at Canada's Big Six</p>
+            <h2 className="text-4xl mb-3" style={{ fontFamily: "'Instrument Serif',serif", color: "white" }}>No customer quotes</h2>
+            <p className="text-sm max-w-xl mx-auto" style={{ color: "var(--t2)", lineHeight: 1.7 }}>This prototype has no testimonials. No person at a bank has endorsed it, and no quote on any earlier version of this page was a real customer.</p>
           </div>
-          <div className="grid md:grid-cols-3 gap-5">
-            {[
-              { name: "Sarah Chen", role: "Chief Compliance Officer", org: "RBC", initials: "SC", quote: "NexusAI reduced our AML false positive rate by 92%. The graph-based network analysis caught a shell company ring our legacy system missed for months.", accent: "var(--brand-hi)" },
-              { name: "Michael Rousseau", role: "VP of Regulatory Affairs", org: "TD Canada Trust", initials: "MR", quote: "After the 2024 penalties, we needed explainable AI that regulators could audit. NexusAI's SAR generator produces FINTRAC-ready reports with full decision trails.", accent: "var(--gold)" },
-              { name: "Dr. Priya Sharma", role: "Director, Digital Banking", org: "Scotiabank", initials: "PS", quote: "The CDBA Phase 1 compliance was seamless. NexusAI's consent management and aggregated account views positioned us ahead of the 2027 deadline.", accent: "var(--sky)" },
-            ].map((t) => (
-              <div key={t.name} className="p-6 rounded-2xl border-[0.5px] relative" style={{ background: "var(--glass)", borderColor: "rgba(255,255,255,.07)" }}>
-                <div className="absolute top-0 left-0 right-0 h-[1px]" style={{ background: `linear-gradient(90deg, transparent, ${t.accent}, transparent)` }} />
-                <div className="text-3xl mb-4" style={{ color: t.accent, fontFamily: "'Instrument Serif',serif", lineHeight: 1 }}>"</div>
-                <p className="text-sm mb-6" style={{ color: "var(--t1)", lineHeight: 1.7 }}>{t.quote}</p>
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold" style={{ background: `linear-gradient(135deg, ${t.accent}30, ${t.accent}12)`, border: `1px solid ${t.accent}35`, color: t.accent }}>{t.initials}</div>
-                  <div>
-                    <div className="text-sm font-semibold" style={{ color: "white" }}>{t.name}</div>
-                    <div className="text-xs" style={{ color: "var(--t2)" }}>{t.role} · {t.org}</div>
-                  </div>
-                </div>
-              </div>
-            ))}
+          <div className="p-6 rounded-2xl border-[0.5px] text-center" style={{ background: "var(--glass)", borderColor: "rgba(251,191,36,.28)" }}>
+            <p className="text-sm" style={{ color: "var(--t1)", lineHeight: 1.7 }}>Hypothetical example, not a customer: “A reviewer could edit a draft and decide whether to keep it.” That sentence is invented for the layout. It is not attributed to anyone.</p>
           </div>
         </div>
       </div>
@@ -631,9 +570,9 @@ export default function LandingPage() {
           </div>
           <div className="grid md:grid-cols-3 gap-5">
             {[
-              { name: "STARTER", price: "$4,999", per: "/month", tag: "Credit unions & regional banks", features: ["Up to 50K transactions/mo", "Basic AML + KYC workflows", "Email support (24h SLA)", "Full audit logging", "FINTRAC basic reporting"], featured: false, color: "var(--t2)" },
-              { name: "PROFESSIONAL", price: "$14,999", per: "/month", tag: "Mid-sized banks & fintechs", features: ["Up to 500K transactions/mo", "Full compliance suite + SAR", "Priority support (4h SLA)", "Network graph analysis", "Open Banking Phase 1", "Federated AI model access"], featured: true, color: "var(--brand-hi)" },
-              { name: "ENTERPRISE", price: "Custom", per: "", tag: "Big Six & government institutions", features: ["Unlimited transactions", "White-label deployment", "Dedicated CSM", "Custom integrations + APIs", "FINTRAC + OSFI reporting", "Agentic AI investigators"], featured: false, color: "var(--gold)" },
+              { name: "STARTER", price: "$4,999", per: "/month", tag: "Illustrative price, not an offer", features: ["Sample transaction cap", "Sample AML and KYC screens", "Sample email support note", "Sample audit log", "Sample report drafts"], featured: false, color: "var(--t2)" },
+              { name: "PROFESSIONAL", price: "$14,999", per: "/month", tag: "Illustrative price, not an offer", features: ["Sample transaction cap", "Sample compliance screens", "Sample support note", "Sample network view", "Open-banking sketch", "Sample shared-model idea"], featured: true, color: "var(--brand-hi)" },
+              { name: "ENTERPRISE", price: "Custom", per: "", tag: "Illustrative price, not an offer", features: ["Sample unlimited tier", "White-label sketch", "Sample contact role", "Sample API notes", "Sample reporting screens", "Sample investigator view"], featured: false, color: "var(--gold)" },
             ].map((plan) => (
               <div key={plan.name} className="p-7 rounded-2xl border-[0.5px] relative" style={{ background: plan.featured ? "rgba(139,92,246,.08)" : "var(--glass)", borderColor: plan.featured ? "rgba(139,92,246,.4)" : "rgba(255,255,255,.07)", boxShadow: plan.featured ? "0 0 40px rgba(139,92,246,.1)" : "none" }}>
                 {plan.featured && <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full text-[0.65rem] font-bold" style={{ background: "linear-gradient(135deg,#8B5CF6,#7C3AED)", color: "white", fontFamily: "'Geist Mono',monospace" }}>MOST POPULAR</div>}
@@ -652,7 +591,7 @@ export default function LandingPage() {
                   ))}
                 </div>
                 <button className="w-full py-2.5 rounded-full text-sm font-semibold transition-all" style={{ background: plan.featured ? "linear-gradient(135deg,#8B5CF6,#7C3AED)" : "var(--glass2)", color: plan.featured ? "white" : "var(--t1)", border: plan.featured ? "none" : "0.5px solid rgba(255,255,255,.12)" }}>
-                  {plan.price === "Custom" ? "Contact Sales" : "Start Free Trial"}
+                  View the prototype
                 </button>
               </div>
             ))}
@@ -666,9 +605,9 @@ export default function LandingPage() {
           <h2 className="text-4xl mb-12 text-center" style={{ fontFamily: "'Instrument Serif',serif", color: "white" }}>Frequently asked questions</h2>
           <div className="space-y-3">
             {[
-              { q: "Is NexusAI FINTRAC and OSFI compliant?", a: "Yes. NexusAI is built with Canadian regulatory frameworks at its core. All SAR filings are FINTRAC-ready, and our audit logging meets OSFI requirements for explainability and traceability." },
-              { q: "How does the AI explainability work?", a: "Every risk score includes a natural language explanation of contributing factors — e.g. 'structuring pattern detected' or 'cross-border velocity anomaly'. Compliance officers can drill into transaction graphs and see exactly why an alert was triggered. This is OSFI audit-ready." },
-              { q: "What's the difference between Phase 1 and Phase 2 Open Banking?", a: "Phase 1 (2026) allows read-only access to customer banking data with consent. Phase 2 (2027) adds payment initiation and account switching. NexusAI supports Phase 1 today and is fully architected for Phase 2." },
+              { q: "Is NexusAI certified for Canadian regulatory filing or supervision?", a: "No. This prototype does not hold a filing, supervisory, privacy, or security certification. Sample screens are not filings and are not examination evidence." },
+              { q: "How does the AI explainability work?", a: "The sketch shows a short reason next to a score, such as a structuring pattern or a velocity note. That layout is illustrative. It is not an examination-ready control." },
+              { q: "What's the difference between Phase 1 and Phase 2 Open Banking?", a: "In the sketch, phase 1 is read-only sharing and phase 2 is a payment idea. Neither is live, neither is certified, and no bank is connected." },
               { q: "Can NexusAI integrate with our existing core banking system?", a: "Yes. NexusAI connects via REST APIs to systems like Temenos, FIS, and Oracle FLEXCUBE. We also support batch file imports (CSV, JSON) and direct database connectors for legacy systems." },
               { q: "How does the Federated Learning model protect our customer data?", a: "The federated model uses Homomorphic Encryption to ensure model weights are encrypted before transmission. Differential privacy (ε=0.1) adds noise to gradient updates, and a zero-knowledge proof verifies no raw PII ever leaves your institution." },
               { q: "What support options are available?", a: "Starter: Email (24h SLA). Professional: Priority email + Slack (4h SLA). Enterprise: Dedicated CSM, phone support, and custom SLAs down to 1h for critical compliance issues." },
@@ -690,8 +629,8 @@ export default function LandingPage() {
         <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 700px 400px at 50% 50%, rgba(139,92,246,.08) 0%, transparent 70%)" }} />
         <div className="relative z-10 max-w-2xl mx-auto">
           <div className="text-xs font-bold tracking-widest mb-6 uppercase" style={{ fontFamily: "'Geist Mono',monospace", color: "var(--t3)" }}>Ready when you are</div>
-          <h2 className="text-4xl md:text-5xl mb-6" style={{ fontFamily: "'Instrument Serif',serif", color: "white" }}>The platform Canada's banks<br /><span className="italic" style={{ color: "var(--brand-hi)" }}>can't afford to ignore.</span></h2>
-          <p className="text-base mb-10" style={{ color: "var(--t2)", lineHeight: 1.7 }}>Join the institutions already using NexusAI to stay ahead of FINTRAC, OSFI, and the CDBA — without adding headcount.</p>
+          <h2 className="text-4xl md:text-5xl mb-6" style={{ fontFamily: "'Instrument Serif',serif", color: "white" }}>A prototype you can<br /><span className="italic" style={{ color: "var(--brand-hi)" }}>click through.</span></h2>
+          <p className="text-base mb-10" style={{ color: "var(--t2)", lineHeight: 1.7 }}>No institution is using NexusAI in production. The dashboard behind this button is sample data.</p>
           <div className="flex gap-3 justify-center flex-wrap">
             <button onClick={() => navigate("/dashboard")} className="px-8 py-4 rounded-full text-base font-semibold" style={{ background: "linear-gradient(135deg,#8B5CF6,#7C3AED)", color: "white", boxShadow: "0 0 40px rgba(139,92,246,.3)" }}>
               Explore the Platform →
@@ -701,7 +640,7 @@ export default function LandingPage() {
             </button>
           </div>
           <div className="flex items-center justify-center gap-6 mt-12 text-xs flex-wrap" style={{ color: "var(--t3)" }}>
-            {["FINTRAC Compliant", "SOC 2 Type II", "ISO 27001", "99.97% Uptime", "No credit card required"].map((badge, i) => (
+            {["Prototype", "No certification", "Illustrative data only", "No uptime claim", "Not a paid product"].map((badge, i) => (
               <span key={badge} className="flex items-center gap-1.5">
                 <svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 5L4 7L8 3" stroke="#4A3D6A" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none"/></svg>
                 {badge}
@@ -721,7 +660,7 @@ export default function LandingPage() {
               <span style={{ fontFamily: "'Instrument Serif',serif", color: "rgba(167,139,250,.5)", fontSize: "13px" }}>Nexus<b style={{ color: "rgba(167,139,250,.7)" }}>AI</b></span>
             </div>
             <div className="flex gap-6 text-xs" style={{ color: "var(--t3)" }}>
-              {["Privacy Policy", "Terms of Service", "Security", "FINTRAC Reports", "Contact"].map((link) => (
+              {["Privacy note", "Terms note", "Security note", "Prototype notes", "Contact"].map((link) => (
                 <a key={link} href="#" className="hover:text-[var(--t2)] transition-colors" style={{ color: "var(--t3)", textDecoration: "none" }}>{link}</a>
               ))}
             </div>

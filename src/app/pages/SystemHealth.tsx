@@ -4,7 +4,7 @@ import { Activity, CheckCircle, AlertTriangle, Cpu, Database, Zap, Globe, Clock 
 
 const services = [
   { name: "AML Detection Engine", uptime: "99.98%", latency: "42ms", status: "operational", requests: "12,441/hr" },
-  { name: "FINTRAC SAR API", uptime: "99.95%", latency: "118ms", status: "operational", requests: "84/hr" },
+  { name: "Sample report API", uptime: "99.95%", latency: "118ms", status: "operational", requests: "84/hr" },
   { name: "Sanctions Screening", uptime: "99.99%", latency: "28ms", status: "operational", requests: "5,320/hr" },
   { name: "Graph Analysis Pipeline", uptime: "99.87%", latency: "340ms", status: "degraded", requests: "230/hr" },
   { name: "Open Banking API Gateway", uptime: "100%", latency: "55ms", status: "operational", requests: "3,100/hr" },

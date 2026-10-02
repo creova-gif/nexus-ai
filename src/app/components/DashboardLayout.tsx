@@ -1,5 +1,6 @@
 import { ReactNode, useState } from "react";
 import { useLocation } from "wouter";
+import PrototypeNotice from "./PrototypeNotice";
 import {
   LayoutGrid, AlertTriangle, Network, Users, Shield, FileText,
   TrendingUp, Laptop, Activity, Settings as SettingsIcon,
@@ -351,6 +352,9 @@ export default function DashboardLayout({
 
         {/* SCROLL AREA */}
         <div className="flex-1 overflow-y-auto px-6 py-5">
+          <div className="mb-4 -mx-6 -mt-5">
+            <PrototypeNotice />
+          </div>
           {children}
         </div>
       </div>

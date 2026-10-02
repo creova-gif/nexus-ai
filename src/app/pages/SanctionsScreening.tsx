@@ -17,7 +17,7 @@ const watchlists = [
   { name: "UN Security Council", entries: "4,112", lastSync: "4h ago", status: "active" },
   { name: "EU Consolidated List", entries: "8,330", lastSync: "1d ago", status: "active" },
   { name: "PEP Database", entries: "91,204", lastSync: "12h ago", status: "active" },
-  { name: "FINTRAC Terrorist Entities", entries: "2,067", lastSync: "6h ago", status: "active" },
+  { name: "Sample terrorist-entities list", entries: "2,067", lastSync: "6h ago", status: "active" },
 ];
 
 export default function SanctionsScreening() {

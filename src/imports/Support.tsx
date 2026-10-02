@@ -199,7 +199,7 @@ export default function Support() {
                 },
                 {
                   q: "Is my data secure?",
-                  a: "Yes, all data is encrypted in transit and at rest. We comply with Canadian banking regulations and PIPEDA.",
+                  a: "Sample answer only. This prototype encrypts nothing in production and does not claim a privacy-law or banking-regulation certification.",
                 },
               ].map((faq, idx) => (
                 <div key={idx} className="border-b border-border pb-4 last:border-0">

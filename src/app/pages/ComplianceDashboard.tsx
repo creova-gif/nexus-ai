@@ -32,8 +32,8 @@ export default function ComplianceDashboard() {
       label: "SARs Filed",
       value: "12",
       highlight: true,
-      sub: "This month · FINTRAC",
-      badge: "✓ OK",
+      sub: "Sample count · not filed",
+      badge: "SAMPLE",
       badgeClass: "bg-[var(--brand-glow)] text-[var(--brand-hi)]",
       color: "var(--brand-hi)",
     },
@@ -101,16 +101,16 @@ export default function ComplianceDashboard() {
     { icon: AlertTriangle, title: "High-risk alert triggered", meta: "Alert #AML-2026-0471", time: "2h ago", color: "var(--coral)" },
     { icon: FileText, title: "Investigation case opened", meta: "Case #INV-0092 · Officer M. Chen", time: "1.5h ago", color: "var(--brand-hi)" },
     { icon: Users, title: "Network graph analyzed", meta: "6-node shell company cluster detected", time: "45m ago", color: "var(--amber)" },
-    { icon: CheckCircle, title: "SAR draft generated (AI)", meta: "FINTRAC format · awaiting officer review", time: "12m ago", color: "var(--teal)" },
+    { icon: CheckCircle, title: "SAR draft generated (AI)", meta: "Sample format · not filed", time: "12m ago", color: "var(--teal)" },
   ];
 
   // removed hardcoded chatMessages
 
   const regulatoryStatus = [
-    { name: "FINTRAC", status: "COMPLIANT", color: "var(--teal)" },
-    { name: "OSFI", status: "AUDIT READY", color: "var(--brand-hi)" },
-    { name: "CDBA Phase 1", status: "ACTIVE", color: "var(--teal)" },
-    { name: "PCMLTFA", status: "COMPLIANT", color: "var(--teal)" },
+    { name: "Filing regime", status: "NOT CERTIFIED", color: "var(--amber)" },
+    { name: "Supervisory regime", status: "NOT CERTIFIED", color: "var(--amber)" },
+    { name: "Open-banking regime", status: "NOT CERTIFIED", color: "var(--amber)" },
+    { name: "Recordkeeping regime", status: "NOT CERTIFIED", color: "var(--amber)" },
   ];
 
   const todayActions = [
@@ -226,7 +226,7 @@ export default function ComplianceDashboard() {
                 ))}
               </div>
               <span>High</span>
-              <span className="ml-auto">Powered by graph intelligence · PCMLTFA compliant</span>
+              <span className="ml-auto">Sample heatmap · not a certification</span>
             </div>
           </div>
         </Card>
@@ -379,7 +379,7 @@ export default function ComplianceDashboard() {
             {/* Regulatory Status */}
             <Card className="glass-2 border-[0.5px] border-[var(--border)] p-3">
               <div className="font-['Geist_Mono'] text-[0.65rem] font-bold tracking-wider uppercase text-[var(--text-purple-3)] mb-3">
-                Regulatory Status
+                Certification status
               </div>
               <div className="space-y-2">
                 {regulatoryStatus.map((reg, idx) => (
@@ -617,12 +617,12 @@ export default function ComplianceDashboard() {
           <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[rgba(255,255,255,.06)] to-transparent pointer-events-none" />
           <div className="px-4 py-3 border-b-[0.5px] border-[var(--border)]">
             <div className="font-['Geist_Mono'] text-[0.72rem] font-bold tracking-wider uppercase text-[var(--text-purple-2)]">
-              SAR Generator — FINTRAC Reporting
+              SAR Generator — sample drafts
             </div>
           </div>
           <div className="p-4">
             <div className="text-sm text-[var(--text-purple-2)] mb-4">
-              AI-drafted Suspicious Activity Reports with officer review workflow and direct FINTRAC submission
+              Sample suspicious-activity drafts for an officer to read. This prototype does not submit them anywhere.
             </div>
             <div className="space-y-4">
               <div>
@@ -640,7 +640,7 @@ export default function ComplianceDashboard() {
               </div>
               <div>
                 <label className="block text-xs font-semibold text-[var(--text-purple-2)] mb-2">AI-Generated Summary</label>
-                <textarea readOnly value={sarSummary} rows={4} className="w-full px-3 py-2 text-sm bg-[var(--glass)] border-[0.5px] border-[var(--border)] rounded-md text-[var(--text-purple)] outline-none focus:border-[var(--border-purple)]" placeholder="The AI will generate a FINTRAC-ready SAR summary based on the alert details..." />
+                <textarea readOnly value={sarSummary} rows={4} className="w-full px-3 py-2 text-sm bg-[var(--glass)] border-[0.5px] border-[var(--border)] rounded-md text-[var(--text-purple)] outline-none focus:border-[var(--border-purple)]" placeholder="A sample summary appears here. It is not a filing." />
               </div>
               <div className="flex gap-3">
                 <Button onClick={generateSarDraft} className="flex-1 gradient-purple text-white">Generate SAR Draft</Button>

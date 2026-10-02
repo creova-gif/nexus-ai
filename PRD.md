@@ -1,7 +1,7 @@
 # NexusAI — Product Requirements Document
 
 **Version:** 1.0
-**Status:** Approved
+**Status:** Requirements draft for a prototype. No security-audit, information-security, filing, supervisory, privacy, or open-banking certification has been obtained. Tables below are targets, not current attestations.
 **Date:** May 2026
 **Owner:** Product Team
 **Stakeholders:** Engineering, Compliance, Sales, Legal, Design
@@ -692,7 +692,7 @@ NexusAI is **not** a rules engine replacement. It sits on top of existing transa
 ### OSFI B-10 (Third-Party Risk Management)
 
 - NexusAI must provide contractual commitments covering: data access controls, audit rights, incident notification (within 72h), business continuity, and data return/destruction
-- Annual service organization control (SOC 2 Type II) report provided to customers
+- Target only, after a certification that has not been obtained: an annual service organization control report could be shared with customers. None exists today.
 - Customers can conduct their own due diligence assessments (security questionnaire, site visit for Enterprise)
 
 ### OSFI B-8 (Operational Resilience)

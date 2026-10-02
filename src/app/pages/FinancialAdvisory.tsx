@@ -6,14 +6,14 @@ import { TrendingUp, TrendingDown, Target, DollarSign, PieChart, User, Zap } fro
 
 const clients = [
   { id: "CLI-001", name: "James Whitfield", segment: "HNW", portfolio: "$2.4M", ytd: "+14.2%", risk: "Moderate", status: "on-track", advisor: "M. Chen" },
-  { id: "CLI-002", name: "Priya Sharma", segment: "Mass Affluent", portfolio: "$380K", ytd: "+6.8%", risk: "Conservative", status: "at-risk", advisor: "M. Chen" },
+  { id: "CLI-002", name: "Example Client B", segment: "Mass Affluent", portfolio: "$380K", ytd: "+6.8%", risk: "Conservative", status: "at-risk", advisor: "M. Chen" },
   { id: "CLI-003", name: "David Okonkwo", segment: "HNW", portfolio: "$1.1M", ytd: "+19.5%", risk: "Aggressive", status: "on-track", advisor: "M. Chen" },
   { id: "CLI-004", name: "Sophie Tremblay", segment: "Mass Affluent", portfolio: "$210K", ytd: "-2.1%", risk: "Moderate", status: "review", advisor: "M. Chen" },
 ];
 
 const recommendations = [
   { client: "James Whitfield", action: "Rebalance equities — overweight tech by 8%", priority: "high", type: "Rebalance" },
-  { client: "Priya Sharma", action: "Increase bond allocation ahead of rate decision", priority: "medium", type: "Allocation" },
+  { client: "Example Client B", action: "Increase bond allocation ahead of rate decision", priority: "medium", type: "Allocation" },
   { client: "David Okonkwo", action: "Tax-loss harvesting opportunity in Q2", priority: "low", type: "Tax" },
   { client: "Sophie Tremblay", action: "Risk review — negative YTD, suggest conservative shift", priority: "high", type: "Risk" },
 ];

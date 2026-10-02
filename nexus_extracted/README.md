@@ -166,7 +166,7 @@ See `/src/imports/` for:
 
 ## Compliance & Security
 
-- PIPEDA compliant data handling
+- Privacy-by-design sketches in the interface (not a privacy-law certification)
 - End-to-end encryption for data at rest and in transit
 - Role-based access control (RBAC)
 - Audit logging
