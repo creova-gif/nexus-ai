@@ -13,52 +13,51 @@ function renderAt(path: string) {
   );
 }
 
-const routes: [string][] = [
-  ['/'],
-  ['/tour'],
-  ['/dashboard'],
-  ['/compliance'],
-  ['/alerts'],
-  ['/network'],
-  ['/kyc'],
-  ['/sanctions'],
-  ['/sar'],
-  ['/advisory'],
-  ['/openbanking'],
-  ['/audit'],
-  ['/admin'],
-  ['/cases'],
-  ['/supervisor'],
-  ['/rules'],
-  ['/risk-profile'],
-  ['/screening'],
-  ['/ubo'],
-  ['/reporting'],
-  ['/agent'],
-  ['/crypto-graph'],
-  ['/federated'],
-  ['/deepfake'],
-  ['/comms'],
-  ['/workflow-builder'],
-  ['/qa-checker'],
+type Marker = { heading: string } | { text: RegExp };
+
+// Route-specific content: DashboardLayout pages assert their exact h1 title;
+// the two standalone pages assert stable copy their own tests already rely on.
+const routes: [string, Marker][] = [
+  ['/', { text: /The AI Platform/i }],
+  ['/tour', { text: /INTERACTIVE PRODUCT TOUR/i }],
+  ['/dashboard', { heading: 'Compliance Overview' }],
+  ['/compliance', { heading: 'Compliance Overview' }],
+  ['/alerts', { heading: 'AML Alerts' }],
+  ['/network', { heading: 'Entity Network Graph' }],
+  ['/kyc', { heading: 'KYC Onboarding' }],
+  ['/sanctions', { heading: 'Sanctions Screening' }],
+  ['/sar', { heading: 'SAR Generator' }],
+  ['/advisory', { heading: 'Financial Advisory' }],
+  ['/openbanking', { heading: 'Open Banking' }],
+  ['/audit', { heading: 'Audit Trail' }],
+  ['/admin', { heading: 'System Health' }],
+  ['/cases', { heading: 'Case Management' }],
+  ['/supervisor', { heading: 'Supervisor Queue' }],
+  ['/rules', { heading: 'Rules Engine' }],
+  ['/risk-profile', { heading: 'Risk Profile' }],
+  ['/screening', { heading: 'Adverse Media & Screening' }],
+  ['/ubo', { heading: 'UBO Discovery' }],
+  ['/reporting', { heading: 'Regulatory Reporting Hub' }],
+  ['/agent', { heading: 'Agentic Investigator' }],
+  ['/crypto-graph', { heading: 'Fiat-to-Crypto Forensics' }],
+  ['/federated', { heading: 'Federated Learning Network' }],
+  ['/deepfake', { heading: 'Deepfake & Synthetic ID Detection' }],
+  ['/comms', { heading: 'Communication Hub' }],
+  ['/workflow-builder', { heading: 'Workflow Builder' }],
+  ['/qa-checker', { heading: 'Maker-Checker QA' }],
 ];
 
-describe('Route smoke tests: every route loads past the lazy-load fallback', () => {
-  for (const [path] of routes) {
-    it(`renders ${path}`, async () => {
-      const { container } = renderAt(path);
-      await waitFor(() => expect(screen.queryByText('Loading…')).not.toBeInTheDocument());
-      expect(container.textContent?.length ?? 0).toBeGreaterThan(50);
-    });
-  }
-});
-
-describe('Every page exposes at least one heading', () => {
-  for (const [path] of routes) {
-    it(`has a heading at ${path}`, async () => {
+describe('Route smoke tests: each route renders its own page', () => {
+  for (const [path, marker] of routes) {
+    it(`renders the expected page at ${path}`, async () => {
       renderAt(path);
       await waitFor(() => expect(screen.queryByText('Loading…')).not.toBeInTheDocument());
-      expect(screen.getAllByRole('heading').length).toBeGreaterThan(0);
+      expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+      if ('heading' in marker) {
+        expect(screen.getByRole('heading', { level: 1, name: marker.heading })).toBeInTheDocument();
+      } else {
+        expect(screen.getAllByText(marker.text).length).toBeGreaterThan(0);
+      }
     });
   }
 });
