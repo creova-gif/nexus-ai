@@ -1,35 +1,43 @@
+import { lazy, Suspense } from "react";
 import { Toaster } from "./components/ui/sonner";
 import { Route, Switch } from "wouter";
 import LandingPage from "./pages/LandingPage";
-import ComplianceDashboard from "./pages/ComplianceDashboard";
-import AMLAlerts from "./pages/AMLAlerts";
-import EntityGraph from "./pages/EntityGraph";
-import KycOnboarding from "./pages/KycOnboarding";
-import SanctionsScreening from "./pages/SanctionsScreening";
-import SARGenerator from "./pages/SARGenerator";
-import FinancialAdvisory from "./pages/FinancialAdvisory";
-import OpenBanking from "./pages/OpenBanking";
-import AuditTrail from "./pages/AuditTrail";
-import SystemHealth from "./pages/SystemHealth";
-import CaseManagement from "./pages/CaseManagement";
-import SupervisorQueue from "./pages/SupervisorQueue";
-import RulesEngine from "./pages/RulesEngine";
-import RiskProfile from "./pages/RiskProfile";
-import WatchlistScreening from "./pages/WatchlistScreening";
-import UboDiscovery from "./pages/UboDiscovery";
-import RegulatoryReporting from "./pages/RegulatoryReporting";
-import AgentInvestigator from "./pages/AgentInvestigator";
-import CryptoForensics from "./pages/CryptoForensics";
-import FederatedLearning from "./pages/FederatedLearning";
-import DeepfakeDetection from "./pages/DeepfakeDetection";
-import CommHub from "./pages/CommHub";
-import WorkflowBuilder from "./pages/WorkflowBuilder";
-import MakerChecker from "./pages/MakerChecker";
-import ProductTour from "./pages/ProductTour";
+const ComplianceDashboard = lazy(() => import("./pages/ComplianceDashboard"));
+const AMLAlerts = lazy(() => import("./pages/AMLAlerts"));
+const EntityGraph = lazy(() => import("./pages/EntityGraph"));
+const KycOnboarding = lazy(() => import("./pages/KycOnboarding"));
+const SanctionsScreening = lazy(() => import("./pages/SanctionsScreening"));
+const SARGenerator = lazy(() => import("./pages/SARGenerator"));
+const FinancialAdvisory = lazy(() => import("./pages/FinancialAdvisory"));
+const OpenBanking = lazy(() => import("./pages/OpenBanking"));
+const AuditTrail = lazy(() => import("./pages/AuditTrail"));
+const SystemHealth = lazy(() => import("./pages/SystemHealth"));
+const CaseManagement = lazy(() => import("./pages/CaseManagement"));
+const SupervisorQueue = lazy(() => import("./pages/SupervisorQueue"));
+const RulesEngine = lazy(() => import("./pages/RulesEngine"));
+const RiskProfile = lazy(() => import("./pages/RiskProfile"));
+const WatchlistScreening = lazy(() => import("./pages/WatchlistScreening"));
+const UboDiscovery = lazy(() => import("./pages/UboDiscovery"));
+const RegulatoryReporting = lazy(() => import("./pages/RegulatoryReporting"));
+const AgentInvestigator = lazy(() => import("./pages/AgentInvestigator"));
+const CryptoForensics = lazy(() => import("./pages/CryptoForensics"));
+const FederatedLearning = lazy(() => import("./pages/FederatedLearning"));
+const DeepfakeDetection = lazy(() => import("./pages/DeepfakeDetection"));
+const CommHub = lazy(() => import("./pages/CommHub"));
+const WorkflowBuilder = lazy(() => import("./pages/WorkflowBuilder"));
+const MakerChecker = lazy(() => import("./pages/MakerChecker"));
+const ProductTour = lazy(() => import("./pages/ProductTour"));
 
 export default function App() {
   return (
     <>
+      <Suspense
+        fallback={
+          <div role="status" className="min-h-screen flex items-center justify-center" style={{ background: "var(--bg)" }}>
+            <span className="text-[var(--text-purple-2)]">Loading…</span>
+          </div>
+        }
+      >
       <Switch>
         <Route path="/" component={LandingPage} />
         <Route path="/tour" component={ProductTour} />
@@ -69,6 +77,7 @@ export default function App() {
           )}
         </Route>
       </Switch>
+      </Suspense>
       <Toaster />
     </>
   );

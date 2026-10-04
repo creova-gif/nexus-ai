@@ -1,5 +1,5 @@
-import { describe, it, expect, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { describe, it, expect } from 'vitest';
+import { render, screen, waitFor } from '@testing-library/react';
 import { Router } from 'wouter';
 import { memoryLocation } from 'wouter/memory-location';
 import App from '../app/App';
@@ -13,42 +13,52 @@ function renderAt(path: string) {
   );
 }
 
-const routes: [string, string][] = [
-  ['/', 'landing'],
-  ['/tour', 'product tour'],
-  ['/dashboard', 'compliance'],
-  ['/compliance', 'compliance'],
-  ['/alerts', 'alerts'],
-  ['/network', 'entity'],
-  ['/kyc', 'kyc'],
-  ['/sanctions', 'sanctions'],
-  ['/sar', 'sar'],
-  ['/advisory', 'advisory'],
-  ['/openbanking', 'open banking'],
-  ['/audit', 'audit'],
-  ['/admin', 'system'],
-  ['/cases', 'case'],
-  ['/supervisor', 'supervisor'],
-  ['/rules', 'rules'],
-  ['/risk-profile', 'risk'],
-  ['/screening', 'watchlist'],
-  ['/ubo', 'ubo'],
-  ['/reporting', 'report'],
-  ['/agent', 'agent'],
-  ['/crypto-graph', 'crypto'],
-  ['/federated', 'federated'],
-  ['/deepfake', 'deepfake'],
-  ['/comms', 'comm'],
-  ['/workflow-builder', 'workflow'],
-  ['/qa-checker', 'maker'],
+const routes: [string][] = [
+  ['/'],
+  ['/tour'],
+  ['/dashboard'],
+  ['/compliance'],
+  ['/alerts'],
+  ['/network'],
+  ['/kyc'],
+  ['/sanctions'],
+  ['/sar'],
+  ['/advisory'],
+  ['/openbanking'],
+  ['/audit'],
+  ['/admin'],
+  ['/cases'],
+  ['/supervisor'],
+  ['/rules'],
+  ['/risk-profile'],
+  ['/screening'],
+  ['/ubo'],
+  ['/reporting'],
+  ['/agent'],
+  ['/crypto-graph'],
+  ['/federated'],
+  ['/deepfake'],
+  ['/comms'],
+  ['/workflow-builder'],
+  ['/qa-checker'],
 ];
 
-describe('Route smoke tests — every route renders without crashing', () => {
-  for (const [path, label] of routes) {
-    it(`renders ${path}`, () => {
+describe('Route smoke tests: every route loads past the lazy-load fallback', () => {
+  for (const [path] of routes) {
+    it(`renders ${path}`, async () => {
       const { container } = renderAt(path);
-      expect(container.firstChild).not.toBeNull();
-      _ = label;
+      await waitFor(() => expect(screen.queryByText('Loading…')).not.toBeInTheDocument());
+      expect(container.textContent?.length ?? 0).toBeGreaterThan(50);
+    });
+  }
+});
+
+describe('Every page exposes at least one heading', () => {
+  for (const [path] of routes) {
+    it(`has a heading at ${path}`, async () => {
+      renderAt(path);
+      await waitFor(() => expect(screen.queryByText('Loading…')).not.toBeInTheDocument());
+      expect(screen.getAllByRole('heading').length).toBeGreaterThan(0);
     });
   }
 });
@@ -59,5 +69,3 @@ describe('404 fallback', () => {
     expect(screen.getByText('404')).toBeInTheDocument();
   });
 });
-
-let _: string;
