@@ -1,36 +1,98 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { Toaster } from "./components/ui/sonner";
 import { Route, Switch } from "wouter";
+import RouteErrorBoundary from "./components/RouteErrorBoundary";
 import LandingPage from "./pages/LandingPage";
-const ComplianceDashboard = lazy(() => import("./pages/ComplianceDashboard"));
-const AMLAlerts = lazy(() => import("./pages/AMLAlerts"));
-const EntityGraph = lazy(() => import("./pages/EntityGraph"));
-const KycOnboarding = lazy(() => import("./pages/KycOnboarding"));
-const SanctionsScreening = lazy(() => import("./pages/SanctionsScreening"));
-const SARGenerator = lazy(() => import("./pages/SARGenerator"));
-const FinancialAdvisory = lazy(() => import("./pages/FinancialAdvisory"));
-const OpenBanking = lazy(() => import("./pages/OpenBanking"));
-const AuditTrail = lazy(() => import("./pages/AuditTrail"));
-const SystemHealth = lazy(() => import("./pages/SystemHealth"));
-const CaseManagement = lazy(() => import("./pages/CaseManagement"));
-const SupervisorQueue = lazy(() => import("./pages/SupervisorQueue"));
-const RulesEngine = lazy(() => import("./pages/RulesEngine"));
-const RiskProfile = lazy(() => import("./pages/RiskProfile"));
-const WatchlistScreening = lazy(() => import("./pages/WatchlistScreening"));
-const UboDiscovery = lazy(() => import("./pages/UboDiscovery"));
-const RegulatoryReporting = lazy(() => import("./pages/RegulatoryReporting"));
-const AgentInvestigator = lazy(() => import("./pages/AgentInvestigator"));
-const CryptoForensics = lazy(() => import("./pages/CryptoForensics"));
-const FederatedLearning = lazy(() => import("./pages/FederatedLearning"));
-const DeepfakeDetection = lazy(() => import("./pages/DeepfakeDetection"));
-const CommHub = lazy(() => import("./pages/CommHub"));
-const WorkflowBuilder = lazy(() => import("./pages/WorkflowBuilder"));
-const MakerChecker = lazy(() => import("./pages/MakerChecker"));
-const ProductTour = lazy(() => import("./pages/ProductTour"));
+const loadComplianceDashboard = () => import("./pages/ComplianceDashboard");
+const ComplianceDashboard = lazy(loadComplianceDashboard);
+const loadAMLAlerts = () => import("./pages/AMLAlerts");
+const AMLAlerts = lazy(loadAMLAlerts);
+const loadEntityGraph = () => import("./pages/EntityGraph");
+const EntityGraph = lazy(loadEntityGraph);
+const loadKycOnboarding = () => import("./pages/KycOnboarding");
+const KycOnboarding = lazy(loadKycOnboarding);
+const loadSanctionsScreening = () => import("./pages/SanctionsScreening");
+const SanctionsScreening = lazy(loadSanctionsScreening);
+const loadSARGenerator = () => import("./pages/SARGenerator");
+const SARGenerator = lazy(loadSARGenerator);
+const loadFinancialAdvisory = () => import("./pages/FinancialAdvisory");
+const FinancialAdvisory = lazy(loadFinancialAdvisory);
+const loadOpenBanking = () => import("./pages/OpenBanking");
+const OpenBanking = lazy(loadOpenBanking);
+const loadAuditTrail = () => import("./pages/AuditTrail");
+const AuditTrail = lazy(loadAuditTrail);
+const loadSystemHealth = () => import("./pages/SystemHealth");
+const SystemHealth = lazy(loadSystemHealth);
+const loadCaseManagement = () => import("./pages/CaseManagement");
+const CaseManagement = lazy(loadCaseManagement);
+const loadSupervisorQueue = () => import("./pages/SupervisorQueue");
+const SupervisorQueue = lazy(loadSupervisorQueue);
+const loadRulesEngine = () => import("./pages/RulesEngine");
+const RulesEngine = lazy(loadRulesEngine);
+const loadRiskProfile = () => import("./pages/RiskProfile");
+const RiskProfile = lazy(loadRiskProfile);
+const loadWatchlistScreening = () => import("./pages/WatchlistScreening");
+const WatchlistScreening = lazy(loadWatchlistScreening);
+const loadUboDiscovery = () => import("./pages/UboDiscovery");
+const UboDiscovery = lazy(loadUboDiscovery);
+const loadRegulatoryReporting = () => import("./pages/RegulatoryReporting");
+const RegulatoryReporting = lazy(loadRegulatoryReporting);
+const loadAgentInvestigator = () => import("./pages/AgentInvestigator");
+const AgentInvestigator = lazy(loadAgentInvestigator);
+const loadCryptoForensics = () => import("./pages/CryptoForensics");
+const CryptoForensics = lazy(loadCryptoForensics);
+const loadFederatedLearning = () => import("./pages/FederatedLearning");
+const FederatedLearning = lazy(loadFederatedLearning);
+const loadDeepfakeDetection = () => import("./pages/DeepfakeDetection");
+const DeepfakeDetection = lazy(loadDeepfakeDetection);
+const loadCommHub = () => import("./pages/CommHub");
+const CommHub = lazy(loadCommHub);
+const loadWorkflowBuilder = () => import("./pages/WorkflowBuilder");
+const WorkflowBuilder = lazy(loadWorkflowBuilder);
+const loadMakerChecker = () => import("./pages/MakerChecker");
+const MakerChecker = lazy(loadMakerChecker);
+const loadProductTour = () => import("./pages/ProductTour");
+const ProductTour = lazy(loadProductTour);
+
+const prefetchers = [
+  loadComplianceDashboard,
+  loadAMLAlerts,
+  loadEntityGraph,
+  loadKycOnboarding,
+  loadSanctionsScreening,
+  loadSARGenerator,
+  loadFinancialAdvisory,
+  loadOpenBanking,
+  loadAuditTrail,
+  loadSystemHealth,
+  loadCaseManagement,
+  loadSupervisorQueue,
+  loadRulesEngine,
+  loadRiskProfile,
+  loadWatchlistScreening,
+  loadUboDiscovery,
+  loadRegulatoryReporting,
+  loadAgentInvestigator,
+  loadCryptoForensics,
+  loadFederatedLearning,
+  loadDeepfakeDetection,
+  loadCommHub,
+  loadWorkflowBuilder,
+  loadMakerChecker,
+  loadProductTour,
+];
 
 export default function App() {
+  useEffect(() => {
+    const run = () => prefetchers.forEach((load) => load().catch(() => {}));
+    const w = window as Window & { requestIdleCallback?: (cb: () => void) => number };
+    if (w.requestIdleCallback) w.requestIdleCallback(run);
+    else setTimeout(run, 2000);
+  }, []);
+
   return (
     <>
+      <RouteErrorBoundary>
       <Suspense
         fallback={
           <div role="status" className="min-h-screen flex items-center justify-center" style={{ background: "var(--bg)" }}>
@@ -78,6 +140,7 @@ export default function App() {
         </Route>
       </Switch>
       </Suspense>
+      </RouteErrorBoundary>
       <Toaster />
     </>
   );
