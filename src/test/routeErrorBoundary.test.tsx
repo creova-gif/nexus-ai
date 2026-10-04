@@ -19,4 +19,13 @@ describe('RouteErrorBoundary', () => {
     expect(screen.getByRole('button', { name: /reload/i })).toBeInTheDocument();
     spy.mockRestore();
   });
+
+  it('recovers when the resetKey changes', () => {
+    const spy = vi.spyOn(console, 'error').mockImplementation(() => {});
+    const { rerender } = render(<RouteErrorBoundary resetKey="/a"><Boom /></RouteErrorBoundary>);
+    expect(screen.getByRole('alert')).toBeInTheDocument();
+    rerender(<RouteErrorBoundary resetKey="/b"><p>landing</p></RouteErrorBoundary>);
+    expect(screen.getByText('landing')).toBeInTheDocument();
+    spy.mockRestore();
+  });
 });

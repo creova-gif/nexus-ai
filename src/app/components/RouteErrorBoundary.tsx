@@ -4,8 +4,19 @@ interface State {
   failed: boolean;
 }
 
-export default class RouteErrorBoundary extends Component<{ children: ReactNode }, State> {
+interface Props {
+  children: ReactNode;
+  resetKey?: string;
+}
+
+export default class RouteErrorBoundary extends Component<Props, State> {
   state: State = { failed: false };
+
+  componentDidUpdate(prev: Props) {
+    if (this.state.failed && prev.resetKey !== this.props.resetKey) {
+      this.setState({ failed: false });
+    }
+  }
 
   static getDerivedStateFromError(): State {
     return { failed: true };

@@ -1,6 +1,6 @@
 import { lazy, Suspense, useEffect } from "react";
 import { Toaster } from "./components/ui/sonner";
-import { Route, Switch } from "wouter";
+import { Route, Switch, useLocation } from "wouter";
 import RouteErrorBoundary from "./components/RouteErrorBoundary";
 import LandingPage from "./pages/LandingPage";
 const loadComplianceDashboard = () => import("./pages/ComplianceDashboard");
@@ -83,6 +83,7 @@ const prefetchers = [
 ];
 
 export default function App() {
+  const [location] = useLocation();
   useEffect(() => {
     const run = () => prefetchers.forEach((load) => load().catch(() => {}));
     const w = window as Window & { requestIdleCallback?: (cb: () => void) => number };
@@ -92,7 +93,7 @@ export default function App() {
 
   return (
     <>
-      <RouteErrorBoundary>
+      <RouteErrorBoundary resetKey={location}>
       <Suspense
         fallback={
           <div role="status" className="min-h-screen flex items-center justify-center" style={{ background: "var(--bg)" }}>
