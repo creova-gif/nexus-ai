@@ -1,7 +1,9 @@
 # NexusAI — System Architecture
 
+> **Status: design specification only.** Nothing described in this document is implemented in the running app (`src/app/`). It is a target architecture, not a description of the current system. Compliance and certification references below are goals, not claims.
+
 **Intelligent Banking, Trusted Future.**
-Version: 3.0 | Region: `ca-central-1` (primary) | Compliance: OSFI, FINTRAC, PCMLTFA, PIPEDA
+Version: 3.0 | Region: `ca-central-1` (primary) | Compliance targets (not achieved): OSFI, FINTRAC, PCMLTFA, PIPEDA
 
 ---
 

@@ -299,7 +299,7 @@ export default function DashboardLayout({
         <div className="h-[54px] flex-shrink-0 flex items-center justify-between px-6 glass-2 border-b-[0.5px] border-[var(--border)] relative z-[5]" style={{ backdropFilter: "blur(16px)" }}>
           <div className="flex items-center gap-4">
             <div>
-              <div className="font-['Instrument_Serif'] text-[1.1rem] text-white">{pageTitle}</div>
+              <h1 className="font-['Instrument_Serif'] text-[1.1rem] text-white font-normal">{pageTitle}</h1>
               <div className="font-['Geist_Mono'] text-[0.7rem] text-[var(--text-purple-3)] flex items-center gap-1">
                 NexusAI <span className="text-[var(--text-purple-2)]">›</span> <span className="text-[var(--text-purple-2)]">{breadcrumb}</span>
               </div>
