@@ -6,10 +6,10 @@ import { Button } from "../components/ui/button";
 import { FileText, CheckCircle, Clock, AlertTriangle, Download, Send, Code, RefreshCw } from "lucide-react";
 
 const filings = [
-  { id: "STR-2026-0041", sar: "SAR-104", subject: "Account #CA-4471", type: "Structuring", filed: "2026-05-20", agency: "FINTRAC", status: "acknowledged", ref: "FIN-ACK-89221", amount: "$149,400" },
-  { id: "STR-2026-0042", sar: "SAR-105", subject: "Global Trade Corp", type: "PEP/Sanctions", filed: "2026-05-18", agency: "FINTRAC", status: "pending", ref: "—", amount: "$4.2M" },
-  { id: "CTR-2026-0018", sar: "CTR-88", subject: "Viktor Sokolov", type: "Currency Transaction", filed: "2026-05-15", agency: "FinCEN", status: "acknowledged", ref: "FCN-ACK-50132", amount: "$890,000" },
-  { id: "STR-2026-0039", sar: "SAR-103", subject: "Meridian Holdings Ltd", type: "Structuring", filed: "2026-05-10", agency: "FINTRAC", status: "rejected", ref: "FIN-REJ-00441", amount: "$310,000" },
+  { id: "STR-SAMPLE-0041", sar: "SAR-104", subject: "Account #SAMPLE-4471", type: "Structuring", filed: "2026-05-20", agency: "Sample agency", status: "acknowledged", ref: "SAMPLE-REF-001", amount: "$149,400" },
+  { id: "STR-SAMPLE-0042", sar: "SAR-105", subject: "Example Trade Co.", type: "PEP/Sanctions", filed: "2026-05-18", agency: "Sample agency", status: "pending", ref: "—", amount: "$4.2M" },
+  { id: "CTR-SAMPLE-0018", sar: "CTR-88", subject: "Example Person A", type: "Currency Transaction", filed: "2026-05-15", agency: "Sample agency", status: "acknowledged", ref: "SAMPLE-REF-002", amount: "$890,000" },
+  { id: "STR-SAMPLE-0039", sar: "SAR-103", subject: "Example Holdings", type: "Structuring", filed: "2026-05-10", agency: "Sample agency", status: "rejected", ref: "SAMPLE-REF-003", amount: "$310,000" },
 ];
 
 const sarXmlPreview = (filing: typeof filings[0]) => `<?xml version="1.0" encoding="UTF-8"?>
@@ -23,7 +23,7 @@ const sarXmlPreview = (filing: typeof filings[0]) => `<?xml version="1.0" encodi
     <Amount>${filing.amount}</Amount>
     <Agency>${filing.agency}</Agency>
   </SuspiciousTransaction>
-  <Narrative>Based on analysis, patterns consistent with ${filing.type} were identified requiring mandatory disclosure per PCMLTFA s.7.</Narrative>
+  <Narrative>Sample narrative only. Patterns consistent with ${filing.type} are illustrative and are not a filing.</Narrative>
 </FinancialIntelligenceReport>`;
 
 const sarJsonPreview = (filing: typeof filings[0]) => JSON.stringify({
@@ -45,22 +45,22 @@ export default function RegulatoryReporting() {
 
   const getStatusStyle = (status: string) => {
     switch (status) {
-      case "acknowledged": return { cls: "bg-[rgba(52,211,153,.10)] text-[var(--teal)] border-[rgba(52,211,153,.28)]", label: "ACKNOWLEDGED", icon: CheckCircle };
-      case "pending": return { cls: "bg-[rgba(251,191,36,.12)] text-[var(--amber)] border-[rgba(251,191,36,.3)]", label: "PENDING", icon: Clock };
-      case "rejected": return { cls: "bg-[rgba(248,113,113,.12)] text-[var(--coral)] border-[rgba(248,113,113,.3)]", label: "REJECTED", icon: AlertTriangle };
+      case "acknowledged": return { cls: "bg-[rgba(52,211,153,.10)] text-[var(--teal)] border-[rgba(52,211,153,.28)]", label: "SAMPLE ACK", icon: CheckCircle };
+      case "pending": return { cls: "bg-[rgba(251,191,36,.12)] text-[var(--amber)] border-[rgba(251,191,36,.3)]", label: "SAMPLE", icon: Clock };
+      case "rejected": return { cls: "bg-[rgba(248,113,113,.12)] text-[var(--coral)] border-[rgba(248,113,113,.3)]", label: "SAMPLE", icon: AlertTriangle };
       default: return { cls: "", label: status.toUpperCase(), icon: Clock };
     }
   };
 
   return (
-    <DashboardLayout pageTitle="Regulatory Reporting Hub" breadcrumb="FinCEN / FINTRAC E-Filing">
+    <DashboardLayout pageTitle="Regulatory Reporting Hub" breadcrumb="Sample drafts, not filings">
       <div className="flex flex-col gap-4">
 
         {/* Stats */}
         <div className="grid grid-cols-4 gap-3">
           {[
-            { label: "Total Filed (30d)", value: filings.length.toString(), color: "var(--brand-hi)" },
-            { label: "Acknowledged", value: filings.filter(f => f.status === "acknowledged").length.toString(), color: "var(--teal)" },
+            { label: "Sample rows", value: filings.length.toString(), color: "var(--brand-hi)" },
+            { label: "Sample acknowledged", value: filings.filter(f => f.status === "acknowledged").length.toString(), color: "var(--teal)" },
             { label: "Pending Response", value: filings.filter(f => f.status === "pending").length.toString(), color: "var(--amber)" },
             { label: "Rejected / Resubmit", value: filings.filter(f => f.status === "rejected").length.toString(), color: "var(--coral)" },
           ].map((stat, i) => (

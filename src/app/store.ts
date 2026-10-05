@@ -97,8 +97,8 @@ export const useAppStore = create<AppState>((set, get) => ({
   adverseMedia: [
     { id: "AM-001", entity: "Global Trade Corp", headline: "Global Trade Corp executives face money laundering probe in EU", source: "Financial Times", date: "2026-05-22", severity: "critical", status: "unreviewed" },
     { id: "AM-002", entity: "Viktor Sokolov", headline: "Russian oligarch Sokolov linked to sanctions-evasion network", source: "Reuters", date: "2026-05-21", severity: "critical", status: "unreviewed" },
-    { id: "AM-003", entity: "Blue Horizon Finance", headline: "Blue Horizon Finance under scrutiny for offshore shell structures", source: "Globe and Mail", date: "2026-05-20", severity: "high", status: "unreviewed" },
-    { id: "AM-004", entity: "Meridian Holdings Ltd", headline: "Meridian Holdings discloses undisclosed beneficial owner in annual filing", source: "Bloomberg", date: "2026-05-19", severity: "medium", status: "reviewed" },
+    { id: "AM-003", entity: "Blue Horizon Finance", headline: "Sample headline about offshore shell structures", source: "Sample outlet", date: "2026-05-20", severity: "high", status: "unreviewed" },
+    { id: "AM-004", entity: "Example Holdings", headline: "Sample headline about an undisclosed owner", source: "Sample outlet", date: "2026-05-19", severity: "medium", status: "reviewed" },
   ],
 
   kycProfiles: [
@@ -111,7 +111,7 @@ export const useAppStore = create<AppState>((set, get) => ({
   ],
 
   sarDrafts: [
-    { id: "SAR-104", subject: "Account #CA-4471", type: "Structuring / Smurfing", summary: "Based on the activity associated with Account #CA-4471, we have identified patterns consistent with Structuring / Smurfing. The transaction history exhibits significant anomalies deviating from typical client profiles. This report has been drafted for FINTRAC compliance review.", status: "pending", author: "Marie Chen" },
+    { id: "SAR-104", subject: "Account #CA-4471", type: "Structuring / Smurfing", summary: "Sample draft only. Patterns consistent with Structuring / Smurfing are illustrative. This text is not a filing and not a certification.", status: "pending", author: "Marie Chen" },
     { id: "SAR-105", subject: "Global Trade Corp", type: "PEP / Sanctions Match", summary: "Cross-border wire flags potential match with OFAC sanctioned entities. 87% name similarity detected.", status: "pending", author: "Marie Chen" },
   ],
 
@@ -139,7 +139,7 @@ export const useAppStore = create<AppState>((set, get) => ({
       id: `SAR-${Math.floor(Math.random() * 1000)}`,
       subject: sarSubject || 'Unknown Entity',
       type: sarType,
-      summary: `Based on the activity associated with ${sarSubject || 'the selected entity'}, we have identified patterns consistent with ${sarType}. The transaction history exhibits significant anomalies deviating from typical client profiles. This report has been drafted for FINTRAC compliance review.`,
+      summary: `Sample draft only for ${sarSubject || 'the selected entity'}. Patterns consistent with ${sarType} are illustrative. This text is not a filing and not a certification.`,
       status: 'pending',
       author: 'Marie Chen'
     };

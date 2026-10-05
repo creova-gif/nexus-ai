@@ -42,9 +42,12 @@ describe('LandingPage', () => {
     expect(screen.getByText('Pricing')).toBeInTheDocument();
   });
 
-  it('shows FINTRAC compliance badge', () => {
+  it('shows the prototype notice and no certification claim', () => {
     renderPage();
-    expect(screen.getAllByText(/FINTRAC/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/Prototype – illustrative data, not a real customer or certification/i).length).toBeGreaterThan(0);
+    expect(screen.queryByText(/SOC 2/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/ISO 27001/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/FINTRAC Compliant/i)).not.toBeInTheDocument();
   });
 
   it('shows Request Demo CTA', () => {
@@ -52,15 +55,17 @@ describe('LandingPage', () => {
     expect(screen.getByText(/Request Demo/i)).toBeInTheDocument();
   });
 
-  it('shows Canadian institution logos in the trust bar', () => {
+  it('does not name banks as customers or partners', () => {
     renderPage();
-    expect(screen.getAllByText(/Royal Bank of Canada/i).length).toBeGreaterThan(0);
-    expect(screen.getAllByText(/Scotiabank/i).length).toBeGreaterThan(0);
-    expect(screen.getAllByText(/FINTRAC/i).length).toBeGreaterThan(0);
+    expect(screen.queryByText(/Royal Bank of Canada/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/TD Canada Trust/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Scotiabank/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Sarah Chen/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Michael Rousseau/i)).not.toBeInTheDocument();
   });
 
-  it('shows the CDBA announcement banner', () => {
+  it('shows the architecture banner without a certification claim', () => {
     renderPage();
-    expect(screen.getAllByText(/CDBA Phase 1/i).length).toBeGreaterThan(0);
+    expect(screen.getByText(/no formal regulatory certification has been obtained/i)).toBeInTheDocument();
   });
 });

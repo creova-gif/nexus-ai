@@ -35,7 +35,7 @@ KEY FINDINGS
 [4] Transaction Pattern: All three structuring transactions were initiated from the same IP subnet (10.122.x.x), consistent with coordinated automated behavior rather than organic client activity.
 
 RECOMMENDED ACTION
-File Suspicious Transaction Report (STR) with FINTRAC under PCMLTFA s.7. Freeze account pending senior compliance review. Open linked-entity case for Shell LLC A, Corp B, and Trust Acct C.
+Sample recommendation only: a reviewer might write a suspicious-transaction draft. This prototype does not file it and does not freeze an account.
 
 CITATIONS
 [1] FINTRAC Guideline 2: Suspicious Transactions — Indicators of Structuring
@@ -185,7 +185,7 @@ export default function AgentInvestigator() {
               </div>
               {briefReady && (
                 <span className="text-[0.6rem] text-[var(--teal)] font-['Geist_Mono'] font-bold flex items-center gap-1">
-                  <CheckCircle className="w-2.5 h-2.5" /> CITED · FINTRAC-ALIGNED
+                  <CheckCircle className="w-2.5 h-2.5" /> SAMPLE CITATION
                 </span>
               )}
             </div>

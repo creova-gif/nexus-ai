@@ -166,7 +166,7 @@ export default function RiskProfile() {
 
               <div className="mt-4 pt-3 border-t-[0.5px] border-[var(--border)] flex items-center gap-1.5 text-[0.63rem] text-[var(--text-purple-3)]">
                 <Info className="w-3 h-3 flex-shrink-0" />
-                <span>Score computed by NexusAI XAI Engine v3.2 · FINTRAC-aligned methodology</span>
+                <span>Illustrative score · not a certified methodology</span>
               </div>
             </Card>
 

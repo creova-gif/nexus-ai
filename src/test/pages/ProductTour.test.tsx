@@ -45,9 +45,13 @@ describe('ProductTour', () => {
     expect(screen.getAllByText(/Entity Network/i).length).toBeGreaterThan(0);
   });
 
-  it('shows FINTRAC Reporting section', () => {
+  it('shows the sample reporting section and prototype notice', () => {
     renderPage();
-    expect(screen.getAllByText(/FINTRAC Reporting/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/Sample STR drafts/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/Prototype – illustrative data, not a real customer or certification/i).length).toBeGreaterThan(0);
+    expect(screen.queryByText(/SOC 2 Type II/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/ISO 27001/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/99%/)).not.toBeInTheDocument();
   });
 
   it('shows Federated AI section', () => {

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useInView, animate } from "motion/react";
 import { Link } from "wouter";
 import { ArrowRight, Shield, Zap, Network, FileText, Brain, ChevronDown, Play, X } from "lucide-react";
+import PrototypeNotice from "../components/PrototypeNotice";
 
 /* ─── Particle Canvas ─────────────────────────────────────────────────────── */
 function ParticleCanvas({ className = "" }: { className?: string }) {
@@ -104,7 +105,7 @@ function AMLBlueprint() {
     { x: 395, y: 265, label: "KYC CHECK",    color: "#60A5FA" },
     { x: 395, y: 25,  label: "OFAC",         color: "#F87171" },
     { x: 555, y: 145, label: "CASE MGR",     color: "#34D399" },
-    { x: 700, y: 80,  label: "FINTRAC",      color: "#FBBF24" },
+    { x: 700, y: 80,  label: "DRAFT STR",    color: "#FBBF24" },
     { x: 700, y: 200, label: "CLOSE",        color: "#34D399" },
   ];
   const edges = [
@@ -439,7 +440,10 @@ export default function ProductTour() {
             style={{ background: "radial-gradient(circle, rgba(139,92,246,0.9) 0%, transparent 65%)" }} />
         </div>
 
-        <div className="relative z-10 flex flex-col items-center text-center px-6 w-full pt-20">
+        <div className="relative z-10 flex flex-col items-center text-center px-6 w-full pt-24">
+          <div className="w-full max-w-3xl mb-8">
+            <PrototypeNotice />
+          </div>
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.15 }}>
             <TourLabel>Interactive Product Tour</TourLabel>
           </motion.div>
@@ -468,7 +472,7 @@ export default function ProductTour() {
             <Link href="/dashboard">
               <button className="flex items-center gap-2 px-7 py-3 rounded-full text-sm font-bold text-white transition-all hover:scale-105 active:scale-100"
                 style={{ background: "linear-gradient(135deg,#7C3AED,#8B5CF6)", boxShadow: "0 0 36px rgba(139,92,246,0.4)" }}>
-                <Zap className="w-4 h-4" /> Open Live Dashboard
+                <Zap className="w-4 h-4" /> Open sample dashboard
               </button>
             </Link>
             <button onClick={() => setShowVideo(true)}
@@ -483,9 +487,9 @@ export default function ProductTour() {
             initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.85 }}
             className="grid grid-cols-3 gap-4 max-w-2xl w-full">
             {[
-              { val: 94, suffix: "%", label: "Faster alert triage" },
-              { val: 10, suffix: "+", label: "AML rule templates" },
-              { val: 99, suffix: "%", label: "FINTRAC compliance" },
+              { val: 0, suffix: "", label: "Measured customer results" },
+              { val: 10, suffix: "", label: "Sample rule sketches" },
+              { val: 0, suffix: "", label: "Certifications held" },
             ].map((s, i) => (
               <div key={i} className="px-6 py-4 rounded-2xl text-center"
                 style={{ background: "rgba(255,255,255,0.04)", border: "0.5px solid rgba(139,92,246,0.18)" }}>
@@ -522,10 +526,10 @@ export default function ProductTour() {
               </p>
             </FadeIn>
             <div className="grid grid-cols-2 gap-4">
-              <StatCard val={48} suffix="ms" label="Avg decision latency" delay={0.1} />
-              <StatCard val={6} suffix="%" label="False positive rate" delay={0.2} />
-              <StatCard val={24} suffix="/7" label="Continuous monitoring" delay={0.3} />
-              <StatCard val={100} suffix="%" label="PCMLTFA coverage" delay={0.4} />
+              <StatCard val={0} suffix="" label="Measured latency" delay={0.1} />
+              <StatCard val={0} suffix="" label="Measured false positives" delay={0.2} />
+              <StatCard val={0} suffix="" label="Live monitors" delay={0.3} />
+              <StatCard val={0} suffix="" label="Certifications held" delay={0.4} />
             </div>
           </div>
           <FadeIn direction="right" delay={0.2}>
@@ -590,7 +594,7 @@ export default function ProductTour() {
                 NexusAI maps every entity relationship across 12+ node types — subsidiaries, shell companies, crypto wallets, PEP associates, and sanctioned counterparties — surfacing hidden risk invisible to traditional systems.
               </p>
               <div className="flex flex-wrap gap-2">
-                {["OFAC SDN Matching", "Shell Company Detection", "Crypto Wallet Tracing", "PEP Network Mapping", "UBO Discovery", "FINTRAC Integration"].map((tag, i) => (
+                {["Sample list match", "Sample shell-company view", "Sample wallet sketch", "Sample PEP view", "Sample ownership view", "Sample draft flow"].map((tag, i) => (
                   <FadeIn key={i} delay={i * 0.07}>
                     <span className="px-3 py-1 rounded-full text-[0.65rem] font-bold font-['Geist_Mono']"
                       style={{ background: "rgba(96,165,250,0.1)", border: "0.5px solid rgba(96,165,250,0.25)", color: "#60A5FA" }}>
@@ -614,19 +618,19 @@ export default function ProductTour() {
         <div className="relative z-10 max-w-6xl mx-auto px-8 w-full grid md:grid-cols-2 gap-16 items-center">
           <div>
             <FadeIn>
-              <TourLabel color="#34D399">FINTRAC Reporting</TourLabel>
+              <TourLabel color="#34D399">Sample STR drafts</TourLabel>
               <h2 className="font-['Instrument_Serif'] leading-tight mb-6" style={{ fontSize: "clamp(2rem,4vw,3.2rem)" }}>
-                AI-Drafted STRs Ready for E-Filing
+                Sample narratives, not filings
               </h2>
               <p className="text-base leading-relaxed mb-8" style={{ color: "rgba(255,255,255,0.5)" }}>
-                From alert to acknowledged FINTRAC filing in under 4 hours. NexusAI generates complete Suspicious Transaction Reports with PCMLTFA-compliant XML/JSON, automatic reference tracking, and resubmission handling.
+                This section shows a sample suspicious-transaction draft. The prototype does not submit reports, does not receive acknowledgements, and is not certified.
               </p>
             </FadeIn>
             <div className="space-y-4">
               {[
-                { label: "Avg time to STR submission", val: "3.8h", sub: "vs 72h manual" },
-                { label: "FINTRAC acknowledgement rate", val: "97%", sub: "across all filings" },
-                { label: "Rejection auto-correction", val: "Active", sub: "resubmit + correction note" },
+                { label: "Submission time", val: "n/a", sub: "nothing is submitted" },
+                { label: "Acknowledgement rate", val: "n/a", sub: "no filings exist" },
+                { label: "Auto-resubmit", val: "Off", sub: "not connected" },
               ].map((item, i) => (
                 <FadeIn key={i} direction="left" delay={i * 0.12}>
                   <div className="flex items-center justify-between p-4 rounded-xl"
@@ -662,7 +666,7 @@ export default function ProductTour() {
                   { t: "    <Subject>Global Trade Corp</Subject>",       c: "#34D399", d: 0.82 },
                   { t: "    <ActivityType>Structuring</ActivityType>",   c: "#FBBF24", d: 0.88 },
                   { t: "    <Amount>$4,250,000</Amount>",                c: "#F87171", d: 0.94 },
-                  { t: "    <Agency>FINTRAC</Agency>",                   c: "#60A5FA", d: 1.0 },
+                  { t: "    <Agency>SAMPLE</Agency>",                    c: "#60A5FA", d: 1.0 },
                   { t: "  </SuspiciousTransaction>",                     c: "#A78BFA", d: 1.06 },
                   { t: "</FinancialIntelligenceReport>",                 c: "#A78BFA", d: 1.12 },
                 ].map((l, i) => (
@@ -682,7 +686,7 @@ export default function ProductTour() {
                 <motion.span className="text-[0.6rem] font-bold font-['Geist_Mono'] whitespace-nowrap" style={{ color: "#34D399" }}
                   initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
                   transition={{ delay: 2.8 }}>
-                  ACKNOWLEDGED
+                  SAMPLE ONLY
                 </motion.span>
               </div>
             </div>
@@ -712,7 +716,7 @@ export default function ProductTour() {
                   { icon: Shield, label: "Zero raw data sharing",  color: "#FBBF24" },
                   { icon: Brain,  label: "Gradient encryption",    color: "#A78BFA" },
                   { icon: Network, label: "Multi-bank model",      color: "#60A5FA" },
-                  { icon: FileText, label: "PIPEDA compliant",     color: "#34D399" },
+                  { icon: FileText, label: "Not a privacy certification", color: "#34D399" },
                 ].map((item, i) => {
                   const Icon = item.icon;
                   return (
@@ -763,7 +767,7 @@ export default function ProductTour() {
             </div>
             <div className="mt-16 flex flex-wrap items-center justify-center gap-8 text-xs font-['Geist_Mono'] uppercase tracking-widest"
               style={{ color: "rgba(255,255,255,0.28)" }}>
-              {["SOC 2 Type II", "ISO 27001", "PCMLTFA", "PIPEDA", "CDBA Phase 1"].map((t, i) => (
+              {["No security audit certification", "No information-security certification", "No regulatory attestation", "Illustrative data only"].map((t, i) => (
                 <span key={i} className="flex items-center gap-2">
                   <span className="w-1 h-1 rounded-full" style={{ background: "rgba(139,92,246,0.6)" }} />
                   {t}

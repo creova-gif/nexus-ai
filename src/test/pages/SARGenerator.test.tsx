@@ -20,9 +20,10 @@ describe('SARGenerator', () => {
     expect(screen.getAllByText(/SAR/i).length).toBeGreaterThan(0);
   });
 
-  it('shows FINTRAC reference', () => {
+  it('shows the prototype notice instead of a filing claim', () => {
     renderPage();
-    expect(screen.getAllByText(/FINTRAC/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/Prototype – illustrative data, not a real customer or certification/i).length).toBeGreaterThan(0);
+    expect(screen.queryByText(/FINTRAC/i)).not.toBeInTheDocument();
   });
 
   it('shows status indicators', () => {

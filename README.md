@@ -2,7 +2,9 @@
 
 **Intelligent Banking, Trusted Future.**
 
-A comprehensive AI-powered banking platform designed for Canadian financial institutions, built with React, TypeScript, Tailwind CSS, and shadcn/ui components.
+A prototype AI banking interface for demonstration. It is not a live product, it has no bank customers, and it holds no security or regulatory certification. Built with React, TypeScript, Tailwind CSS, and shadcn/ui components.
+
+**Prototype – illustrative data, not a real customer or certification.**
 
 ![NexusAI landing page](docs/screenshots/dashboard.png)
 
@@ -28,7 +30,7 @@ NexusAI is a unified banking assistant platform that addresses critical challeng
 - Professional marketing site with hero section
 - Audience-specific cards (Banks, Government, Fintechs)
 - Feature showcase with numbered sections
-- Trust bar with Canadian financial institution logos
+- Notice that no institution is a customer, partner, or endorser
 - Metrics and statistics
 - Call-to-action sections
 - **Design**: DM Serif Display, DM Sans, Space Mono fonts
@@ -179,7 +181,7 @@ See `/src/imports/` for:
 
 ## Compliance & Security
 
-- PIPEDA compliant data handling
+- Privacy-by-design sketches in the interface (not a privacy-law certification)
 - End-to-end encryption for data at rest and in transit
 - Role-based access control (RBAC)
 - Audit logging
